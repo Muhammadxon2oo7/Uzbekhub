@@ -24,7 +24,7 @@ const Header = () => {
 
         {/* Desktop nav */}
         <nav className="hidden md:flex items-center gap-6 text-sm text-gray-600">
-          <Link href="/xonalar" className="hover:text-black text-[18px]  relative  font-medium text-gray-700 after:content-[''] after:absolute after:left-0 after:bottom-0 after:w-0 after:h-[2px] after:bg-black after:transition-all after:duration-300 hover:after:w-full">Xonalar</Link>
+          <Link href="/hubs" className="hover:text-black text-[18px]  relative  font-medium text-gray-700 after:content-[''] after:absolute after:left-0 after:bottom-0 after:w-0 after:h-[2px] after:bg-black after:transition-all after:duration-300 hover:after:w-full">Xonalar</Link>
           <Link href="/about" className="hover:text-black text-[18px]   relative  font-medium text-gray-700 after:content-[''] after:absolute after:left-0 after:bottom-0 after:w-0 after:h-[2px] after:bg-black after:transition-all after:duration-300 hover:after:w-full">Haqida</Link>
           <Link href="/help" className="hover:text-black text-[18px]   relative  font-medium text-gray-700 after:content-[''] after:absolute after:left-0 after:bottom-0 after:w-0 after:h-[2px] after:bg-black after:transition-all after:duration-300 hover:after:w-full">Yordam</Link>
         </nav>
