@@ -20,7 +20,11 @@ const config: Config = {
         input: 'oklch(var(--input) / <alpha-value>)',
         ring: 'oklch(var(--ring) / <alpha-value>)',
         text: 'oklch(var(--text) / <alpha-value>)',
+        bggradient: 'oklch(var(--bggradient) / <alpha-value>)',
         navbar: 'oklch(var(--navbar) / <alpha-value>)',
+      },backgroundImage: {
+        // ✅ если хочешь использовать готовый градиент
+        'hero-radial': 'radial-gradient(at 50% 75%, oklch(1 0 0) 0%, oklch(var(--bggradient)) 50%, oklch(0.145 0 0) 90%)',
       },
       borderRadius: {
         sm: 'var(--radius-sm)',

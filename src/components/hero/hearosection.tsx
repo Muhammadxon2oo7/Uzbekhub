@@ -1,81 +1,110 @@
-// components/guest/hero-section.tsx
-
 'use client'
 
-import { useState } from "react"
+import { useRef, useState, useEffect } from "react"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
-import { Instagram, Linkedin, MessageCircle, Search, Send } from "lucide-react"
-import Image from "next/image"
-import Autoplay from "embla-carousel-autoplay"
-import { Carousel, CarouselContent, CarouselItem } from "@/components/ui/carousel"
+import { MessageCircle, Search } from "lucide-react"
 import Link from "next/link"
+import { motion } from "framer-motion"
 
 export default function HeroSection() {
   const [query, setQuery] = useState("")
+  const cardRef = useRef<HTMLDivElement | null>(null)
+  const spotRef = useRef<HTMLDivElement | null>(null)
 
   const handleSearch = () => {
     console.log("Qidirilyapti:", query)
   }
 
-  const images = [
- 
-    "/images/Questions-rafiki.png",
-    "/images/Team spirit-rafiki.png",
-    "/images/Team goals-rafiki.png",
-    '/images/Connected world-rafiki.png',
-    '/images/Discussion-rafiki.png',
-  ]
+  useEffect(() => {
+    const card = cardRef.current
+    const spot = spotRef.current
+    if (!card || !spot) return
+
+    const handleMouseMove = (e: MouseEvent) => {
+      const rect = card.getBoundingClientRect()
+      const x = e.clientX - rect.left
+      const y = e.clientY - rect.top
+
+      // Spot position
+      spot.style.left = `${x - 80}px`
+      spot.style.top = `${y - 80}px`
+      spot.style.opacity = '1'
+
+      // Tilt
+      const centerX = rect.width / 2
+      const centerY = rect.height / 2
+      const rotateX = -(y - centerY) / 40
+      const rotateY = (x - centerX) / 40
+
+      card.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`
+    }
+
+    const handleMouseLeave = () => {
+      spot.style.opacity = '0'
+      card.style.transform = `rotateX(-10deg) rotateY(-5deg)`
+    }
+
+    card.addEventListener('mousemove', handleMouseMove)
+    card.addEventListener('mouseleave', handleMouseLeave)
+
+    return () => {
+      card.removeEventListener('mousemove', handleMouseMove)
+      card.removeEventListener('mouseleave', handleMouseLeave)
+    }
+  }, [])
 
   return (
-    <section className="container flex items-center justify-center">
-      <div className="flex flex-col items-center">
-        <Link href="/" className="flex items-center gap-2">
-          <MessageCircle className="w-10 h-10 text-primary" />
-          <span className="text-[40px] font-semibold text-text">UzbekHub</span>
-        </Link>
-        <div className="mb-[40px]">
-          <h1 className="text-4xl md:text-5xl font-bold text-text text-left cursor-zoom-in">
-            O'zinga mos <span className="text-primary text-shadow-sm text-shadow-primary">jamiyatni</span> top!
-          </h1>
-          <p className="mt-3 text-gray-600 text-center md:text-lg">
-            Qiziqarli mavzular atrofida jamiyatga qo‘shil, o‘rgan, fikr almash.
-          </p>
+    <div className="bg-radial-[at_50%_75%] from-[100%_0_0] via-[#004d1d] to-[oklch(0.145_0_0)] to-90% pt-[60px] flex items-center justify-center overflow-hidden">
+      <section className="container mx-auto flex items-center justify-center">
+        <div className="relative perspective-[1000px]">
+          {/* 🔆 SPOT */}
+          <div
+            ref={spotRef}
+            className="pointer-events-none absolute w-40 h-40 rounded-full bg-white/10 blur-2xl opacity-0 transition-opacity duration-200 z-0"
+          ></div>
+
+          {/* 💫 CARD + TILT */}
+          <motion.div
+            ref={cardRef}
+            initial={{ scale: 0, y: 200, rotateX: 0, rotateY: 0, opacity: 0 }}
+            animate={{ scale: 1, y: 0, rotateX: -10, rotateY: -5, opacity: 1 }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
+            className="relative z-10 transition-transform duration-200 ease-out will-change-transform border border-white/20 py-[60px] px-[100px] rounded-2xl bg-[#f7f7f726] backdrop-blur-[20px]"
+          >
+            <div className="flex flex-col items-center">
+              <Link href="/" className="flex items-center gap-2">
+                <MessageCircle className="w-10 h-10 text-primary" />
+                <span className="text-[40px] font-semibold text-text">UzbekHub</span>
+              </Link>
+              <div className="mb-[40px]">
+                <h1 className="text-4xl md:text-5xl font-bold text-text text-left cursor-zoom-in">
+                  O'zinga mos <span className="text-primary text-shadow-sm text-shadow-primary">jamiyatni</span> top!
+                </h1>
+                <p className="mt-3 text-text text-center md:text-lg">
+                  Qiziqarli mavzular atrofida jamiyatga qo‘shil, o‘rgan, fikr almash.
+                </p>
+              </div>
+              <div className="w-[500px] flex items-center justify-between gap-2">
+                <Input
+                  placeholder="Masalan: Dasturchilar, Kitobxonlar..."
+                  className="h-[55px] w-full text-[20px]"
+                  value={query}
+                  onChange={(e) => setQuery(e.target.value)}
+                />
+                <Button
+                  onClick={handleSearch}
+                  size="lg"
+                  className="h-[50px] bg-primary hover:scale-105 hover:rotate-3 cursor-pointer"
+                >
+                  <Search className="w-4 h-4 mr-2" />
+                  Qidirish
+                </Button>
+              </div>
+            </div>
+          </motion.div>
         </div>
-        <div className="w-[500px] flex items-center justify-between gap-2">
-          <Input
-            placeholder="Masalan: Dasturchilar, Kitobxonlar..."
-            className="h-[55px]  w-full text-[20px]"
-            value={query}
-            onChange={(e) => setQuery(e.target.value)}
-          />
-          <Button onClick={handleSearch} size={"lg"} className="h-[50px] bg-primary hover:scale-105 hover:rotate-3 cursor-pointer">
-            <Search className="w-4 h-4 mr-2" />
-            Qidirish
-          </Button>
-        </div>
-      </div>
-      {/* <div className="flex-1  md:w-[50%] h-[500px] justify-center content-center w-full  ">
-        <Carousel
-          plugins={[Autoplay({ delay: 3000 })]}
-          className="w-full h-full" 
-        >
-          <CarouselContent>
-            {images.map((src, index) => (
-              <CarouselItem key={index} className=" flex items-center justify-center">
-                <div className="w-full h-[500px] relative ">
-                  <Image
-                    src={src}
-                    alt={`Ilustratsiya ${index + 1}`}
-                    fill
-                    className=" w-[500px] h-[500px] "
-                  />
-                </div>
-              </CarouselItem>
-            ))}
-          </CarouselContent>
-        </Carousel>
-      </div> */}
-    </section>
+      </section>
+    </div>
   )
 }
