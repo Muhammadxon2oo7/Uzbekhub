@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button"
 import { MessageCircle, Search } from "lucide-react"
 import Link from "next/link"
 import { motion } from "framer-motion"
+import RecommendedCommunities from "../Recommended-Communities/RecommendedCommunities"
 
 export default function HeroSection() {
   const [query, setQuery] = useState("")
@@ -56,7 +57,7 @@ export default function HeroSection() {
 
   return (
     <div className="bg-radial-[at_50%_75%] from-[100%_0_0] via-[var(--bggradient)] to-[var(--bgbradientstart)] to-90% pt-[60px] flex items-center justify-center overflow-hidden">
-      <section className="container mx-auto flex items-center justify-center">
+      <section className="container mx-auto flex items-center justify-center flex-wrap">
         <div className="relative perspective-[1000px]">
           {/* 🔆 SPOT */}
           <div
@@ -104,7 +105,9 @@ export default function HeroSection() {
             </div>
           </motion.div>
         </div>
+        <RecommendedCommunities/>
       </section>
+     
     </div>
   )
 }
