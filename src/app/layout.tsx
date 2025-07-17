@@ -30,9 +30,9 @@ export default function RootLayout({
   return (
     <html lang="en" className='dark'>
       <body className={`relative ${geistSans.variable} ${geistMono.variable} antialiased`}>
-        {<Wrapper/>}
         {!isAuth && <Header />}
         {children}
+        {<Wrapper/>}
       </body>
     </html>
   );
