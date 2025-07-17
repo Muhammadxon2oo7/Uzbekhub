@@ -71,7 +71,7 @@ export default function HeroSection() {
             initial={{ scale: 0, y: 200, rotateX: 0, rotateY: 0, opacity: 0 }}
             animate={{ scale: 1, y: 0, rotateX: -10, rotateY: -5, opacity: 1 }}
             transition={{ duration: 0.8, ease: "easeOut" }}
-            className="relative z-10 transition-transform duration-200 ease-out will-change-transform border border-white/20 py-[60px] px-[100px] rounded-2xl bg-[#f7f7f726] backdrop-blur-[20px]"
+            className=" cursor-defaultrelative z-10 transition-transform duration-200 ease-out will-change-transform border border-white/20 py-[60px] px-[100px] rounded-2xl bg-[#f7f7f726] backdrop-blur-[20px]"
           >
             <div className="flex flex-col items-center">
               <Link href="/" className="flex items-center gap-2">
@@ -79,7 +79,7 @@ export default function HeroSection() {
                 <span className="text-[40px] font-semibold text-text">UzbekHub</span>
               </Link>
               <div className="mb-[40px]">
-                <h1 className="text-4xl md:text-5xl font-bold text-text text-left cursor-zoom-in">
+                <h1 className="text-4xl md:text-5xl font-bold text-text text-left">
                   O'zinga mos <span className="text-primary text-shadow-sm text-shadow-primary">jamiyatni</span> top!
                 </h1>
                 <p className="mt-3 text-text text-center md:text-lg">

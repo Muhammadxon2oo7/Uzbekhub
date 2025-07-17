@@ -81,7 +81,7 @@ export default function RecommendedCommunities() {
                   <span className="text-sm text-gray-400">{community.members} a'zo</span>
                   <Button
                     variant="secondary"
-                    className="text-sm px-4 py-1 bg-primary hover:bg-primary/80"
+                    className="cursor-pointer text-sm px-4 py-1 bg-primary hover:bg-primary/80"
                   >
                     Qo‘shilish
                   </Button>

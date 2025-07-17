@@ -14,7 +14,7 @@ const Header = () => {
   )
 
   return (
-    <header className="border-b bg-navbar sticky top-0 z-50 shadow-sm">
+    <header className="border-b bg-[var(--navbar)] sticky top-0 z-50 shadow-sm backdrop-blur-[5px]">
       <div className="container mx-auto px-4 py-4 flex items-center justify-between">
         {/* Chap — Logo */}
         <Link href="/" className="flex items-center gap-2">
