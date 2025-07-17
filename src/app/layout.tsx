@@ -6,6 +6,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/header/Header";
 import { usePathname } from "next/navigation";
+import { Wrapper } from '@/components/button-tools/wrapper';
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -27,8 +28,9 @@ export default function RootLayout({
   const isAuth = pathname.startsWith("/register") || pathname.startsWith("/login");
 
   return (
-    <html lang="en" >
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+    <html lang="en" className='dark'>
+      <body className={`relative ${geistSans.variable} ${geistMono.variable} antialiased`}>
+        {<Wrapper/>}
         {!isAuth && <Header />}
         {children}
       </body>
