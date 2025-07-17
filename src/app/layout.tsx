@@ -27,7 +27,7 @@ export default function RootLayout({
   const isAuth = pathname.startsWith("/register") || pathname.startsWith("/login");
 
   return (
-    <html lang="en" className='dark'>
+    <html lang="en" >
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         {!isAuth && <Header />}
         {children}

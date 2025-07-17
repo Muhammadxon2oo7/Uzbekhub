@@ -80,6 +80,9 @@
   --sidebar-border: oklch(0.922 0 0);
   --sidebar-ring: oklch(0.708 0 0);
   --text: oklch(0.2784 0.0335 257.67);
+  --bggradient: oklch(0.9521 0 0);
+  --bgbradientstart: oklch(0.9375 0 0);
+  --bggradientend: oklch(0.4063 0 0);
   --navbar: oklch(0.9375 0 0);
 }
 
@@ -116,6 +119,9 @@
   --sidebar-border: oklch(1 0 0 / 10%);
   --sidebar-ring: oklch(0.556 0 0);
   --text: 100% 0 0;
+  --bggradient: oklch(0.3589 0.188 154.27);
+  --bgbradientstart: oklch(0.145 0 0);
+  --bggradientend: 100% 0 0;
   --navbar: oklch(0.1645 0 0);
 }
 
@@ -126,4 +132,8 @@
   body {
     @apply bg-background text-foreground;
   }
+}
+
+body {
+  perspective: 2000px;
 }
