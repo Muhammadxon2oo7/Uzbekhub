@@ -14,19 +14,19 @@ const Header = () => {
   )
 
   return (
-    <header className="border-b bg-white sticky top-0 z-50 shadow-sm">
+    <header className="border-b bg-navbar sticky top-0 z-50 shadow-sm">
       <div className="container mx-auto px-4 py-4 flex items-center justify-between">
         {/* Chap — Logo */}
         <Link href="/" className="flex items-center gap-2">
-          <MessageCircle className="w-6 h-6 text-blue-600" />
-          <span className="text-lg font-semibold text-gray-800">UzbekHub</span>
+          <MessageCircle className="w-6 h-6 text-primary" />
+          <span className="text-lg font-semibold text-text">UzbekHub</span>
         </Link>
 
         {/* Desktop nav */}
-        <nav className="hidden md:flex items-center gap-6 text-sm text-gray-600">
-          <Link href="/hubs" className="hover:text-black text-[18px]  relative  font-medium text-gray-700 after:content-[''] after:absolute after:left-0 after:bottom-0 after:w-0 after:h-[2px] after:bg-black after:transition-all after:duration-300 hover:after:w-full">Xonalar</Link>
-          <Link href="/about" className="hover:text-black text-[18px]   relative  font-medium text-gray-700 after:content-[''] after:absolute after:left-0 after:bottom-0 after:w-0 after:h-[2px] after:bg-black after:transition-all after:duration-300 hover:after:w-full">Haqida</Link>
-          <Link href="/help" className="hover:text-black text-[18px]   relative  font-medium text-gray-700 after:content-[''] after:absolute after:left-0 after:bottom-0 after:w-0 after:h-[2px] after:bg-black after:transition-all after:duration-300 hover:after:w-full">Yordam</Link>
+        <nav className="hidden md:flex items-center gap-6 text-sm">
+          <Link href="/hubs" className="hover:text-primary text-[18px]  relative  font-medium text-text after:content-[''] after:absolute after:left-0 after:bottom-0 after:w-0 after:h-[2px] after:bg-primary after:transition-all after:duration-300 hover:after:w-full">Xonalar</Link>
+          <Link href="/about" className="hover:text-primary text-[18px]   relative  font-medium text-text after:content-[''] after:absolute after:left-0 after:bottom-0 after:w-0 after:h-[2px] after:bg-primary after:transition-all after:duration-300 hover:after:w-full">Haqida</Link>
+          <Link href="/help" className="hover:text-primary text-[18px]   relative  font-medium text-text after:content-[''] after:absolute after:left-0 after:bottom-0 after:w-0 after:h-[2px] after:bg-primary after:transition-all after:duration-300 hover:after:w-full">Yordam</Link>
         </nav>
 
         {/* Auth */}
