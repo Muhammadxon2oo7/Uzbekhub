@@ -143,7 +143,6 @@
 
 'use client';
 
-import Link from 'next/link';
 import { useState, useEffect } from 'react';
 import { Menu, MessageCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -151,6 +150,7 @@ import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import { cn } from '@/lib/utils';
 import { useTranslation } from 'react-i18next';
+import Link from 'next/link';
 
 const Header = () => {
   const { t } = useTranslation();

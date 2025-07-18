@@ -144,103 +144,12 @@ import { motion } from 'framer-motion'
 import { useInView } from 'react-intersection-observer'
 import { useTranslation } from 'react-i18next'
 import { t } from 'i18next'
+import { communities } from '@/components/fake-backends/communities'
+import { SpotCard } from '@/components/SpotCard/spotcard'
 
 const Hubs = () => {
   const [query, setQuery] = useState("")
   const { t } = useTranslation()
-
-  const communities = [
-    {
-      icon: "🧑‍💻",
-      title: t("recommended.frontend.title"),
-      desc: t("recommended.frontend.desc"),
-      members: 1342,
-    },
-    {
-      icon: "📚",
-      title: t("recommended.readers.title"),
-      desc: t("recommended.readers.desc"),
-      members: 847,
-    },
-    {
-      icon: "💬",
-      title: t("recommended.chat.title"),
-      desc: t("recommended.chat.desc"),
-      members: 560,
-    },
-    {
-      icon: "📸",
-      title: t("recommended.photographers.title"),
-      desc: t("recommended.photographers.desc"),
-      members: 234,
-    },
-    {
-      icon: "🎨",
-      title: t("recommended.designers.title"),
-      desc: t("recommended.designers.desc"),
-      members: 786,
-    },
-    {
-      icon: "💼",
-      title: t("recommended.startup.title"),
-      desc: t("recommended.startup.desc"),
-      members: 491,
-    },
-    {
-      icon: "🧠",
-      title: t("recommended.selfdev.title"),
-      desc: t("recommended.selfdev.desc"),
-      members: 1392,
-    },
-    {
-      icon: "🎵",
-      title: t("recommended.music.title"),
-      desc: t("recommended.music.desc"),
-      members: 314,
-    },
-    {
-      icon: "🎮",
-      title: t("recommended.gamers.title"),
-      desc: t("recommended.gamers.desc"),
-      members: 728,
-    },
-    {
-      icon: "🌐",
-      title: t("recommended.english.title"),
-      desc: t("recommended.english.desc"),
-      members: 1503,
-    },
-    {
-      icon: "🧘",
-      title: t("recommended.mental.title"),
-      desc: t("recommended.mental.desc"),
-      members: 376,
-    },
-    {
-      icon: "📈",
-      title: t("recommended.finance.title"),
-      desc: t("recommended.finance.desc"),
-      members: 598,
-    },
-    {
-      icon: "⚙️",
-      title: t("recommended.tech.title"),
-      desc: t("recommended.tech.desc"),
-      members: 1049,
-    },
-    {
-      icon: "✍️",
-      title: t("recommended.writers.title"),
-      desc: t("recommended.writers.desc"),
-      members: 218,
-    },
-    {
-      icon: "🏃",
-      title: t("recommended.sport.title"),
-      desc: t("recommended.sport.desc"),
-      members: 467,
-    },
-  ]
 
   const handleSearch = () => {
     console.log("Qidirilyapti:", query)
@@ -275,7 +184,9 @@ const Hubs = () => {
         <div className="w-[90%] perspective-[1000px] mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 mt-20">
           {
             communities.map((community, i) => (
-              <SpotCard key={i} community={community} />
+              <SpotCard
+                community={{icon: community.icon, title: community.title, members: community.members}}
+              />
             ))
           }
         </div>
@@ -284,62 +195,5 @@ const Hubs = () => {
   )
 }
 
-function SpotCard({ community }: { community: any }) {
-  const [pos, setPos] = useState({ x: 0, y: 0 })
-  const [visible, setVisible] = useState(false)
-  const cardRef = useRef<HTMLDivElement>(null)
-
-  const { ref: inViewRef, inView } = useInView({
-    triggerOnce: true,
-    threshold: 0.1,
-  })
-
-  const combinedRef = (node: HTMLDivElement) => {
-    cardRef.current = node
-    inViewRef(node)
-  }
-
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    const rect = cardRef.current?.getBoundingClientRect()
-    if (!rect) return
-    const x = e.clientX - rect.left
-    const y = e.clientY - rect.top
-    setPos({ x, y })
-    setVisible(true)
-  }
-
-  const handleMouseLeave = () => {
-    setVisible(false)
-  }
-
-  return (
-    <motion.div
-      ref={combinedRef}
-      initial={{ opacity: 0, y: 50}}
-      animate={inView ? { opacity: 1, y: 0} : {}}
-      transition={{ duration: 0.5, ease: "easeOut" }}
-      onMouseMove={handleMouseMove}
-      onMouseLeave={handleMouseLeave}
-      className="group relative cursor-pointer transition-all duration-200 bg-white/5 backdrop-blur-[10px] border border-white/10 hover:border-white/25 transition-colors rounded-2xl p-6 shadow-md overflow-hidden"
-    >
-      <div
-        className="absolute w-32 h-32 rounded-full bg-primary blur-2xl pointer-events-none transition-opacity duration-300"
-        style={{
-          left: pos.x - 64,
-          top: pos.y - 64,
-          opacity: visible ? 0.2 : 0,
-        }}
-      />
-
-      <div className="relative z-10 flex gap-4">
-        <div className="text-4xl">{community.icon}</div>
-        <div>
-          <h3 className="text-xl font-semibold">{community.title}</h3>
-          <span className="text-sm text-gray-400">{community.members} {` `}{t("hubs.members")}</span>
-        </div>
-      </div>
-    </motion.div>
-  )
-}
 
 export default Hubs
