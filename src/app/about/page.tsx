@@ -1,11 +1,16 @@
-import React from 'react'
+// app/about/page.tsx
 
-const About = () => {
+"use client";
+
+import React from "react";
+import { useTranslation } from "react-i18next";
+
+export default function AboutPage() {
+  const { t } = useTranslation("translation");
+
   return (
-    <div className='container mx-auto'>
-      <h1>Haqimizda</h1>
+    <div>
+      <h1>{t("welcome")}</h1>
     </div>
-  )
+  );
 }
-
-export default About
