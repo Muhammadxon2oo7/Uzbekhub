@@ -85,9 +85,34 @@
     "login": "Login",
     "register": "Sign Up"
   },
-"hubs": {
-  "search_placeholder": "Search for a community or topic...",
-  "search_button": "Search",
-  "members": "members"
-}
+  "hubs": {
+    "search_placeholder": "Search for a community or topic...",
+    "search_button": "Search",
+    "members": "members"
+  },
+  "auth": {
+    "register": {
+      "register_title": "Register",
+      "verify_title": "Verify Email",
+      "fill_info_title": "Complete Your Info",
+      "email_label": "Email Address",
+      "send_code": "Send Code",
+      "code_label": "Code sent to email",
+      "confirm": "Confirm",
+      "name_label": "Name",
+      "name_placeholder": "Your name",
+      "username_label": "Username",
+      "password_label": "Password",
+      "finish": "Finish"
+    },
+    "login":{
+      "title": "Login",
+      "identifier_label": "Email or username",
+      "identifier_placeholder": "example@gmail.com or yourname",
+      "password_label": "Password",
+      "password_placeholder": "••••••••",
+      "login_button": "Login",
+      "login_success": "You have successfully logged in!"
+    }
+  }
 }

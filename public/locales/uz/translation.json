@@ -85,9 +85,34 @@
     "login": "Kirish",
     "register": "Ro‘yxatdan o‘tish"
   },
-"hubs": {
-  "search_placeholder": "Jamiyat yoki mavzuni qidiring...",
-  "search_button": "Qidirish",
-  "members": "a'zo"
-} 
+  "hubs": {
+    "search_placeholder": "Jamiyat yoki mavzuni qidiring...",
+    "search_button": "Qidirish",
+    "members": "a'zo"
+  },
+"auth": {
+  "register":{
+    "register_title": "Ro‘yxatdan o‘tish",
+    "verify_title": "Emailni tasdiqlash",
+    "fill_info_title": "Maʼlumotlarni toʻldiring",
+    "email_label": "Email manzil",
+    "send_code": "Kod yuborish",
+    "code_label": "Emailga yuborilgan kod",
+    "confirm": "Tasdiqlash",
+    "name_label": "Ism",
+    "name_placeholder": "Ismingiz",
+    "username_label": "Foydalanuvchi nomi",
+    "password_label": "Parol",
+    "finish": "Yakunlash"
+  },
+  "login":{
+  "title": "Tizimga kirish",
+  "identifier_label": "Email yoki foydalanuvchi nomi",
+  "identifier_placeholder": "example@gmail.com yoki yourname",
+  "password_label": "Parol",
+  "password_placeholder": "••••••••",
+  "login_button": "Tizimga kirish",
+  "login_success": "Muvaffaqiyatli tizimga kirdingiz!"
+  }
+}
 }
