@@ -266,7 +266,7 @@ export default function RegisterPage() {
 
 
   return (
-    <div className="h-screen bg-muted px-4 w-full pt-[60px] flex items-center justify-center overflow-hidden">
+    <div className="h-screen bg-muted px-4 w-full  bg-radial-[at_50%_60%] from-[var(--bggradient)] via-[var(--bggradientmid)] to-[var(--bgbradientstart)] to-90% pt-[60px] flex items-center justify-center overflow-hidden">
       <div className="relative perspective-[1000px]">
         <div ref={spotRef} className="pointer-events-none absolute w-40 h-40 rounded-full bg-white/10 blur-2xl opacity-0 transition-opacity duration-200 z-0"></div>
 
