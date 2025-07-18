@@ -102,6 +102,7 @@ import { useInView } from "react-intersection-observer"
 import { useState, useEffect } from "react"
 import { Button } from "@/components/ui/button"
 import { useTranslation } from "react-i18next"
+import { communities } from "../fake-backends/communities"
 
 export default function RecommendedCommunities() {
   const { t } = useTranslation("translation")
@@ -118,98 +119,6 @@ export default function RecommendedCommunities() {
     }
   }, [inView])
 
-  const communities = [
-    {
-      icon: "🧑‍💻",
-      title: t("recommended.frontend.title"),
-      desc: t("recommended.frontend.desc"),
-      members: 1342,
-    },
-    {
-      icon: "📚",
-      title: t("recommended.readers.title"),
-      desc: t("recommended.readers.desc"),
-      members: 847,
-    },
-    {
-      icon: "💬",
-      title: t("recommended.chat.title"),
-      desc: t("recommended.chat.desc"),
-      members: 560,
-    },
-    {
-      icon: "📸",
-      title: t("recommended.photographers.title"),
-      desc: t("recommended.photographers.desc"),
-      members: 234,
-    },
-    {
-      icon: "🎨",
-      title: t("recommended.designers.title"),
-      desc: t("recommended.designers.desc"),
-      members: 786,
-    },
-    {
-      icon: "💼",
-      title: t("recommended.startup.title"),
-      desc: t("recommended.startup.desc"),
-      members: 491,
-    },
-    {
-      icon: "🧠",
-      title: t("recommended.selfdev.title"),
-      desc: t("recommended.selfdev.desc"),
-      members: 1392,
-    },
-    {
-      icon: "🎵",
-      title: t("recommended.music.title"),
-      desc: t("recommended.music.desc"),
-      members: 314,
-    },
-    {
-      icon: "🎮",
-      title: t("recommended.gamers.title"),
-      desc: t("recommended.gamers.desc"),
-      members: 728,
-    },
-    {
-      icon: "🌐",
-      title: t("recommended.english.title"),
-      desc: t("recommended.english.desc"),
-      members: 1503,
-    },
-    {
-      icon: "🧘",
-      title: t("recommended.mental.title"),
-      desc: t("recommended.mental.desc"),
-      members: 376,
-    },
-    {
-      icon: "📈",
-      title: t("recommended.finance.title"),
-      desc: t("recommended.finance.desc"),
-      members: 598,
-    },
-    {
-      icon: "⚙️",
-      title: t("recommended.tech.title"),
-      desc: t("recommended.tech.desc"),
-      members: 1049,
-    },
-    {
-      icon: "✍️",
-      title: t("recommended.writers.title"),
-      desc: t("recommended.writers.desc"),
-      members: 218,
-    },
-    {
-      icon: "🏃",
-      title: t("recommended.sport.title"),
-      desc: t("recommended.sport.desc"),
-      members: 467,
-    },
-  ]
 
   return (
     <section className="py-24 px-4 text-white overflow-hidden w-full" ref={ref}>
@@ -245,8 +154,8 @@ export default function RecommendedCommunities() {
               <div className="absolute -top-10 -left-10 w-32 h-32 bg-white/10 rounded-full blur-2xl opacity-0 group-hover:opacity-60 transition duration-500 z-0" />
               <div className="relative z-10 cursor-pointer">
                 <div className="text-4xl mb-4">{community.icon}</div>
-                <h3 className="text-xl font-semibold mb-2">{community.title}</h3>
-                <p className="text-sm text-gray-300 mb-4">{community.desc}</p>
+                <h3 className="text-xl font-semibold mb-2">{t(community.title)}</h3>
+                <p className="text-sm text-gray-300 mb-4">{t(community.desc)}</p>
                 <div className="flex items-center justify-between">
                   <span className="text-sm text-gray-400">{community.members} {t("recommended.members")}</span>
                   <Button
