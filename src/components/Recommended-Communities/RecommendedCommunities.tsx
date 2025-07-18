@@ -73,7 +73,7 @@ export default function RecommendedCommunities() {
               <div className="absolute -top-10 -left-10 w-32 h-32 bg-white/10 rounded-full blur-2xl opacity-0 group-hover:opacity-60 transition duration-500 z-0" />
 
               {/* Content */}
-              <div className="relative z-10">
+              <div className="relative z-10 cursor-pointer">
                 <div className="text-4xl mb-4">{community.icon}</div>
                 <h3 className="text-xl font-semibold mb-2">{community.title}</h3>
                 <p className="text-sm text-gray-300 mb-4">{community.desc}</p>

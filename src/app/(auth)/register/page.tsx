@@ -1,457 +1,176 @@
-"use client"
+'use client';
 
-import type React from "react"
+import { useState, useEffect, useRef } from 'react';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { cn } from '@/lib/utils';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Icons } from '@/components/icons';
+import { motion } from 'framer-motion';
 
-import { useState } from "react"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { Separator } from "@/components/ui/separator"
-import { Progress } from "@/components/ui/progress"
-import {
-  MessageCircle,
-  Mail,
-  Lock,
-  Eye,
-  EyeOff,
-  User,
-  ArrowLeft,
-  CheckCircle,
-  AlertCircle,
-  Shield,
-  AtSign,
-  Send,
-} from "lucide-react"
-import Link from "next/link"
-import { useRouter } from "next/navigation"
+export default function RegisterPage() {
+  const [step, setStep] = useState<1 | 2 | 3>(1);
+  const [email, setEmail] = useState('');
+  const [code, setCode] = useState('');
+  const [username, setUsername] = useState('');
+  const [name, setName] = useState('');
+  const [password, setPassword] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
 
-interface FormMalumotlari {
-  ism: string
-  email: string
-  foydalanuvchiNomi: string
-  parol: string
-  parolTasdiqlash: string
-}
+  const cardRef = useRef<HTMLDivElement | null>(null);
+  const spotRef = useRef<HTMLDivElement | null>(null);
 
-export default function RoyxatdanOtishSahifasi() {
-  const [parolKorish, setParolKorish] = useState(false)
-  const [parolTasdiqlashKorish, setParolTasdiqlashKorish] = useState(false)
-  const [yuklash, setYuklash] = useState(false)
-  const [emailYuklash, setEmailYuklash] = useState(false)
-  const [xato, setXato] = useState("")
-  const [muvaffaqiyat, setMuvaffaqiyat] = useState(false)
-  const [emailTasdiqlash, setEmailTasdiqlash] = useState(false)
-  const [tasdiqlashKodi, setTasdiqlashKodi] = useState("")
-  const [yuborilganKod, setYuborilganKod] = useState("")
-  const [parolKuchi, setParolKuchi] = useState(0)
-  const [formMalumotlari, setFormMalumotlari] = useState<FormMalumotlari>({
-    ism: "",
-    email: "",
-    foydalanuvchiNomi: "",
-    parol: "",
-    parolTasdiqlash: "",
-  })
-  const router = useRouter()
+  useEffect(() => {
+    const card = cardRef.current;
+    const spot = spotRef.current;
+    if (!card || !spot) return;
 
-  const parolKuchiniHisoblash = (parol: string) => {
-    let kuch = 0
-    if (parol.length >= 8) kuch += 25
-    if (/[A-Z]/.test(parol)) kuch += 25
-    if (/[0-9]/.test(parol)) kuch += 25
-    if (/[^A-Za-z0-9]/.test(parol)) kuch += 25
-    return kuch
-  }
+    const handleMouseMove = (e: MouseEvent) => {
+      const rect = card.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      spot.style.left = `${x - 80}px`;
+      spot.style.top = `${y - 80}px`;
+      spot.style.opacity = '1';
 
-  const inputOzgartirish = (maydon: keyof FormMalumotlari, qiymat: string) => {
-    setFormMalumotlari((prev) => ({ ...prev, [maydon]: qiymat }))
-    if (maydon === "parol") {
-      setParolKuchi(parolKuchiniHisoblash(qiymat))
-    }
-    setXato("")
-  }
+      const centerX = rect.width / 2;
+      const centerY = rect.height / 2;
+      const rotateX = -(y - centerY) / 40;
+      const rotateY = (x - centerX) / 40;
+      card.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+    };
 
-  const emailTasdiqlashKodiniYuborish = async () => {
-    if (!formMalumotlari.email) {
-      setXato("Email manzilni kiriting")
-      return
-    }
+    const handleMouseLeave = () => {
+      spot.style.opacity = '0';
+      card.style.transform = `rotateX(-10deg) rotateY(-5deg)`;
+    };
 
-    setEmailYuklash(true)
-    setXato("")
+    card.addEventListener('mousemove', handleMouseMove);
+    card.addEventListener('mouseleave', handleMouseLeave);
 
-    // Email validatsiya
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-    if (!emailRegex.test(formMalumotlari.email)) {
-      setXato("Email manzil noto'g'ri formatda")
-      setEmailYuklash(false)
-      return
-    }
+    return () => {
+      card.removeEventListener('mousemove', handleMouseMove);
+      card.removeEventListener('mouseleave', handleMouseLeave);
+    };
+  }, []);
 
-    // Simulatsiya - real API chaqiruvi
-    setTimeout(() => {
-      const kod = 777777
-      // Math.floor(100000 + Math.random() * 900000).toString()
-      setYuborilganKod('777777')
-      setEmailTasdiqlash(true)
-      setEmailYuklash(false)
-      console.log("Yuborilgan kod:", kod) // Development uchun
-    }, 2000)
-  }
-
-  const kodniTasdiqlash = async () => {
-    if (tasdiqlashKodi !== yuborilganKod) {
-      setXato("Tasdiqlash kodi noto'g'ri")
-      return
-    }
-
-    setEmailTasdiqlash(false)
-    setXato("")
-    // Email tasdiqlandi, ro'yxatdan o'tish jarayonini davom ettirish mumkin
-  }
-
-  const royxatdanOtishJarayoni = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setYuklash(true)
-    setXato("")
-
-    // Validatsiya
-    if (!formMalumotlari.ism.trim()) {
-      setXato("Ismingizni kiriting")
-      setYuklash(false)
-      return
-    }
-
-    if (!formMalumotlari.foydalanuvchiNomi.trim()) {
-      setXato("Foydalanuvchi nomini kiriting")
-      setYuklash(false)
-      return
-    }
-
-    if (formMalumotlari.foydalanuvchiNomi.length < 3) {
-      setXato("Foydalanuvchi nomi kamida 3 ta belgidan iborat bo'lishi kerak")
-      setYuklash(false)
-      return
-    }
-
-    if (formMalumotlari.parol.length < 8) {
-      setXato("Parol kamida 8 ta belgidan iborat bo'lishi kerak")
-      setYuklash(false)
-      return
-    }
-
-    if (formMalumotlari.parol !== formMalumotlari.parolTasdiqlash) {
-      setXato("Parollar mos kelmaydi")
-      setYuklash(false)
-      return
-    }
-
-    if (tasdiqlashKodi !== yuborilganKod) {
-      setXato("Avval emailni tasdiqlang")
-      setYuklash(false)
-      return
-    }
-
-    // Simulatsiya - real API chaqiruvi
-    setTimeout(() => {
-      setYuklash(false)
-      setMuvaffaqiyat(true)
+  const handleSendCode = async () => {
+    setIsLoading(true);
+    try {
       setTimeout(() => {
-        router.push("/login")
-      }, 2000)
-    }, 3000)
-  }
+        setIsLoading(false);
+        setStep(2);
+      }, 1500);
+    } catch (error) {
+      console.error('Error sending code', error);
+      setIsLoading(false);
+    }
+  };
 
-  const googleIlanRoyxat = () => {
-    // Google OAuth jarayoni
-    console.log("Google bilan ro'yxatdan o'tish")
-  }
+  const handleVerifyCode = async () => {
+    setIsLoading(true);
+    try {
+      setTimeout(() => {
+        setIsLoading(false);
+        setStep(3);
+      }, 1500);
+    } catch (error) {
+      console.error('Error verifying code', error);
+      setIsLoading(false);
+    }
+  };
 
-  if (muvaffaqiyat) {
-    return (
-      <div className="min-h-screen bg-gradient-to-br from-green-50 to-blue-50 flex items-center justify-center p-4">
-        <Card className="w-full max-w-md text-center border-0 shadow-2xl">
-          <CardContent className="p-8">
-            <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
-              <CheckCircle className="w-8 h-8 text-green-600" />
-            </div>
-            <h2 className="text-2xl font-bold text-gray-900 mb-2">Tabriklaymiz!</h2>
-            <p className="text-gray-600 mb-4">Hisobingiz muvaffaqiyatli yaratildi</p>
-            <div className="animate-spin w-6 h-6 border-2 border-blue-600 border-t-transparent rounded-full mx-auto"></div>
-          </CardContent>
-        </Card>
-      </div>
-    )
-  }
+  const handleRegister = () => {
+    setIsLoading(true);
+    setTimeout(() => {
+      alert('Ro‘yxatdan o‘tish muvaffaqiyatli yakunlandi!');
+      setIsLoading(false);
+    }, 1500);
+  };
 
   return (
-    <div className=" bg-gradient-to-br from-slate-50 via-blue-50 to-purple-50 flex items-center justify-center p-4">
-      <div className="w-full ">
-       
-        <Card className="border-0 shadow-2xl bg-white/90 backdrop-blur-sm w-[400px]">
-          <CardHeader className="text-center pb-6">
-            <CardTitle className="text-2xl font-bold">Ro'yxatdan O'tish</CardTitle>
-            <CardDescription>Yangi hisob yaratish uchun ma'lumotlaringizni kiriting</CardDescription>
+    <div className="h-screen bg-muted px-4 w-full bg-radial-[at_50%_60%] from-[var(--bggradient)] via-[var(--bggradientmid)] to-[var(--bgbradientstart)] to-90% pt-[60px] flex items-center justify-center overflow-hidden">
+      <div className="relative perspective-[1000px]">
+        <div ref={spotRef} className="pointer-events-none absolute w-40 h-40 rounded-full bg-white/10 blur-2xl opacity-0 transition-opacity duration-200 z-0"></div>
+
+        <motion.div
+          ref={cardRef}
+          initial={{ scale: 0, y: 200, rotateX: 0, rotateY: 0, opacity: 0 }}
+          animate={{ scale: 1, y: 0, rotateX: -10, rotateY: -5, opacity: 1 }}
+          transition={{ duration: 0.8, ease: 'easeOut' }}
+          className="relative z-10 transition-transform duration-200 ease-out will-change-transform border border-white/20 py-[60px] px-[50px] rounded-2xl bg-[#f7f7f726] backdrop-blur-[20px] md:w-[500px] w-full  shadow-2xl"
+        >
+          <CardHeader>
+            <CardTitle className="text-2xl text-primary">
+              {step === 1
+                ? 'Ro‘yxatdan o‘tish'
+                : step === 2
+                ? 'Emailni tasdiqlash'
+                : 'Maʼlumotlarni toʻldiring'}
+            </CardTitle>
           </CardHeader>
-
-          <CardContent className="space-y-6">
-            {/* Google bilan ro'yxatdan o'tish */}
-            <Button
-              onClick={googleIlanRoyxat}
-              variant="outline"
-              className="w-full h-12 font-medium bg-white hover:bg-gray-50"
-            >
-              <svg className="w-5 h-5 mr-3" viewBox="0 0 24 24">
-                <path
-                  fill="#4285F4"
-                  d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
-                />
-                <path
-                  fill="#34A853"
-                  d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"
-                />
-                <path
-                  fill="#FBBC05"
-                  d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"
-                />
-                <path
-                  fill="#EA4335"
-                  d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"
-                />
-              </svg>
-              Google bilan ro'yxatdan o'tish
-            </Button>
-
-            <div className="relative">
-              <div className="absolute inset-0 flex items-center">
-                <Separator />
-              </div>
-              <div className="relative flex justify-center text-xs uppercase">
-                <span className="bg-white px-2 text-gray-500">yoki</span>
-              </div>
-            </div>
-
-            <form onSubmit={royxatdanOtishJarayoni} className="space-y-6">
-              {/* Ism */}
-              <div className="space-y-2">
-                <Label htmlFor="ism">To'liq ism *</Label>
-                <div className="relative">
-                  <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                    <User className="h-5 w-5 text-gray-400" />
-                  </div>
+          <CardContent className="space-y-4">
+            {step === 1 && (
+              <>
+                <div className="grid w-full items-center gap-2">
+                  <Label htmlFor="email" className="text-primary">Email manzil</Label>
                   <Input
-                    id="ism"
+                    id="email"
+                    type="email"
+                    placeholder="example@gmail.com"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    className={cn('focus-visible:ring-2 focus-visible:ring-primary', 'border border-input focus:border-primary')}
+                  />
+                </div>
+                <Button disabled={!email || isLoading} onClick={handleSendCode} className="w-full">
+                  {isLoading && <Icons.spinner className="animate-spin w-4 h-4 mr-2" />} Kod yuborish
+                </Button>
+              </>
+            )}
+
+            {step === 2 && (
+              <>
+                <div className="grid w-full items-center gap-2">
+                  <Label htmlFor="code" className="text-primary">Emailga yuborilgan kod</Label>
+                  <Input
+                    id="code"
                     type="text"
-                    placeholder="Ismingizni kiriting"
-                    className="pl-10 h-12"
-                    value={formMalumotlari.ism}
-                    onChange={(e) => inputOzgartirish("ism", e.target.value)}
-                    required
+                    placeholder="123456"
+                    value={code}
+                    onChange={(e) => setCode(e.target.value)}
+                    className={cn('focus-visible:ring-2 focus-visible:ring-primary', 'border border-input focus:border-primary')}
                   />
                 </div>
-              </div>
+                <Button disabled={!code || isLoading} onClick={handleVerifyCode} className="w-full">
+                  {isLoading && <Icons.spinner className="animate-spin w-4 h-4 mr-2" />} Tasdiqlash
+                </Button>
+              </>
+            )}
 
-              {/* Email */}
-              <div className="space-y-2">
-                <Label htmlFor="email">Email manzil *</Label>
-                <div className="flex space-x-2">
-                  <div className="relative flex-1">
-                    <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                      <Mail className="h-5 w-5 text-gray-400" />
-                    </div>
-                    <Input
-                      id="email"
-                      type="email"
-                      placeholder="sizning@email.com"
-                      className="pl-10 h-12"
-                      value={formMalumotlari.email}
-                      onChange={(e) => inputOzgartirish("email", e.target.value)}
-                      required
-                      disabled={tasdiqlashKodi === yuborilganKod && yuborilganKod !== ""}
-                    />
-                  </div>
-                  <Button
-                    type="button"
-                    onClick={emailTasdiqlashKodiniYuborish}
-                    disabled={
-                      emailYuklash ||
-                      !formMalumotlari.email ||
-                      (tasdiqlashKodi === yuborilganKod && yuborilganKod !== "")
-                    }
-                    className="h-12 px-4 bg-blue-600 text-white"
-                  >
-                    {emailYuklash ? (
-                      <div className="animate-spin w-4 h-4 border-2 border-white border-t-transparent rounded-full"></div>
-                    ) : tasdiqlashKodi === yuborilganKod && yuborilganKod !== "" ? (
-                      <CheckCircle className="w-4 h-4" />
-                    ) : (
-                      <Send className="w-4 h-4" />
-                    )}
-                  </Button>
+            {step === 3 && (
+              <>
+                <div className="grid w-full items-center gap-2">
+                  <Label htmlFor="name" className="text-primary">Ism</Label>
+                  <Input id="name" value={name} onChange={(e) => setName(e.target.value)} placeholder="Ismingiz" />
                 </div>
-              </div>
-
-              {/* Email tasdiqlash kodi */}
-              {emailTasdiqlash && (
-                <div className="space-y-2 p-4 bg-blue-50 rounded-lg border border-blue-200">
-                  <Label htmlFor="kod">Email tasdiqlash kodi *</Label>
-                  <p className="text-sm text-blue-600 mb-3">
-                    {formMalumotlari.email} manziliga tasdiqlash kodi yuborildi
-                  </p>
-                  <div className="flex space-x-2">
-                    <Input
-                      id="kod"
-                      type="text"
-                      placeholder="6 raqamli kodni kiriting"
-                      className="h-12"
-                      value={tasdiqlashKodi}
-                      onChange={(e) => setTasdiqlashKodi(e.target.value)}
-                      maxLength={6}
-                    />
-                    <Button type="button" onClick={kodniTasdiqlash} className="h-12 px-6 bg-blue-500 hover:bg-blue-600">
-                      Tasdiqlash
-                    </Button>
-                  </div>
+                <div className="grid w-full items-center gap-2">
+                  <Label htmlFor="username" className="text-primary">Foydalanuvchi nomi</Label>
+                  <Input id="username" value={username} onChange={(e) => setUsername(e.target.value)} placeholder="yourname" />
                 </div>
-              )}
-
-              {/* Foydalanuvchi nomi */}
-              <div className="space-y-2">
-                <Label htmlFor="username">Foydalanuvchi nomi *</Label>
-                <div className="relative">
-                  <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                    <AtSign className="h-5 w-5 text-gray-400" />
-                  </div>
-                  <Input
-                    id="username"
-                    type="text"
-                    placeholder="foydalanuvchi_nomi"
-                    className="pl-10 h-12"
-                    value={formMalumotlari.foydalanuvchiNomi}
-                    onChange={(e) =>
-                      inputOzgartirish("foydalanuvchiNomi", e.target.value.toLowerCase().replace(/[^a-z0-9_]/g, ""))
-                    }
-                    required
-                  />
+                <div className="grid w-full items-center gap-2">
+                  <Label htmlFor="password" className="text-primary">Parol</Label>
+                  <Input id="password" type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="••••••••" />
                 </div>
-                <p className="text-xs text-gray-500">Faqat kichik harflar, raqamlar va _ belgisi</p>
-              </div>
-
-              {/* Parol */}
-              <div className="space-y-2">
-                <Label htmlFor="parol">Parol *</Label>
-                <div className="relative">
-                  <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                    <Lock className="h-5 w-5 text-gray-400" />
-                  </div>
-                  <Input
-                    id="parol"
-                    type={parolKorish ? "text" : "password"}
-                    placeholder="Kuchli parol yarating"
-                    className="pl-10 pr-10 h-12"
-                    value={formMalumotlari.parol}
-                    onChange={(e) => inputOzgartirish("parol", e.target.value)}
-                    required
-                  />
-                  <button
-                    type="button"
-                    onClick={() => setParolKorish(!parolKorish)}
-                    className="absolute inset-y-0 right-0 pr-3 flex items-center"
-                  >
-                    {parolKorish ? (
-                      <EyeOff className="h-5 w-5 text-gray-400 hover:text-gray-600" />
-                    ) : (
-                      <Eye className="h-5 w-5 text-gray-400 hover:text-gray-600" />
-                    )}
-                  </button>
-                </div>
-
-                {/* Parol kuchi */}
-                {formMalumotlari.parol && (
-                  <div className="space-y-2">
-                    <Progress value={parolKuchi} className="h-2" />
-                    <div className="text-xs text-gray-600">
-                      Parol kuchi: {parolKuchi < 50 ? "Zaif" : parolKuchi < 75 ? "O'rtacha" : "Kuchli"}
-                    </div>
-                  </div>
-                )}
-              </div>
-
-              {/* Parolni tasdiqlash */}
-              <div className="space-y-2">
-                <Label htmlFor="parol-tasdiqlash">Parolni tasdiqlang *</Label>
-                <div className="relative">
-                  <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                    <Shield className="h-5 w-5 text-gray-400" />
-                  </div>
-                  <Input
-                    id="parol-tasdiqlash"
-                    type={parolTasdiqlashKorish ? "text" : "password"}
-                    placeholder="Parolni qayta kiriting"
-                    className="pl-10 pr-10 h-12"
-                    value={formMalumotlari.parolTasdiqlash}
-                    onChange={(e) => inputOzgartirish("parolTasdiqlash", e.target.value)}
-                    required
-                  />
-                  <button
-                    type="button"
-                    onClick={() => setParolTasdiqlashKorish(!parolTasdiqlashKorish)}
-                    className="absolute inset-y-0 right-0 pr-3 flex items-center"
-                  >
-                    {parolTasdiqlashKorish ? (
-                      <EyeOff className="h-5 w-5 text-gray-400 hover:text-gray-600" />
-                    ) : (
-                      <Eye className="h-5 w-5 text-gray-400 hover:text-gray-600" />
-                    )}
-                  </button>
-                </div>
-              </div>
-
-              {/* Xato xabari */}
-              {xato && (
-                <div className="flex items-center space-x-2 text-red-600 bg-red-50 p-3 rounded-lg">
-                  <AlertCircle className="w-4 h-4" />
-                  <span className="text-sm">{xato}</span>
-                </div>
-              )}
-
-              {/* Ro'yxatdan o'tish tugmasi */}
-              <Button
-                type="submit"
-                className="w-full h-12 bg-blue-600 hover:bg-blue-700 text-white cursor-pointer font-medium text-lg"
-                disabled={yuklash}
-              >
-                {yuklash ? (
-                  <div className="flex items-center space-x-2">
-                    <div className="animate-spin w-4 h-4 border-2 border-white border-t-transparent rounded-full"></div>
-                    <span>Hisob yaratilmoqda...</span>
-                  </div>
-                ) : (
-                  "Hisob Yaratish"
-                )}
-              </Button>
-            </form>
-
-            {/* Kirish havolasi */}
-            <div className="text-center">
-              <p className="text-gray-600">
-                Hisobingiz bormi?{" "}
-                <Link href="/login" className="text-blue-600 hover:text-blue-800 font-medium">
-                  Tizimga kiring
-                </Link>
-              </p>
-            </div>
+                <Button disabled={!username || !password || isLoading} onClick={handleRegister} className="w-full">
+                  {isLoading && <Icons.spinner className="animate-spin w-4 h-4 mr-2" />} Yakunlash
+                </Button>
+              </>
+            )}
           </CardContent>
-        </Card>
-
-        {/* Orqaga qaytish */}
-        <div className="text-center mt-6">
-          <Link href="/" className="inline-flex items-center text-gray-600 hover:text-gray-900">
-            <ArrowLeft className="w-4 h-4 mr-2" />
-            Bosh sahifaga qaytish
-          </Link>
-        </div>
+        </motion.div>
       </div>
     </div>
-  )
+  );
 }
