@@ -1,8 +1,93 @@
 {
-    "welcome": "Assalomu alaykum",
-    "language": "Til",
-    "theme": "Mavzu",
-    "dark": "Qorong'u",
-    "light": "Yorug'"
-  }
-  
+  "welcome": "Assalomu alaykum",
+  "language": "Til",
+  "theme": "Mavzu",
+  "dark": "Qorong'u",
+  "light": "Yorug'",
+  "hero": {
+    "find_community_title": "O'zinga mos",
+    "community": "jamiyatni",
+    "find_community_title_2": "top!",
+    "join_learn_share": "Qiziqarli mavzular atrofida jamiyatga qo‘shil, o‘rgan, fikr almash.",
+    "search_placeholder": "Masalan: Dasturchilar, Kitobxonlar...",
+    "search": "Qidirish"
+  },
+  "recommended": {
+    "title": "Tavsiya etilgan",
+    "highlight": "jamiyatlar",
+    "members": "a'zo",
+    "join": "Qo‘shilish",
+    "frontend": {
+      "title": "Frontend Dasturchilar",
+      "desc": "React, Vue, JS ustalari"
+    },
+    "readers": {
+      "title": "Kitobxonlar",
+      "desc": "Har kuni yangi fikr"
+    },
+    "chat": {
+      "title": "Suhbat guruhlari",
+      "desc": "Tanlovli muloqotlar"
+    },
+    "photographers": {
+      "title": "Fotografchilar",
+      "desc": "San’at bilan yashaydiganlar"
+    },
+    "designers": {
+      "title": "Dizaynerlar",
+      "desc": "UI/UX, Figma ustalari"
+    },
+    "startup": {
+      "title": "Startupchilar",
+      "desc": "G‘oya va jamoa izlayotganlar"
+    },
+    "selfdev": {
+      "title": "O‘zini rivojlantirish",
+      "desc": "Disiplina, odatlar, vaqt"
+    },
+    "music": {
+      "title": "Musiqa sevuvchilar",
+      "desc": "Sof musiqaga bag‘ishlangan"
+    },
+    "gamers": {
+      "title": "Geymerlar",
+      "desc": "PC va konsol o‘yinlari"
+    },
+    "english": {
+      "title": "Ingliz tili",
+      "desc": "Speaking va grammar jamoasi"
+    },
+    "mental": {
+      "title": "Ruhiy sog‘liq",
+      "desc": "Meditatsiya, stressdan qutulish"
+    },
+    "finance": {
+      "title": "Moliyaviy savodxonlik",
+      "desc": "Byudjet, investitsiya, FIRE"
+    },
+    "tech": {
+      "title": "Texnologiyalar",
+      "desc": "AI, Web3, IoT yangiliklari"
+    },
+    "writers": {
+      "title": "Yozuvchilar",
+      "desc": "Ijod, hikoya va esse muxlislari"
+    },
+    "sport": {
+      "title": "Sportchilar",
+      "desc": "Fitnes, yugurish va motivatsiya"
+    }
+  },
+  "header": {
+    "rooms": "Xonalar",
+    "about": "Haqida",
+    "help": "Yordam",
+    "login": "Kirish",
+    "register": "Ro‘yxatdan o‘tish"
+  },
+"hubs": {
+  "search_placeholder": "Jamiyat yoki mavzuni qidiring...",
+  "search_button": "Qidirish",
+  "members": "a'zo"
+} 
+}

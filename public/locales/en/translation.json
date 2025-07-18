@@ -1,8 +1,93 @@
 {
-    "welcome": "Welc0ome",
-    "language": "Language",
-    "theme": "Theme",
-    "dark": "Dark",
-    "light": "Light"
-  }
-  
+  "welcome": "Welc0ome",
+  "language": "Language",
+  "theme": "Theme",
+  "dark": "Dark",
+  "light": "Light",
+  "hero": {
+    "find_community_title": "Find your ideal",
+    "community": "community",
+    "find_community_title_2": "now!",
+    "join_learn_share": "Join communities, learn, and share around interesting topics.",
+    "search_placeholder": "e.g. Developers, Book lovers...",
+    "search": "Search"
+  },
+  "recommended": {
+    "title": "Recommended",
+    "highlight": "communities",
+    "members": "members",
+    "join": "Join",
+    "frontend": {
+      "title": "Frontend Developers",
+      "desc": "Experts in React, Vue, JS"
+    },
+    "readers": {
+      "title": "Book Readers",
+      "desc": "New ideas every day"
+    },
+    "chat": {
+      "title": "Chat Groups",
+      "desc": "Meaningful conversations"
+    },
+    "photographers": {
+      "title": "Photographers",
+      "desc": "Living with art"
+    },
+    "designers": {
+      "title": "Designers",
+      "desc": "UI/UX and Figma experts"
+    },
+    "startup": {
+      "title": "Startup Enthusiasts",
+      "desc": "Looking for ideas and teams"
+    },
+    "selfdev": {
+      "title": "Self Development",
+      "desc": "Discipline, habits, time"
+    },
+    "music": {
+      "title": "Music Lovers",
+      "desc": "Dedicated to pure music"
+    },
+    "gamers": {
+      "title": "Gamers",
+      "desc": "PC and console games"
+    },
+    "english": {
+      "title": "English Language",
+      "desc": "Speaking and grammar team"
+    },
+    "mental": {
+      "title": "Mental Health",
+      "desc": "Meditation, stress relief"
+    },
+    "finance": {
+      "title": "Financial Literacy",
+      "desc": "Budgeting, investing, FIRE"
+    },
+    "tech": {
+      "title": "Technologies",
+      "desc": "News on AI, Web3, IoT"
+    },
+    "writers": {
+      "title": "Writers",
+      "desc": "Lovers of stories and essays"
+    },
+    "sport": {
+      "title": "Athletes",
+      "desc": "Fitness, running and motivation"
+    }
+  },
+  "header": {
+    "rooms": "Rooms",
+    "about": "About",
+    "help": "Help",
+    "login": "Login",
+    "register": "Sign Up"
+  },
+"hubs": {
+  "search_placeholder": "Search for a community or topic...",
+  "search_button": "Search",
+  "members": "members"
+}
+}
