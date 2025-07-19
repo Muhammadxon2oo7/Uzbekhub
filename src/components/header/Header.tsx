@@ -231,13 +231,13 @@ const Header = () => {
             <SheetContent side="right">
               <div className="mt-6 space-y-4 text-sm text-gray-700 w-full p-[5px]">
                 <div className="flex gap-[5px] items-center justify-center flex-wrap">
-                  <Link href="/hubs" className="w-full text-[18px] text-center block">
+                  <Link href="/hubs" className="w-full text-[18px] text-center block" >
                     {t('header.rooms')}
                   </Link>
                   <Link href="/about" className="w-full text-[18px] text-center block">
                     {t('header.about')}
                   </Link>
-                  <Link href="/help" className="w-full text-[18px] text-center block">
+                  <Link href="/help" className="w-full text-[18px] text-center block"> 
                     {t('header.help')}
                   </Link>
                 </div>

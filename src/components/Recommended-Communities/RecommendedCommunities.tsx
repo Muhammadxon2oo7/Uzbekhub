@@ -129,8 +129,9 @@ export default function RecommendedCommunities() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
           className="text-center text-4xl md:text-5xl font-bold mb-16"
+          
         >
-          ✨ {t("recommended.title")} <span className="text-primary">{t("recommended.highlight")}</span>
+          ✨ {t("recommended.title")} <span className="text-primary" >{t("recommended.highlight")}</span>
         </motion.h2>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
@@ -154,13 +155,14 @@ export default function RecommendedCommunities() {
               <div className="absolute -top-10 -left-10 w-32 h-32 bg-white/10 rounded-full blur-2xl opacity-0 group-hover:opacity-60 transition duration-500 z-0" />
               <div className="relative z-10 cursor-pointer">
                 <div className="text-4xl mb-4">{community.icon}</div>
-                <h3 className="text-xl font-semibold mb-2">{t(community.title)}</h3>
-                <p className="text-sm text-gray-300 mb-4">{t(community.desc)}</p>
+                <h3 className="text-xl font-semibold mb-2" >{t(community.title)}</h3>
+                <p className="text-sm text-gray-300 mb-4" >{t(community.desc)}</p>
                 <div className="flex items-center justify-between">
-                  <span className="text-sm text-gray-400">{community.members} {t("recommended.members")}</span>
+                  <span className="text-sm text-gray-400"  >{community.members} {t("recommended.members")}</span>
                   <Button
                     variant="secondary"
                     className="cursor-pointer text-sm px-4 py-1 bg-primary hover:bg-primary/80"
+                    
                   >
                     {t("recommended.join")}
                   </Button>

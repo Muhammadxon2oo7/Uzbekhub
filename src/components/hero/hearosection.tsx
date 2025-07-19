@@ -193,20 +193,21 @@ export default function HeroSection() {
                 <MessageCircle className="w-10 h-10 text-primary" />
                 <span className="text-[40px] font-semibold text-text">UzbekHub</span>
               </Link>
-              <div className="mb-[40px]">
-                <h1 className="text-4xl md:text-5xl font-bold text-text text-left">
+              <div className="mb-[40px]" >
+                <h1 className="text-4xl md:text-5xl font-bold text-text text-left" >
                   {t("hero.find_community_title")}{" "}
-                  <span className="text-primary text-shadow-sm text-shadow-primary">
+                  <span className="text-primary text-shadow-sm text-shadow-primary" >
                     {t("hero.community")}
                   </span>{" "}
                   {t("hero.find_community_title_2")}
                 </h1>
-                <p className="mt-3 text-text text-center md:text-lg">
+                <p className="mt-3 text-text text-center md:text-lg" >
                   {t("hero.join_learn_share")}
                 </p>
               </div>
               <div className="w-[500px] flex items-center justify-between gap-2">
                 <Input
+                
                   placeholder={t("hero.search_placeholder")}
                   className="h-[55px] w-full text-[20px]"
                   value={query}
@@ -216,6 +217,7 @@ export default function HeroSection() {
                   onClick={handleSearch}
                   size="lg"
                   className="h-[50px] bg-primary hover:scale-105 hover:rotate-3 cursor-pointer"
+                  
                 >
                   <Search className="w-4 h-4 mr-2" />
                   {t("hero.search")}
