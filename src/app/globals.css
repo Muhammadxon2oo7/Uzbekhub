@@ -134,6 +134,10 @@
   }
 }
 
+html{
+  scroll-behavior: smooth;
+}
+
 ::-webkit-scrollbar{
   width: 8px;
   background-color: transparent;

@@ -1,0 +1,32 @@
+export const members = [
+    {
+        role: 'Frontend Developer',
+        name: 'Muhammadxon',
+        desc: '2 yillik tajribaga ega dasturchi',
+        email: '',
+        telegram: 'muhammadxon',
+        instagram: 'muhammadxon',
+        github: 'muhammadxon',
+        tools: ['Html', 'Css', 'Scss', 'JavaScript', 'TypeScript', 'React', 'Next', 'Tailwind CSS', 'Mui', 'Ant Design', 'ShadCn', 'Framer Motion',],
+    },
+    {
+        role: 'Frontend Developer',
+        name: 'Sirojiddin',
+        desc: 'kuchli qobilyatlik dasturchi',
+        email: '',
+        telegram: 'muhammadxon',
+        instagram: 'muhammadxon',
+        github: 'muhammadxon',
+        tools: ['Html', 'Css', 'Scss', 'JavaScript', 'TypeScript', 'React', 'Next', 'Tailwind CSS', 'Mui', 'Ant Design', 'ShadCn', 'Framer Motion',],
+    },
+    {
+        role: 'Backend Developer',
+        name: 'Oybek',
+        desc: '2+ yillik tajribaga ega dasturchi',
+        email: '',
+        telegram: 'muhammadxon',
+        instagram: 'muhammadxon',
+        github: 'muhammadxon',
+        tools: ['Html', 'Bilmadim, o\'ziz toldiring'],
+    },
+]
