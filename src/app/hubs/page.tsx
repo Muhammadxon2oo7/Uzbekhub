@@ -131,35 +131,32 @@
 
 // export default Hubs
 
+"use client";
 
-
-
-'use client'
-
-import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
-import { Search } from 'lucide-react'
-import { useState, useRef } from 'react'
-import { motion } from 'framer-motion'
-import { useInView } from 'react-intersection-observer'
-import { useTranslation } from 'react-i18next'
-import { t } from 'i18next'
-import { communities } from '@/components/fake-backends/communities'
-import { SpotCard } from '@/components/SpotCard/spotcard'
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Search } from "lucide-react";
+import { useState, useRef } from "react";
+import { motion } from "framer-motion";
+import { useInView } from "react-intersection-observer";
+import { useTranslation } from "react-i18next";
+import { t } from "i18next";
+import { communities } from "@/components/fake-backends/communities";
+import { SpotCard } from "@/components/SpotCard/spotcard";
 
 const Hubs = () => {
-  const [query, setQuery] = useState("")
-  const { t } = useTranslation()
+  const [query, setQuery] = useState("");
+  const { t } = useTranslation();
 
   const handleSearch = () => {
-    console.log("Qidirilyapti:", query)
-  }
+    console.log("Qidirilyapti:", query);
+  };
 
   return (
     <section>
-      <div className='container mx-auto'>
-        <div className='h-[80vh] w-full flex items-center justify-center relative'>
-          <div className='absolute blur-[100px] w-[500px] h-[100px] bg-primary rounded-full shadow-[0px_0px_100px] shadow-primary'></div>
+      <div className="container mx-auto">
+        <div className="h-[80vh] w-full flex items-center justify-center relative">
+          <div className="absolute blur-[100px] w-[500px] h-[100px] bg-primary rounded-full shadow-[0px_0px_100px] shadow-primary"></div>
           <form
             onSubmit={(e) => e.preventDefault()}
             className="z-10 w-[500px] flex flex-col items-end justify-between gap-2"
@@ -182,18 +179,20 @@ const Hubs = () => {
         </div>
 
         <div className="w-[90%] perspective-[1000px] mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 mt-20">
-          {
-            communities.map((community, i) => (
-              <SpotCard
-                community={{icon: community.icon, title: community.title, members: community.members}}
-              />
-            ))
-          }
+          {communities.map((community, i) => (
+            <SpotCard
+              key={i}
+              community={{
+                icon: community.icon,
+                title: community.title,
+                members: community.members,
+              }}
+            />
+          ))}
         </div>
       </div>
     </section>
-  )
-}
+  );
+};
 
-
-export default Hubs
+export default Hubs;

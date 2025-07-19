@@ -53,7 +53,7 @@ export function SpotCard({ community }: { community: Community }) {
       className="group relative cursor-pointer transition-all duration-200 bg-white/5 backdrop-blur-[10px] border border-white/10 hover:border-white/25 rounded-2xl p-6 shadow-md overflow-hidden"
     >
       <div
-        className="absolute w-32 h-32 rounded-full bg-blue-500 blur-2xl pointer-events-none transition-opacity duration-300"
+        className="absolute w-32 h-32 rounded-full bg-primary blur-2xl pointer-events-none transition-opacity duration-300"
         style={{
           left: pos.x - 64,
           top: pos.y - 64,
