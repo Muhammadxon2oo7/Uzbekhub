@@ -184,6 +184,8 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Icons } from '@/components/icons';
 import { motion } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
+import { ExternalLinkIcon, X } from 'lucide-react';
+import Link from 'next/link';
 
 export default function RegisterPage() {
   const { t } = useTranslation();
@@ -277,6 +279,11 @@ export default function RegisterPage() {
           transition={{ duration: 0.8, ease: 'easeOut' }}
           className="relative z-10 transition-transform duration-200 ease-out will-change-transform border border-white/20 py-[60px] px-[50px] rounded-2xl bg-[#f7f7f726] backdrop-blur-[20px] md:w-[500px] w-full shadow-2xl"
         >
+          <Link href={'/'}>
+            <Button className='absolute top-4 right-4 cursor-pointer' variant={'ghost'}>
+                <X/>
+            </Button>
+          </Link>
           <CardHeader>
             <CardTitle className="text-2xl text-primary">
               {step === 1
