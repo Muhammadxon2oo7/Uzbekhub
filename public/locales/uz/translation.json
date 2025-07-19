@@ -114,5 +114,9 @@
   "login_button": "Tizimga kirish",
   "login_success": "Muvaffaqiyatli tizimga kirdingiz!"
   }
+},
+"about": {
+  "description": "Bizning jamoa foydalanuvchilar uchun eng mos va qiziqarli jamiyatlarni yaratishga intiladi. Frontend, backend va dizayn bo‘yicha tajribali jamoamiz siz uchun shu yerda.",
+  "back_to_home": "Bosh sahifaga qaytish"
 }
 }

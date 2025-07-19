@@ -85,35 +85,38 @@
     "login": "Войти",
     "register": "Регистрация"
   },
-"hubs": {
-  "search_placeholder": "Ищите сообщество или тему...",
-  "search_button": "Поиск",
-  "members": "участник(ов)"
-},
-"auth": {
-  "register":{
-  "register_title": "Регистрация",
-  "verify_title": "Подтвердите Email",
-  "fill_info_title": "Заполните информацию",
-  "email_label": "Электронная почта",
-  "send_code": "Отправить код",
-  "code_label": "Код, отправленный на email",
-  "confirm": "Подтвердить",
-  "name_label": "Имя",
-  "name_placeholder": "Ваше имя",
-  "username_label": "Имя пользователя",
-  "password_label": "Пароль",
-  "finish": "Завершить"
+  "hubs": {
+    "search_placeholder": "Ищите сообщество или тему...",
+    "search_button": "Поиск",
+    "members": "участник(ов)"
   },
-  "login":{
-  "title": "Вход в систему",
-  "identifier_label": "Электронная почта или имя пользователя",
-  "identifier_placeholder": "example@gmail.com или yourname",
-  "password_label": "Пароль",
-  "password_placeholder": "••••••••",
-  "login_button": "Войти",
-  "login_success": "Вы успешно вошли в систему!"
+  "auth": {
+    "register": {
+      "register_title": "Регистрация",
+      "verify_title": "Подтвердите Email",
+      "fill_info_title": "Заполните информацию",
+      "email_label": "Электронная почта",
+      "send_code": "Отправить код",
+      "code_label": "Код, отправленный на email",
+      "confirm": "Подтвердить",
+      "name_label": "Имя",
+      "name_placeholder": "Ваше имя",
+      "username_label": "Имя пользователя",
+      "password_label": "Пароль",
+      "finish": "Завершить"
+    },
+    "login": {
+      "title": "Вход в систему",
+      "identifier_label": "Электронная почта или имя пользователя",
+      "identifier_placeholder": "example@gmail.com или yourname",
+      "password_label": "Пароль",
+      "password_placeholder": "••••••••",
+      "login_button": "Войти",
+      "login_success": "Вы успешно вошли в систему!"
+    }
+  },
+  "about": {
+    "description": "Наша команда стремится создать наиболее подходящие и интересные сообщества для пользователей. У нас опытные специалисты по фронтенду, бэкенду и дизайну — всё для вас.",
+    "back_to_home": "Вернуться на главную"
   }
-}
-
 }

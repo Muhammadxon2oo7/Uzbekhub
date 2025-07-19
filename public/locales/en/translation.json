@@ -114,5 +114,10 @@
       "login_button": "Login",
       "login_success": "You have successfully logged in!"
     }
+  },
+"about": {
+    "description": "Our team is dedicated to creating the most suitable and engaging communities for users. With experienced frontend, backend, and design specialists, we're here for you.",
+    "back_to_home": "Back to homepage"
   }
+
 }
