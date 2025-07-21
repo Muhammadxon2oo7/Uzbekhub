@@ -202,8 +202,8 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="h-screen bg-muted px-4 w-full bg-radial-[at_50%_60%] from-[var(--bggradient)] via-[var(--bggradientmid)] to-[var(--bgbradientstart)] to-90% pt-[60px] flex items-center justify-center overflow-hidden">
-      <div className="relative perspective-[1000px]">
+    <div className="min-h-screen bg-muted px-2 w-full bg-radial-[at_50%_60%] from-[var(--bggradient)] via-[var(--bggradientmid)] to-[var(--bgbradientstart)] to-90% pt-[40px] flex items-center justify-center overflow-auto">
+      <div className="relative perspective-[1000px] w-full flex justify-center">
         <div
           ref={spotRef}
           className="pointer-events-none absolute w-40 h-40 rounded-full bg-white/10 blur-2xl opacity-0 transition-opacity duration-200 z-0"
@@ -214,7 +214,7 @@ export default function LoginPage() {
           initial={{ scale: 0, y: 200, rotateX: 0, rotateY: 0, opacity: 0 }}
           animate={{ scale: 1, y: 0, rotateX: -10, rotateY: -5, opacity: 1 }}
           transition={{ duration: 0.8, ease: "easeOut" }}
-          className="relative z-10 transition-transform duration-200 ease-out will-change-transform border border-white/20 py-[60px] px-[50px] rounded-2xl bg-[#f7f7f726] backdrop-blur-[20px] md:w-[500px] w-full shadow-2xl"
+          className="relative z-10 transition-transform duration-200 ease-out will-change-transform border border-white/20 py-8 px-4 sm:py-12 sm:px-8 rounded-2xl bg-[#f7f7f726] backdrop-blur-[20px] w-full max-w-lg shadow-2xl max-h-[90vh] overflow-y-auto"
         >
           <Link href={'/'}>
             <Button className='absolute top-4 right-4 cursor-pointer' variant={'ghost'}>
@@ -237,7 +237,7 @@ export default function LoginPage() {
                 placeholder={t("auth.login.identifier_placeholder")}
                 value={identifier}
                 onChange={(e) => setIdentifier(e.target.value)}
-                className="focus-visible:ring-2 focus-visible:ring-primary border border-input focus:border-primary"
+                className="focus-visible:ring-2 focus-visible:ring-primary border border-input focus:border-primary w-full sm:w-[400px] mx-auto"
               />
             </div>
 

@@ -54,20 +54,20 @@ export const SectionPpl = ({
   return (
     <motion.section
       id={name}
-      className="py-20 px-6 text-white"
+      className="py-12 sm:py-20 px-4 sm:px-6 text-white"
       initial={{ opacity: 0, y: 50 }}
       whileInView={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.7, ease: 'easeOut' }}
       viewport={{ once: true }}
     >
-      <div className="max-w-[750px] mx-auto flex flex-col md:flex-row items-center gap-8">
+      <div className="max-w-2xl md:max-w-[750px] mx-auto flex flex-col md:flex-row items-center gap-6 md:gap-8">
         <img
           src={`/${name}-avatar.png`}
           alt={name}
-          className="w-40 h-40 rounded-full border-4 border-primary shadow-lg"
+          className="w-32 h-32 sm:w-40 sm:h-40 rounded-full border-4 border-primary shadow-lg"
         />
-        <div>
-          <h2 className="text-3xl font-bold mb-2 flex items-center gap-2">
+        <div className="w-full">
+          <h2 className="text-2xl sm:text-3xl font-bold mb-2 flex flex-wrap items-center gap-2">
             <span
               className="relative inline-block group"
               onMouseMove={handleMouseMove}
@@ -82,20 +82,20 @@ export const SectionPpl = ({
               <span className="relative z-10 cursor-pointer">{name}</span>
               <span
                 ref={glowRef}
-                className="absolute z-0 w-32 h-32 rounded-full bg-primary/40 blur-2xl opacity-0 transition-opacity duration-300 pointer-events-none"
+                className="absolute z-0 w-24 h-24 sm:w-32 sm:h-32 rounded-full bg-primary/40 blur-2xl opacity-0 transition-opacity duration-300 pointer-events-none"
                 style={{ transform: 'translate(-50%, -50%)' }}
               />
             </span>
-            – {role}
+            <span className="text-base sm:text-lg text-primary font-semibold">– {role}</span>
           </h2>
 
-          <p className="text-gray-300 text-lg mb-4">{desc}</p>
+          <p className="text-gray-300 text-base sm:text-lg mb-4">{desc}</p>
 
-          <div className="max-w-[550px] flex flex-wrap gap-2 mb-4">
+          <div className="max-w-full flex flex-wrap gap-2 mb-4">
             {tools.map((tool, index) => (
               <span
                 key={index}
-                className="bg-primary/20 text-primary px-3 py-1 rounded-full text-sm"
+                className="bg-primary/20 text-primary px-3 py-1 rounded-full text-xs sm:text-sm"
               >
                 {tool}
               </span>
@@ -103,18 +103,18 @@ export const SectionPpl = ({
           </div>
 
           {/* Кнопки соцсетей */}
-          <div className="flex gap-[4px]">
+          <div className="flex flex-wrap gap-2 sm:gap-4">
             <Link href={`https://t.me/${telegram}`} target="_blank" rel="noopener noreferrer">
-              <Telegram width={36} height={36} />
+              <Telegram width={32} height={32} />
             </Link>
             <Link href={`https://instagram.com/${instagram}`} target="_blank" rel="noopener noreferrer">
-              <Instagram width={36} height={36} />
+              <Instagram width={32} height={32} />
             </Link>
             <Link href={`https://github.com/${github}`} target="_blank" rel="noopener noreferrer">
-              <Github width={36} height={36} />
+              <Github width={32} height={32} />
             </Link>
             <Link href={`mailto:${email}`}>
-              <Gmail width={36} height={36} />
+              <Gmail width={32} height={32} />
             </Link>
           </div>
         </div>
