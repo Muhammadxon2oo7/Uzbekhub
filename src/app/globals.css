@@ -80,10 +80,14 @@
   --sidebar-border: oklch(0.922 0 0);
   --sidebar-ring: oklch(0.708 0 0);
   --text: oklch(0.2784 0.0335 257.67);
-  --bggradient: oklch(0.9521 0 0);
+  --bggradient: oklch(0.4063 0 0);
   --bgbradientstart: oklch(0.9375 0 0);
-  --bggradientend: oklch(0.4063 0 0);
+  --bggradientend: oklch(0.3589 0.188 154.27);
   --navbar: oklch(0.9375 0 0 / 0.5);
+  --spotcard: oklch(0.9375 0 0 / 0.5);
+  --tools-bg: oklch(0.7802 0.188 154.27 / 0.2);
+  --tools-txt: oklch(0.7802 0.188 154.27);
+
 }
 
 .dark {
@@ -123,6 +127,9 @@
   --bgbradientstart: oklch(0.145 0 0);
   --bggradientend: 100% 0 0;
   --navbar: oklch(0.1645 0 0/ 0.5);
+  --spotcard: oklch(100% 0 0 / 0.05);
+  --tools-bg: oklch(0.7802 0.188 154.27 / 0.2);
+  --tools-txt: oklch(0.7802 0.188 154.27);
 }
 
 @layer base {

@@ -41,7 +41,7 @@ export default function AboutPage() {
   }
 
   return (
-    <div className="bg-radial-[at_50%_75%] from-[100%_0_0] via-[var(--bggradient)] to-[var(--bgbradientstart)] to-90% text-white">
+    <div className="bg-radial-[at_50%_75%] from-[var(--bggradientend)] via-[var(--bggradient)] to-[var(--bgbradientstart)] to-90% text-white">
       <div className="container mx-auto px-2">
         <div className="flex items-center justify-center py-8 sm:py-12 md:py-20 px-2">
           <motion.div

@@ -96,7 +96,7 @@ export const SectionPpl = ({
             {tools.map((tool, index) => (
               <span
                 key={index}
-                className="bg-primary/20 text-primary px-3 py-1 rounded-full text-xs sm:text-sm"
+                className="bg-[var(--tools-bg)] text-[var(--tools-txt)] px-3 py-1 rounded-full text-xs sm:text-sm"
               >
                 {tool}
               </span>
