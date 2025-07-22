@@ -58,7 +58,7 @@ const HelpPage = () => {
 	return (
 		<div className="min-h-screen bg-radial-[at_50%_60%] from-[var(--bggradient)] via-[var(--bggradientmid)] to-[var(--bgbradientstart)] to-90% py-10 px-2 flex flex-col items-center">
 			<div className="w-full max-w-xl mx-auto">
-				<Card className="mb-10 bg-white/10 backdrop-blur-lg border border-white/20 shadow-xl">
+				<Card className="mb-10 bg-[var(--card-bg-gray)] backdrop-blur-lg border-1 border-white shadow-xl">
 					<CardHeader>
 						<CardTitle className="text-2xl text-primary text-center">
 							{t("help.title")}
@@ -140,7 +140,7 @@ const HelpPage = () => {
 						</form>
 					</CardContent>
 				</Card>
-        <Card className="bg-white/10 backdrop-blur-lg border border-white/20 shadow-xl">
+        <Card className="bg-[var(--card-bg-gray)] backdrop-blur-lg border-1 border-white shadow-xl">
           <CardHeader>
             <CardTitle className="text-2xl text-primary text-center">
               {}{t("help.faq_title")}

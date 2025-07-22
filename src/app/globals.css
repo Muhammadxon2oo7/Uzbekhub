@@ -80,14 +80,15 @@
   --sidebar-border: oklch(0.922 0 0);
   --sidebar-ring: oklch(0.708 0 0);
   --text: oklch(0.2784 0.0335 257.67);
-  --bggradient: oklch(0.4063 0 0);
-  --bgbradientstart: oklch(0.9375 0 0);
-  --bggradientend: oklch(0.3589 0.188 154.27);
+  --bggradient: oklch(1 0 0);
+  --bgbradientstart: oklch(0.8023 0 0);
+  --bggradientend: oklch(1 0 0);
   --navbar: oklch(0.9375 0 0 / 0.5);
   --spotcard: oklch(0.9375 0 0 / 0.5);
   --tools-bg: oklch(0.7802 0.188 154.27 / 0.2);
   --tools-txt: oklch(0.7802 0.188 154.27);
-
+  --card-bg-gray: oklch(0.8331 0 0 / 25%);
+  --darker-text: oklch(0.9375 0.0099 252.82);
 }
 
 .dark {
@@ -130,6 +131,8 @@
   --spotcard: oklch(100% 0 0 / 0.05);
   --tools-bg: oklch(0.7802 0.188 154.27 / 0.2);
   --tools-txt: oklch(0.7802 0.188 154.27);
+  --card-bg-gray: oklch(0.9761 0 0 / 14.9%);
+  --darker-text: oklch(0.8709 0.0099 252.82);
 }
 
 @layer base {

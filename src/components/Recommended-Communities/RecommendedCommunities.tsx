@@ -121,7 +121,7 @@ export default function RecommendedCommunities() {
 
 
   return (
-    <section className="py-24 px-4 text-white overflow-hidden w-full" ref={ref}>
+    <section className="py-24 px-4 text-text overflow-hidden w-full" ref={ref}>
       <div className="max-w-7xl mx-auto">
         <motion.h2
           key={`title-${animationCycle}`}
@@ -150,7 +150,7 @@ export default function RecommendedCommunities() {
                   repeatType: "reverse",
                 },
               }}
-              className="relative bg-white/5 backdrop-blur-[10px] border border-white/10 rounded-2xl p-6 shadow-md overflow-hidden group"
+              className="relative bg-[var(--card-bg-gray)] backdrop-blur-[10px] border border-white/10 rounded-2xl p-6 shadow-md overflow-hidden group"
             >
               <div className="absolute -top-10 -left-10 w-32 h-32 bg-white/10 rounded-full blur-2xl opacity-0 group-hover:opacity-60 transition duration-500 z-0" />
               <div className="relative z-10 cursor-pointer">

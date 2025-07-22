@@ -56,7 +56,7 @@ export default function AboutPage() {
             initial={{ opacity: 0, y: 50, scale: 0.9 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             transition={{ duration: 0.8 }}
-            className="bg-white/5 backdrop-blur-[10px] border border-white/10 rounded-3xl p-4 sm:p-8 md:p-16 shadow-xl max-w-full sm:max-w-2xl md:max-w-4xl w-full text-center space-y-8"
+            className="bg-[var(--card-bg-gray)] backdrop-blur-[10px] border-1 border-white rounded-3xl p-4 sm:p-8 md:p-16 shadow-xl max-w-full sm:max-w-2xl md:max-w-4xl w-full text-center space-y-8"
           >
             <div className="flex items-center justify-center gap-3">
               <MessageCircle className="text-primary w-8 h-8 sm:w-10 sm:h-10" />
@@ -67,7 +67,7 @@ export default function AboutPage() {
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.3, duration: 0.6 }}
-              className="text-base sm:text-lg md:text-xl text-gray-300"
+              className="text-base sm:text-lg md:text-xl text-[var(--darker-text)]"
             >
               {t("about.description", {
                 defaultValue:

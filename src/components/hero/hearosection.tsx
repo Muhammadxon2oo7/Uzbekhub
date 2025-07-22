@@ -71,7 +71,7 @@ export default function HeroSection() {
             initial={{ scale: 0, y: 200, rotateX: 0, rotateY: 0, opacity: 0 }}
             animate={{ scale: 1, y: 0, rotateX: -10, rotateY: -5, opacity: 1 }}
             transition={{ duration: 0.8, ease: "easeOut" }}
-            className="relative z-10 transition-transform duration-200 ease-out will-change-transform border border-white/20 py-8 px-4 sm:py-12 sm:px-8 md:py-16 md:px-16 rounded-2xl bg-[#f7f7f726] backdrop-blur-[20px] w-full"
+            className="relative z-10 transition-transform duration-200 ease-out will-change-transform border border-white/20 py-8 px-4 sm:py-12 sm:px-8 md:py-16 md:px-16 rounded-2xl bg-[var(--card-bg-gray)] backdrop-blur-[20px] w-full"
           >
             <div className="flex flex-col items-center">
               <Link href="/" className="flex items-center gap-2 mb-4">
