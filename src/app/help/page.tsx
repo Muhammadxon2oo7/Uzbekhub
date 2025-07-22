@@ -7,6 +7,7 @@ import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from "@/components/ui/accordion";
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { toast } from "sonner";
+import { useTranslation } from "react-i18next";
 
 const faqs = [
 	{
@@ -28,7 +29,8 @@ const faqs = [
 ];
 
 const HelpPage = () => {
-	const [type, setType] = useState("Вопрос");
+	const { t } = useTranslation("translation");
+	const [type, setType] = useState("question");
 	const [message, setMessage] = useState("");
 	const [email, setEmail] = useState("");
 
@@ -36,21 +38,21 @@ const HelpPage = () => {
 		e.preventDefault();
 		// Здесь можно добавить отправку данных на сервер
 		// alert("Ваше сообщение отправлено!");
-		setType("Жалоба");
+		setType("question");
 		setMessage("");
 		setEmail("");
-    console.log("Type:", type);
-    console.log("Message:", message);
-    console.log("Email:", email);
-    toast("Ваше сообщение успешно отправлено!",{
-      description: message.slice(0, 18) + "...",
-      duration: 3000,
-      position: "bottom-left",
-      style: {
-        backgroundColor: "#1a202c",
-        color: "#fff",
-      },
-    })
+		console.log("Type:", type);
+		console.log("Message:", message);
+		console.log("Email:", email);
+		toast("Ваше сообщение успешно отправлено!",{
+		description: message.slice(0, 18) + "...",
+		duration: 3000,
+		position: "bottom-left",
+		style: {
+			backgroundColor: "#1a202c",
+			color: "#fff",
+		},
+		})
 	};
 
 	return (
@@ -59,7 +61,7 @@ const HelpPage = () => {
 				<Card className="mb-10 bg-white/10 backdrop-blur-lg border border-white/20 shadow-xl">
 					<CardHeader>
 						<CardTitle className="text-2xl text-primary text-center">
-							Связаться с нами
+							{t("help.title")}
 						</CardTitle>
 					</CardHeader>
 					<CardContent>
@@ -69,7 +71,7 @@ const HelpPage = () => {
 									htmlFor="type"
 									className="block text-primary font-semibold mb-1"
 								>
-									Тип обращения
+									{t("help.reason")}
 								</label>
 								{/* <select
 									id="type"
@@ -89,10 +91,10 @@ const HelpPage = () => {
                   <SelectContent>
                     <SelectGroup>
                       <SelectLabel>Тип обращения</SelectLabel>
-                      <SelectItem value="Вопрос">Вопрос</SelectItem>
-                      <SelectItem value="Предложение">Предложение</SelectItem>
-                      <SelectItem value="Жалоба">Жалоба</SelectItem>
-                      <SelectItem value="Благодарность">Благодарность</SelectItem>
+                      <SelectItem value="question">{t("help.reasons.question")}</SelectItem>
+                      <SelectItem value="suggestion">{t("help.reasons.suggestion")}</SelectItem>
+                      <SelectItem value="bug">{t("help.reasons.bug")}</SelectItem>
+                      <SelectItem value="other">{t("help.reasons.other")}</SelectItem>
                     </SelectGroup>
                   </SelectContent>
                 </Select>
@@ -102,13 +104,13 @@ const HelpPage = () => {
 									htmlFor="message"
 									className="block text-primary font-semibold mb-1"
 								>
-									Сообщение
+									{t("help.message")}
 								</label>
 								<Textarea
 									id="message"
 									value={message}
 									onChange={(e) => setMessage(e.target.value)}
-									placeholder="Опишите вашу ситуацию или вопрос..."
+									placeholder={t("help.message_placeholder")}
 									className="w-full min-h-[100px] rounded-lg border border-primary bg-white/80 text-primary px-3 py-2 focus:outline-none"
 									required
 								/>
@@ -118,7 +120,7 @@ const HelpPage = () => {
 									htmlFor="email"
 									className="block text-primary font-semibold mb-1"
 								>
-									Ваш Email (необязательно)
+									{t("help.email")}
 								</label>
 								<Input
 									id="email"
@@ -133,7 +135,7 @@ const HelpPage = () => {
 								type="submit"
 								className="w-full bg-primary text-white hover:bg-primary/80 transition"
 							>
-								Отправить
+								{t("help.send")}
 							</Button>
 						</form>
 					</CardContent>
@@ -141,7 +143,7 @@ const HelpPage = () => {
         <Card className="bg-white/10 backdrop-blur-lg border border-white/20 shadow-xl">
           <CardHeader>
             <CardTitle className="text-2xl text-primary text-center">
-              Часто задаваемые вопросы
+              {}{t("help.faq_title")}
             </CardTitle>
           </CardHeader>
           <CardContent>

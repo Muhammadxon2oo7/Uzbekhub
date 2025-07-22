@@ -87,7 +87,7 @@ export default function AboutPage() {
                   <Link href={`#${member.name}`}>
                     <h3 className="text-primary text-base sm:text-lg font-semibold">{member.role}</h3>
                     <p className="text-text text-sm mt-1">{member.name}</p>
-                    <p className="text-gray-400 text-xs sm:text-sm">{member.desc}</p>
+                    <p className="text-gray-400 text-xs sm:text-sm">{t(`about.members_desc.${member.tag}`)}</p>
                   </Link>
                 </motion.div>
               ))}
@@ -108,10 +108,8 @@ export default function AboutPage() {
               key={member.name}
               name={member.name}
               role={member.role}
-              desc={member.desc}
-              email={member.email}
-              telegram={member.telegram}
-              instagram={member.instagram}
+              desc={t(`about.members_desc.${member.tag}`)}
+              tag={member.tag}
               github={member.github}
               tools={member.tools}
             />

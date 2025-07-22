@@ -90,33 +90,54 @@
     "search_button": "Qidirish",
     "members": "a'zo"
   },
-"auth": {
-  "register":{
-    "register_title": "Ro‘yxatdan o‘tish",
-    "verify_title": "Emailni tasdiqlash",
-    "fill_info_title": "Maʼlumotlarni toʻldiring",
-    "email_label": "Email manzil",
-    "send_code": "Kod yuborish",
-    "code_label": "Emailga yuborilgan kod",
-    "confirm": "Tasdiqlash",
-    "name_label": "Ism",
-    "name_placeholder": "Ismingiz",
-    "username_label": "Foydalanuvchi nomi",
+  "auth": {
+    "register":{
+      "register_title": "Ro‘yxatdan o‘tish",
+      "verify_title": "Emailni tasdiqlash",
+      "fill_info_title": "Maʼlumotlarni toʻldiring",
+      "email_label": "Email manzil",
+      "send_code": "Kod yuborish",
+      "code_label": "Emailga yuborilgan kod",
+      "confirm": "Tasdiqlash",
+      "name_label": "Ism",
+      "name_placeholder": "Ismingiz",
+      "username_label": "Foydalanuvchi nomi",
+      "password_label": "Parol",
+      "finish": "Yakunlash"
+    },
+    "login":{
+    "title": "Tizimga kirish",
+    "identifier_label": "Email yoki foydalanuvchi nomi",
+    "identifier_placeholder": "example@gmail.com yoki username",
     "password_label": "Parol",
-    "finish": "Yakunlash"
+    "password_placeholder": "••••••••",
+    "login_button": "Tizimga kirish",
+    "login_success": "Muvaffaqiyatli tizimga kirdingiz!"
+    }
   },
-  "login":{
-  "title": "Tizimga kirish",
-  "identifier_label": "Email yoki foydalanuvchi nomi",
-  "identifier_placeholder": "example@gmail.com yoki yourname",
-  "password_label": "Parol",
-  "password_placeholder": "••••••••",
-  "login_button": "Tizimga kirish",
-  "login_success": "Muvaffaqiyatli tizimga kirdingiz!"
+  "about": {
+    "description": "Bizning jamoa foydalanuvchilar uchun eng mos va qiziqarli jamiyatlarni yaratishga intiladi. Frontend, backend va dizayn bo‘yicha tajribali jamoamiz siz uchun shu yerda.",
+    "back_to_home": "Bosh sahifaga qaytish",
+    "members_desc": {
+        "muhammadxon": "2 yillik tajribaga ega dasturchi",
+        "sirojiddin": "Kuchli mahoratga ega iqtidorli dasturchi",
+        "oybek": "2 yildan ortiq tajribaga ega dasturchi"
+      },
+      "contact": "Bog'lanish"
+  },
+  "help": {
+    "title": "Biz bilan bog'lanish",
+    "reason": "Bog'lanish sababi",
+    "reasons": {
+      "question": "Savol",
+      "bug": "Xato haqida xabar berish",
+      "suggestion": "Taklif",
+      "other": "Boshqa"
+    },
+    "message": "Xabar",
+    "message_placeholder": "Xabaringizni kiriting...",
+    "email": "Sizning elektron pochtangiz (ixtiyoriy)",
+    "send": "Yuborish",
+    "faq_title": "Ko'p so'raladigan savollar"
   }
-},
-"about": {
-  "description": "Bizning jamoa foydalanuvchilar uchun eng mos va qiziqarli jamiyatlarni yaratishga intiladi. Frontend, backend va dizayn bo‘yicha tajribali jamoamiz siz uchun shu yerda.",
-  "back_to_home": "Bosh sahifaga qaytish"
-}
 }

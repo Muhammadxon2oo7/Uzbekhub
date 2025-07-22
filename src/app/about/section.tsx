@@ -7,19 +7,20 @@ import { Instagram } from '../../../public/images/icons/instagram'
 import { Telegram } from '../../../public/images/icons/telegram'
 import { Github } from '../../../public/images/icons/github'
 import { Gmail } from '../../../public/images/icons/gmail'
+import { Button } from '@/components/ui/button'
+import { useTranslation } from 'react-i18next'
 
 export const SectionPpl = ({
-  name, role, desc, email, telegram, instagram, github, tools
+  name, role, desc, github, tag, tools
 }: {
   name: string,
   role: string,
   desc: string,
-  email: string,
-  telegram: string,
-  instagram: string,
+  tag: string,
   github: string,
   tools: string[]
 }) => {
+  const { t } = useTranslation("translation")
   const glowRef = useRef<HTMLSpanElement>(null)
 
   const handleMouseMove = (e: React.MouseEvent) => {
@@ -104,17 +105,13 @@ export const SectionPpl = ({
 
           {/* Кнопки соцсетей */}
           <div className="flex flex-wrap gap-2 sm:gap-4">
-            <Link href={`https://t.me/${telegram}`} target="_blank" rel="noopener noreferrer">
-              <Telegram width={32} height={32} />
-            </Link>
-            <Link href={`https://instagram.com/${instagram}`} target="_blank" rel="noopener noreferrer">
-              <Instagram width={32} height={32} />
-            </Link>
             <Link href={`https://github.com/${github}`} target="_blank" rel="noopener noreferrer">
               <Github width={32} height={32} />
             </Link>
-            <Link href={`mailto:${email}`}>
-              <Gmail width={32} height={32} />
+            <Link href={`/msg/${tag}`}>
+              <Button>
+                {t(`about.contact`)}
+              </Button>
             </Link>
           </div>
         </div>

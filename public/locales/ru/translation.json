@@ -108,7 +108,7 @@
     "login": {
       "title": "Вход в систему",
       "identifier_label": "Электронная почта или имя пользователя",
-      "identifier_placeholder": "example@gmail.com или yourname",
+      "identifier_placeholder": "example@gmail.com или username",
       "password_label": "Пароль",
       "password_placeholder": "••••••••",
       "login_button": "Войти",
@@ -117,6 +117,27 @@
   },
   "about": {
     "description": "Наша команда стремится создать наиболее подходящие и интересные сообщества для пользователей. У нас опытные специалисты по фронтенду, бэкенду и дизайну — всё для вас.",
-    "back_to_home": "Вернуться на главную"
+    "back_to_home": "Вернуться на главную",
+    "members_desc": {
+      "muhammadxon": "Программист с 2-летним опытом",
+      "sirojiddin": "Талантливый программист с сильными навыками",
+      "oybek": "Программист с более чем 2-летним опытом"
+    },
+    "contact": "Связаться"
+  },
+  "help": {
+    "title": "Связаться с нами",
+    "reason": "Причина обращения",
+    "reasons": {
+      "question": "Вопрос",
+      "bug": "Сообщить об ошибке",
+      "suggestion": "Предложение",
+      "other": "Другое"
+    },
+    "message": "Сообщение",
+    "message_placeholder": "Ваше сообщение здесь...",
+    "email": "Ваш Email (необязательно)",
+    "send": "Отправить",
+    "faq_title": "Часто задаваемые вопросы"
   }
 }
