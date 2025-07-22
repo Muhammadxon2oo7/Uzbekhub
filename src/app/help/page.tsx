@@ -43,7 +43,7 @@ const HelpPage = () => {
     console.log("Message:", message);
     console.log("Email:", email);
     toast("Ваше сообщение успешно отправлено!",{
-      description: message.slice(0, 10) + "...",
+      description: message.slice(0, 18) + "...",
       duration: 3000,
       position: "bottom-left",
       style: {
