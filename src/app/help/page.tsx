@@ -5,6 +5,8 @@ import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from "@/components/ui/accordion";
+import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { toast } from "sonner";
 
 const faqs = [
 	{
@@ -26,7 +28,7 @@ const faqs = [
 ];
 
 const HelpPage = () => {
-	const [type, setType] = useState("Жалоба");
+	const [type, setType] = useState("Вопрос");
 	const [message, setMessage] = useState("");
 	const [email, setEmail] = useState("");
 
@@ -37,12 +39,126 @@ const HelpPage = () => {
 		setType("Жалоба");
 		setMessage("");
 		setEmail("");
+    console.log("Type:", type);
+    console.log("Message:", message);
+    console.log("Email:", email);
+    toast("Ваше сообщение успешно отправлено!",{
+      description: message.slice(0, 10) + "...",
+      duration: 3000,
+      position: "bottom-left",
+      style: {
+        backgroundColor: "#1a202c",
+        color: "#fff",
+      },
+    })
 	};
 
 	return (
 		<div className="min-h-screen bg-radial-[at_50%_60%] from-[var(--bggradient)] via-[var(--bggradientmid)] to-[var(--bgbradientstart)] to-90% py-10 px-2 flex flex-col items-center">
 			<div className="w-full max-w-xl mx-auto">
-				
+				<Card className="mb-10 bg-white/10 backdrop-blur-lg border border-white/20 shadow-xl">
+					<CardHeader>
+						<CardTitle className="text-2xl text-primary text-center">
+							Связаться с нами
+						</CardTitle>
+					</CardHeader>
+					<CardContent>
+						<form className="space-y-4" onSubmit={handleSubmit}>
+							<div>
+								<label
+									htmlFor="type"
+									className="block text-primary font-semibold mb-1"
+								>
+									Тип обращения
+								</label>
+								{/* <select
+									id="type"
+									value={type}
+									onChange={(e) => setType(e.target.value)}
+									className="w-full rounded-lg border border-primary bg-white/80 text-primary px-3 py-2 focus:outline-none"
+								>
+									<option>Жалоба</option>
+									<option>Предложение</option>
+									<option>Благодарность</option>
+									<option>Вопрос</option>
+								</select> */}
+                <Select value={type} onValueChange={setType}>
+                  <SelectTrigger className="w-full rounded-lg border border-primary bg-white/80 text-primary px-3 py-2 focus:outline-none">
+                    <SelectValue placeholder="Выберите тип обращения" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectGroup>
+                      <SelectLabel>Тип обращения</SelectLabel>
+                      <SelectItem value="Вопрос">Вопрос</SelectItem>
+                      <SelectItem value="Предложение">Предложение</SelectItem>
+                      <SelectItem value="Жалоба">Жалоба</SelectItem>
+                      <SelectItem value="Благодарность">Благодарность</SelectItem>
+                    </SelectGroup>
+                  </SelectContent>
+                </Select>
+							</div>
+							<div>
+								<label
+									htmlFor="message"
+									className="block text-primary font-semibold mb-1"
+								>
+									Сообщение
+								</label>
+								<Textarea
+									id="message"
+									value={message}
+									onChange={(e) => setMessage(e.target.value)}
+									placeholder="Опишите вашу ситуацию или вопрос..."
+									className="w-full min-h-[100px] rounded-lg border border-primary bg-white/80 text-primary px-3 py-2 focus:outline-none"
+									required
+								/>
+							</div>
+							<div>
+								<label
+									htmlFor="email"
+									className="block text-primary font-semibold mb-1"
+								>
+									Ваш Email (необязательно)
+								</label>
+								<Input
+									id="email"
+									type="email"
+									value={email}
+									onChange={(e) => setEmail(e.target.value)}
+									placeholder="example@mail.com"
+									className="w-full rounded-lg border border-primary bg-white/80 text-primary px-3 py-2 focus:outline-none"
+								/>
+							</div>
+							<Button
+								type="submit"
+								className="w-full bg-primary text-white hover:bg-primary/80 transition"
+							>
+								Отправить
+							</Button>
+						</form>
+					</CardContent>
+				</Card>
+        <Card className="bg-white/10 backdrop-blur-lg border border-white/20 shadow-xl">
+          <CardHeader>
+            <CardTitle className="text-2xl text-primary text-center">
+              Часто задаваемые вопросы
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <Accordion type="single" collapsible className="w-full">
+              {faqs.map((faq, idx) => (
+                <AccordionItem key={idx} value={`faq-${idx}`}>
+                  <AccordionTrigger className="text-lg text-primary">
+                    {faq.question}
+                  </AccordionTrigger>
+                  <AccordionContent className="text-base text-gray-200">
+                    {faq.answer}
+                  </AccordionContent>
+                </AccordionItem>
+              ))}
+            </Accordion>
+          </CardContent>
+        </Card>
 			</div>
 		</div>
 	);

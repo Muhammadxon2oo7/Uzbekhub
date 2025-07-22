@@ -48,6 +48,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import FloatingAssistant from '@/components/tool/FloatingAssistant';
 import { Providers } from './providers';
 import LayoutClient from '@/components/LayoutClient';
+import { Toaster } from '@/components/ui/sonner';
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -74,6 +75,7 @@ export default function RootLayout({
         <Providers>
           <LayoutClient>{children}</LayoutClient>
           <FloatingAssistant />
+          <Toaster />
         </Providers>
       </body>
     </html>
