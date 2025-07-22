@@ -7,6 +7,7 @@ import '../lib/i18n';
 export default function LayoutClient({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const isAuth = pathname.startsWith("/register") || pathname.startsWith("/login");
+  const isMain = pathname.startsWith("/main");
 
   useEffect(() => {
     const lang = localStorage.getItem('i18nextLng') || 'uz'
@@ -14,7 +15,7 @@ export default function LayoutClient({ children }: { children: React.ReactNode }
   }, [])
   return (
     <>
-      {!isAuth && <Header />}
+      {!isAuth && !isMain && <Header />}
       {children}
     </>
   );
