@@ -584,6 +584,231 @@
 //     </div>
 //   )
 // }
+/////////////////////////////
+
+
+// "use client"
+
+// import { useState, useRef, useEffect } from "react"
+// import { AnimatePresence, motion } from "framer-motion"
+// import { MessageCircle } from "lucide-react"
+
+// // Import custom components
+// import ChatList from "./ChatList"
+// import ChatHeader from "./ChatHeader"
+// import MessageInput from "./MessageInput"
+// import MessageBubble from "./MessageBubble"
+// import {Message} from "./MessageBubble"
+
+// // Mock data (could be fetched from API in a real app)
+// const mockChats = [
+//   {
+//     id: "1",
+//     name: "Dilshod Rahimov",
+//     avatar: "/placeholder.svg?height=40&width=40",
+//     lastMessage: "Salom, qalaysan? 😊",
+//     time: "2 daqiqa",
+//     unread: 3,
+//     online: true,
+//     typing: false,
+//     lastSeen: "Hozir faol",
+//   },
+//   {
+//     id: "2",
+//     name: "Malika Karimova",
+//     avatar: "/placeholder.svg?height=40&width=40",
+//     lastMessage: "🎵 Ovozli xabar",
+//     time: "15 daqiqa",
+//     unread: 0,
+//     online: false,
+//     typing: false,
+//     lastSeen: "15 daqiqa oldin",
+//   },
+//   {
+//     id: "3",
+//     name: "IT Developers UZ",
+//     avatar: "/placeholder.svg?height=40&width=40",
+//     lastMessage: "📷 Rasm yuborildi",
+//     time: "1 soat",
+//     unread: 7,
+//     online: true,
+//     typing: true,
+//     isGroup: true,
+//     lastSeen: "Faol",
+//   },
+// ]
+
+// const mockMessages: Message[] = [ 
+//   {
+//     id: "1",
+//     sender: "Dilshod Rahimov",
+//     content: "Salom! Qalaysan bugun? 😊",
+//     time: "14:30",
+//     isOwn: false,
+//     type: "text",
+//     status: "read",
+//     reactions: [{ emoji: "👍", count: 2, users: ["Aziz", "Malika"] }],
+//   },
+//   {
+//     id: "2",
+//     sender: "Me",
+//     content: "Salom! Yaxshi, rahmat. Sen-chi? Ishlar qanday ketayapti?",
+//     time: "14:32",
+//     isOwn: true,
+//     type: "text",
+//     status: "read",
+//   },
+//   {
+//     id: "3",
+//     sender: "Me",
+//     content: "/images/elon.jpeg",
+//     time: "14:33",
+//     isOwn: true,
+//     type: "image",
+//     status: "delivered",
+//     caption: "Bugun Samarqandda chiroyli manzara! 🏛️",
+//   },
+//   {
+//     id: "4",
+//     sender: "Dilshod Rahimov",
+//     content: "Voy, qanday chiroyli! Men ham bormoqchiman tez orada 😍",
+//     time: "14:35",
+//     isOwn: false,
+//     type: "text",
+//     status: "read",
+//     reactions: [{ emoji: "❤️", count: 1, users: ["Aziz"] }],
+//   },
+//   {
+//     id: "5",
+//     sender: "Dilshod Rahimov",
+//     content: "voice_message_url",
+//     time: "14:36",
+//     isOwn: false,
+//     type: "voice",
+//     status: "read",
+//     duration: "0:45",
+//   },
+// ]
+
+// export default function ChatView() {
+//   const [selectedChat, setSelectedChat] = useState<string | null>("1")
+//   const [message, setMessage] = useState("")
+//   const [isRecording, setIsRecording] = useState(false)
+//   const [isTyping, setIsTyping] = useState(false) // Still useful for general typing status, though individual chat typing is in ChatList
+//   const messagesEndRef = useRef<HTMLDivElement>(null)
+//   const fileInputRef = useRef<HTMLInputElement>(null)
+
+//   // Find the currently selected chat to pass its data to ChatHeader
+//   const currentChat = mockChats.find((chat) => chat.id === selectedChat);
+
+
+//   const handleSendMessage = () => {
+//     if (message.trim()) {
+//       console.log("Xabar yuborilmoqda:", message)
+//       // In a real app, you would send this message to a backend and then update the messages state
+//       // For now, let's just clear the input
+//       setMessage("")
+//     }
+//   }
+
+//   const handleFileUpload = (type: string) => {
+//     console.log("Fayl yuklash:", type)
+//     // Trigger the hidden file input
+//     fileInputRef.current?.click()
+//   }
+
+//   const handleVoiceRecord = () => {
+//     setIsRecording(!isRecording)
+//     console.log("Ovoz yozish:", !isRecording)
+//     // In a real app, you would start/stop actual audio recording here
+//   }
+
+//   const addReaction = (messageId: string, emoji: string) => {
+//     console.log("Reaktsiya qo'shish:", messageId, emoji)
+//     // In a real app, you would update the specific message's reactions state or send to backend
+//   }
+
+//   useEffect(() => {
+//     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" })
+//   }, [mockMessages]) // Ensure messages are scrolled to bottom when they update
+
+//   // Simulate typing indicator for the current user's input
+//   useEffect(() => {
+//     if (message.length > 0) {
+//       setIsTyping(true)
+//       const timer = setTimeout(() => setIsTyping(false), 1000)
+//       return () => clearTimeout(timer)
+//     }
+//   }, [message])
+
+
+//   return (
+//     <div className="h-full flex bg-white/5 backdrop-blur-[10px] border border-white/10 rounded-2xl overflow-hidden">
+//       {/* Chat List */}
+//       <ChatList chats={mockChats} selectedChat={selectedChat} setSelectedChat={setSelectedChat} />
+
+//       {/* Chat Area */}
+//       {selectedChat && currentChat ? (
+//         <div className="flex-1 flex flex-col">
+//           {/* Chat Header */}
+//           <ChatHeader
+//             chatName={currentChat.name}
+//             chatAvatar={currentChat.avatar}
+//             onlineStatus={currentChat.lastSeen} // Using lastSeen as onlineStatus for display
+//           />
+
+//           {/* Messages */}
+//           <div className="flex-1 overflow-y-auto p-4 space-y-4">
+//             <AnimatePresence>
+//               {mockMessages.map((msg, index) => (
+//                 <motion.div
+//                   key={msg.id}
+//                   initial={{ opacity: 0, y: 20 }}
+//                   animate={{ opacity: 1, y: 0 }}
+//                   transition={{ delay: index * 0.1 }}
+//                 >
+//                   <MessageBubble message={msg} addReaction={addReaction} />
+//                 </motion.div>
+//               ))}
+//             </AnimatePresence>
+//             <div ref={messagesEndRef} />
+//           </div>
+
+//           {/* Message Input */}
+//           <MessageInput
+//             message={message}
+//             setMessage={setMessage}
+//             handleSendMessage={handleSendMessage}
+//             handleFileUpload={handleFileUpload}
+//             handleVoiceRecord={handleVoiceRecord}
+//             isRecording={isRecording}
+//             fileInputRef={fileInputRef}
+//           />
+
+//           <input
+//             ref={fileInputRef}
+//             type="file"
+//             className="hidden"
+//             accept="image/*,video/*,audio/*,.pdf,.doc,.docx"
+//             onChange={(e) => console.log("Fayl tanlandi:", e.target.files)}
+//           />
+//         </div>
+//       ) : (
+//         <div className="flex-1 flex items-center justify-center">
+//           <motion.div className="text-center" initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }}>
+//             <MessageCircle className="w-16 h-16 text-gray-400 mx-auto mb-4" />
+//             <h3 className="text-lg font-medium text-text mb-2">Suhbatni tanlang</h3>
+//             <p className="text-gray-400">Xabar almashishni boshlash uchun suhbatni tanlang</p>
+//           </motion.div>
+//         </div>
+//       )}
+//     </div>
+//   )
+// }
+
+
+
+
 
 
 "use client"
@@ -591,20 +816,16 @@
 import { useState, useRef, useEffect } from "react"
 import { AnimatePresence, motion } from "framer-motion"
 import { MessageCircle } from "lucide-react"
-
-// Import custom components
 import ChatList from "./ChatList"
 import ChatHeader from "./ChatHeader"
 import MessageInput from "./MessageInput"
-import MessageBubble from "./MessageBubble"
-import {Message} from "./MessageBubble"
+import MessageBubble, { Message } from "./MessageBubble"
 
-// Mock data (could be fetched from API in a real app)
 const mockChats = [
   {
     id: "1",
     name: "Dilshod Rahimov",
-    avatar: "/placeholder.svg?height=40&width=40",
+    avatar: "/placeholder.svg",
     lastMessage: "Salom, qalaysan? 😊",
     time: "2 daqiqa",
     unread: 3,
@@ -615,7 +836,7 @@ const mockChats = [
   {
     id: "2",
     name: "Malika Karimova",
-    avatar: "/placeholder.svg?height=40&width=40",
+    avatar: "/placeholder.svg",
     lastMessage: "🎵 Ovozli xabar",
     time: "15 daqiqa",
     unread: 0,
@@ -626,7 +847,7 @@ const mockChats = [
   {
     id: "3",
     name: "IT Developers UZ",
-    avatar: "/placeholder.svg?height=40&width=40",
+    avatar: "/placeholder.svg",
     lastMessage: "📷 Rasm yuborildi",
     time: "1 soat",
     unread: 7,
@@ -637,101 +858,106 @@ const mockChats = [
   },
 ]
 
-const mockMessages: Message[] = [ // <-- Mana shu yerga `: Message[]` ni qo'shing
-  {
-    id: "1",
-    sender: "Dilshod Rahimov",
-    content: "Salom! Qalaysan bugun? 😊",
-    time: "14:30",
-    isOwn: false,
-    type: "text",
-    status: "read",
-    reactions: [{ emoji: "👍", count: 2, users: ["Aziz", "Malika"] }],
-  },
-  {
-    id: "2",
-    sender: "Me",
-    content: "Salom! Yaxshi, rahmat. Sen-chi? Ishlar qanday ketayapti?",
-    time: "14:32",
-    isOwn: true,
-    type: "text",
-    status: "read",
-  },
-  {
-    id: "3",
-    sender: "Me",
-    content: "/images/elon.jpeg",
-    time: "14:33",
-    isOwn: true,
-    type: "image",
-    status: "delivered",
-    caption: "Bugun Samarqandda chiroyli manzara! 🏛️",
-  },
-  {
-    id: "4",
-    sender: "Dilshod Rahimov",
-    content: "Voy, qanday chiroyli! Men ham bormoqchiman tez orada 😍",
-    time: "14:35",
-    isOwn: false,
-    type: "text",
-    status: "read",
-    reactions: [{ emoji: "❤️", count: 1, users: ["Aziz"] }],
-  },
-  {
-    id: "5",
-    sender: "Dilshod Rahimov",
-    content: "voice_message_url",
-    time: "14:36",
-    isOwn: false,
-    type: "voice",
-    status: "read",
-    duration: "0:45",
-  },
-]
+const mockMessagesByChatId: Record<string, Message[]> = {
+  "1": [
+    {
+      id: "1",
+      sender: "Dilshod Rahimov",
+      content: "Salom! Qalaysan bugun? 😊",
+      time: "14:30",
+      isOwn: false,
+      type: "text",
+      status: "read",
+      reactions: [{ emoji: "👍", count: 2, users: ["Aziz", "Malika"] }],
+    },
+    {
+      id: "2",
+      sender: "Me",
+      content: "Yaxshi, rahmat. Sen-chi?",
+      time: "14:31",
+      isOwn: true,
+      type: "text",
+      status: "read",
+    },
+  ],
+  "2": [
+    {
+      id: "1",
+      sender: "Malika Karimova",
+      content: "Salom! Yangi loyihang haqida eshitdim 😊",
+      time: "13:00",
+      isOwn: false,
+      type: "text",
+      status: "read",
+    },
+    {
+      id: "2",
+      sender: "Me",
+      content: "Ha, to‘g‘ri. Endi rasmiy beta bosqichda!",
+      time: "13:03",
+      isOwn: true,
+      type: "text",
+      status: "read",
+    },
+  ],
+  "3": [
+    {
+      id: "1",
+      sender: "IT Developers UZ",
+      content: "📢 Eslatma: ertaga miting 10:00da",
+      time: "10:00",
+      isOwn: false,
+      type: "text",
+      status: "delivered",
+    },
+    {
+      id: "2",
+      sender: "Me",
+      content: "Ok, qatnashaman!",
+      time: "10:02",
+      isOwn: true,
+      type: "text",
+      status: "read",
+    },
+  ],
+}
 
 export default function ChatView() {
   const [selectedChat, setSelectedChat] = useState<string | null>("1")
   const [message, setMessage] = useState("")
   const [isRecording, setIsRecording] = useState(false)
-  const [isTyping, setIsTyping] = useState(false) // Still useful for general typing status, though individual chat typing is in ChatList
+  const [isTyping, setIsTyping] = useState(false)
   const messagesEndRef = useRef<HTMLDivElement>(null)
   const fileInputRef = useRef<HTMLInputElement>(null)
 
-  // Find the currently selected chat to pass its data to ChatHeader
-  const currentChat = mockChats.find((chat) => chat.id === selectedChat);
-
+  const currentChat = mockChats.find((chat) => chat.id === selectedChat)
+  const messages = selectedChat ? mockMessagesByChatId[selectedChat] || [] : []
 
   const handleSendMessage = () => {
     if (message.trim()) {
-      console.log("Xabar yuborilmoqda:", message)
-      // In a real app, you would send this message to a backend and then update the messages state
-      // For now, let's just clear the input
+      console.log("Yangi xabar:", message)
       setMessage("")
     }
   }
 
   const handleFileUpload = (type: string) => {
     console.log("Fayl yuklash:", type)
-    // Trigger the hidden file input
     fileInputRef.current?.click()
   }
 
   const handleVoiceRecord = () => {
     setIsRecording(!isRecording)
     console.log("Ovoz yozish:", !isRecording)
-    // In a real app, you would start/stop actual audio recording here
   }
 
   const addReaction = (messageId: string, emoji: string) => {
-    console.log("Reaktsiya qo'shish:", messageId, emoji)
-    // In a real app, you would update the specific message's reactions state or send to backend
+    console.log("Reaktsiya:", messageId, emoji)
   }
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" })
-  }, [mockMessages]) // Ensure messages are scrolled to bottom when they update
+  }, [messages])
 
-  // Simulate typing indicator for the current user's input
   useEffect(() => {
     if (message.length > 0) {
       setIsTyping(true)
@@ -740,31 +966,29 @@ export default function ChatView() {
     }
   }, [message])
 
-
   return (
     <div className="h-full flex bg-white/5 backdrop-blur-[10px] border border-white/10 rounded-2xl overflow-hidden">
-      {/* Chat List */}
+
       <ChatList chats={mockChats} selectedChat={selectedChat} setSelectedChat={setSelectedChat} />
 
-      {/* Chat Area */}
+
       {selectedChat && currentChat ? (
         <div className="flex-1 flex flex-col">
-          {/* Chat Header */}
+
           <ChatHeader
             chatName={currentChat.name}
             chatAvatar={currentChat.avatar}
-            onlineStatus={currentChat.lastSeen} // Using lastSeen as onlineStatus for display
+            onlineStatus={currentChat.lastSeen}
           />
 
-          {/* Messages */}
           <div className="flex-1 overflow-y-auto p-4 space-y-4">
             <AnimatePresence>
-              {mockMessages.map((msg, index) => (
+              {messages.map((msg, index) => (
                 <motion.div
                   key={msg.id}
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: index * 0.1 }}
+                  transition={{ delay: index * 0.05 }}
                 >
                   <MessageBubble message={msg} addReaction={addReaction} />
                 </motion.div>
@@ -773,7 +997,6 @@ export default function ChatView() {
             <div ref={messagesEndRef} />
           </div>
 
-          {/* Message Input */}
           <MessageInput
             message={message}
             setMessage={setMessage}
@@ -794,7 +1017,11 @@ export default function ChatView() {
         </div>
       ) : (
         <div className="flex-1 flex items-center justify-center">
-          <motion.div className="text-center" initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }}>
+          <motion.div
+            className="text-center"
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+          >
             <MessageCircle className="w-16 h-16 text-gray-400 mx-auto mb-4" />
             <h3 className="text-lg font-medium text-text mb-2">Suhbatni tanlang</h3>
             <p className="text-gray-400">Xabar almashishni boshlash uchun suhbatni tanlang</p>
