@@ -256,7 +256,6 @@ export default function DashboardSidebar({
           ))}
         </nav>
 
-        {/* Quick Actions */}
         {!collapsed && (
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="mt-6 space-y-2">
             <Button variant="ghost" className="w-full justify-start gap-3 h-10 hover:bg-white/10 text-text group">
@@ -273,7 +272,7 @@ export default function DashboardSidebar({
           </motion.div>
         )}
 
-        {/* Footer */}
+     
         {!collapsed && (
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="mt-4 pt-4 border-t border-white/10">
             <div className="text-center text-xs text-gray-400">

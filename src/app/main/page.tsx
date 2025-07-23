@@ -3,7 +3,7 @@
 import { useState } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import DashboardSidebar from "@/components/dashboard/DashboardSidebar"
-import ChatView from "@/components/dashboard/ChatView"
+import ChatView from "@/components/dashboard/chat/ChatView"
 import GroupsView from "@/components/dashboard/GroupsView"
 import ProfileView from "@/components/dashboard/ProfileView"
 import DiscoverView from "@/components/dashboard/DiscoverView"
