@@ -50,7 +50,7 @@ export function SpotCard({ community }: { community: Community }) {
       transition={{ duration: 0.5, ease: "easeOut" }}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
-      className="group relative cursor-pointer transition-all duration-200 bg-white/5 backdrop-blur-[10px] border border-white/10 hover:border-white/25 rounded-2xl p-6 shadow-md overflow-hidden"
+      className="group relative cursor-pointer transition-all duration-200 bg-[var(--spotcard)] backdrop-blur-[10px] border border-white/10 hover:border-white/25 rounded-2xl p-6 shadow-md overflow-hidden"
     >
       <div
         className="absolute w-32 h-32 rounded-full bg-primary blur-2xl pointer-events-none transition-opacity duration-300"

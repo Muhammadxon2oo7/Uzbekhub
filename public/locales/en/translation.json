@@ -108,16 +108,36 @@
     "login":{
       "title": "Login",
       "identifier_label": "Email or username",
-      "identifier_placeholder": "example@gmail.com or yourname",
+      "identifier_placeholder": "example@gmail.com or username",
       "password_label": "Password",
       "password_placeholder": "••••••••",
       "login_button": "Login",
       "login_success": "You have successfully logged in!"
     }
   },
-"about": {
+  "about": {
     "description": "Our team is dedicated to creating the most suitable and engaging communities for users. With experienced frontend, backend, and design specialists, we're here for you.",
-    "back_to_home": "Back to homepage"
+    "back_to_home": "Back to homepage",
+    "members_desc": {
+      "muhammadxon": "Programmer with 2 years of experience",
+      "sirojiddin": "Talented programmer with a strong skill set",
+      "oybek": "Programmer with over 2 years of experience"
+    },
+    "contact": "Contact"
+  },
+  "help": {
+    "title": "Contact us",
+    "reason": "Reason for contact",
+    "reasons": {
+      "question": "Question",
+      "bug": "Bug report",
+      "suggestion": "Suggestion",
+      "other": "Other"
+    },
+    "message": "Message",
+    "message_placeholder": "Your message here...",
+    "email": "Your Email (optional)",
+    "send": "Send",
+    "faq_title": "Frequently asked questions"
   }
-
 }

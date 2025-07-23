@@ -26,7 +26,9 @@ export default function ThemeToggle() {
       <motion.div
         layout
         transition={{ type: "spring", stiffness: 300, damping: 20 }}
-        className="w-7 h-7 bg-white text-black dark:bg-black dark:text-white rounded-full flex items-center justify-center shadow-md"
+        className={`w-7 h-7 bg-white text-black dark:bg-black dark:text-white rounded-full flex items-center justify-center shadow-md absolute top-1 left-1 ${
+          isDark ? "translate-x-7" : "translate-x-0"
+        }`}
       >
         <AnimatePresence mode="wait">
           {isDark ? (
@@ -52,14 +54,6 @@ export default function ThemeToggle() {
           )}
         </AnimatePresence>
       </motion.div>
-
-      {/* Sliding effect */}
-      <motion.div
-        layout
-        className={`absolute top-1 left-1 ${
-          isDark ? "translate-x-[32px]" : "translate-x-0"
-        } transition-transform`}
-      />
     </button>
   );
 }

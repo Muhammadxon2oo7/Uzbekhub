@@ -41,7 +41,7 @@ export default function AboutPage() {
   }
 
   return (
-    <div className="bg-radial-[at_50%_75%] from-[100%_0_0] via-[var(--bggradient)] to-[var(--bgbradientstart)] to-90% text-white">
+    <div className="bg-radial-[at_50%_75%] from-[var(--bggradientend)] via-[var(--bggradient)] to-[var(--bgbradientstart)] to-90% text-white">
       <div className="container mx-auto px-2">
         <div className="flex items-center justify-center py-8 sm:py-12 md:py-20 px-2">
           <motion.div
@@ -56,7 +56,7 @@ export default function AboutPage() {
             initial={{ opacity: 0, y: 50, scale: 0.9 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             transition={{ duration: 0.8 }}
-            className="bg-white/5 backdrop-blur-[10px] border border-white/10 rounded-3xl p-4 sm:p-8 md:p-16 shadow-xl max-w-full sm:max-w-2xl md:max-w-4xl w-full text-center space-y-8"
+            className="bg-[var(--card-bg-gray)] backdrop-blur-[10px] border-1 border-white rounded-3xl p-4 sm:p-8 md:p-16 shadow-xl max-w-full sm:max-w-2xl md:max-w-4xl w-full text-center space-y-8"
           >
             <div className="flex items-center justify-center gap-3">
               <MessageCircle className="text-primary w-8 h-8 sm:w-10 sm:h-10" />
@@ -67,7 +67,7 @@ export default function AboutPage() {
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.3, duration: 0.6 }}
-              className="text-base sm:text-lg md:text-xl text-gray-300"
+              className="text-base sm:text-lg md:text-xl text-[var(--darker-text)]"
             >
               {t("about.description", {
                 defaultValue:
@@ -87,7 +87,7 @@ export default function AboutPage() {
                   <Link href={`#${member.name}`}>
                     <h3 className="text-primary text-base sm:text-lg font-semibold">{member.role}</h3>
                     <p className="text-text text-sm mt-1">{member.name}</p>
-                    <p className="text-gray-400 text-xs sm:text-sm">{member.desc}</p>
+                    <p className="text-gray-400 text-xs sm:text-sm">{t(`about.members_desc.${member.tag}`)}</p>
                   </Link>
                 </motion.div>
               ))}
@@ -108,10 +108,8 @@ export default function AboutPage() {
               key={member.name}
               name={member.name}
               role={member.role}
-              desc={member.desc}
-              email={member.email}
-              telegram={member.telegram}
-              instagram={member.instagram}
+              desc={t(`about.members_desc.${member.tag}`)}
+              tag={member.tag}
               github={member.github}
               tools={member.tools}
             />
