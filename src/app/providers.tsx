@@ -1,5 +1,7 @@
 "use client";
 
+import { GoogleOAuthProvider } from "@react-oauth/google";
+import { SessionProvider } from "next-auth/react";
 import { ThemeProvider as NextThemesProvider } from "next-themes";
 import { ReactNode } from "react";
 
@@ -9,7 +11,9 @@ interface Props {
 
 export function Providers({ children }: Props) {
   return (
-    <NextThemesProvider
+    <GoogleOAuthProvider clientId={process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID!}>
+      <SessionProvider>
+ <NextThemesProvider
       attribute="class"
       defaultTheme="dark"
       enableSystem
@@ -17,5 +21,7 @@ export function Providers({ children }: Props) {
     >
       {children}
     </NextThemesProvider>
+    </SessionProvider>
+    </GoogleOAuthProvider>
   );
 }

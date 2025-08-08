@@ -13,9 +13,9 @@ interface FormInputProps {
 export default function FormInput({ label, id, type, placeholder, register, error, className }: FormInputProps) {
   return (
     <div className="space-y-1">
-      <label htmlFor={id} className="block text-sm font-medium">
+      {/* <label htmlFor={id} className="block text-sm font-medium">
         {label}
-      </label>
+      </label> */}
       <input
         id={id}
         type={type}
