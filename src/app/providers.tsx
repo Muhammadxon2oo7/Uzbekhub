@@ -11,7 +11,7 @@ interface Props {
 
 export function Providers({ children }: Props) {
   return (
-    <GoogleOAuthProvider clientId={process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID!}>
+    <GoogleOAuthProvider clientId={process.env.BANAN_CLIENT_ID!}>
       <SessionProvider>
  <NextThemesProvider
       attribute="class"
