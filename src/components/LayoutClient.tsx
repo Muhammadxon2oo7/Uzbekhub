@@ -6,7 +6,7 @@ import { useEffect } from "react";
 import '../lib/i18n'; 
 export default function LayoutClient({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
-  const isAuth = pathname.startsWith("/register") || pathname.startsWith("/login");
+  const isAuth = pathname.startsWith("/register") || pathname.startsWith("/login") || pathname.startsWith("/forgot-password");
   const isMain = pathname.startsWith("/main");
 
   useEffect(() => {
@@ -18,5 +18,5 @@ export default function LayoutClient({ children }: { children: React.ReactNode }
       {!isAuth && !isMain && <Header />}
       {children}
     </>
-  );
+  );  
 }
