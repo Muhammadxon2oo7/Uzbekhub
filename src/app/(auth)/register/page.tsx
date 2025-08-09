@@ -208,6 +208,7 @@ export default function RegisterPage() {
                     error: step1Form.formState.errors.email,
                     className: cn('focus-visible:ring-2 focus-visible:ring-primary', 'border border-input focus:border-primary')
                   }} />
+                  <Label htmlFor="email" className="text-primary">{t('auth.register.password_label')}</Label>
                   <FormInput {...{
                     label: t('auth.register.password_label'),
                     id: "password",
@@ -217,6 +218,7 @@ export default function RegisterPage() {
                     error: step1Form.formState.errors.password,
                     className: cn('focus-visible:ring-2 focus-visible:ring-primary', 'border border-input focus:border-primary')
                   }} />
+                  <Label htmlFor="email" className="text-primary">{t('auth.register.confirm_password_label')}</Label>
                   <FormInput {...{
                     label: t('auth.register.confirm_password_label'),
                     id: "confirm_password",

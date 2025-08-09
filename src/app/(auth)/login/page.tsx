@@ -22,6 +22,7 @@ import "react-toastify/dist/ReactToastify.css";
 import z from "zod";
 import { GoogleLogin } from "@react-oauth/google";
 import axios from "axios";
+import Cookies from "js-cookie";
 
 type FormData = z.infer<typeof signInSchema>;
 
@@ -113,7 +114,12 @@ export default function LoginPage() {
           className: "bg-red-500 text-white rounded-lg shadow-lg",
         });
       } else {
-        localStorage.setItem("token", result.token.access);
+        // localStorage.setItem("token", result.token.access);
+        Cookies.set("token", result.token.access, {
+          expires: 7, // хранить 7 дней
+          secure: true, // только HTTPS
+          sameSite: "strict", // безопаснее
+        });
         toast.success(t("auth.login.success"), {
           position: "top-right",
           autoClose: 2000,
@@ -154,7 +160,12 @@ export default function LoginPage() {
         { token: idToken }
       );
       const { access, refresh } = res.data;
-      localStorage.setItem("token", access);
+      // localStorage.setItem("token", access);
+        Cookies.set("token", access, {
+          expires: 7, // хранить 7 дней
+          secure: true, // только HTTPS
+          sameSite: "strict", // безопаснее
+        });
       localStorage.setItem("refresh", refresh);
       toast.success(t("auth.login.google_success"), {
         position: "top-right",
