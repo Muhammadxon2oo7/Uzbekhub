@@ -156,7 +156,7 @@ export default function LoginPage() {
     try {
       const idToken = credentialResponse.credential;
       const res = await axios.post(
-        `${process.env.NEXT_PUBLIC_API_URL}/auth/oauth2/google/`,
+        `${process.env.NEXT_PUBLIC_APPLE}/accounts/auth/oauth2/google/`,
         { token: idToken }
       );
       const { access, refresh } = res.data;
