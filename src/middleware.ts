@@ -1,35 +1,40 @@
-// middleware.ts
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 
 export function middleware(req: NextRequest) {
-  const token = req.cookies.get('token')?.value; // Получаем токен из куки
-  const pathname = req.nextUrl.pathname; // Текущий путь
+  const token = req.cookies.get('token')?.value;
+  const pathname = req.nextUrl.pathname;
 
-  // Логи для отладки (удалить в продакшене)
-  console.log('TOKEN:', token, 'PATH:', pathname);
+  // Пути, которые не нужно трогать (статические файлы, api и т.п.)
+  const ignoredPaths = ['/api', '/_next', '/favicon.ico', '/locales'];
 
-  // Определяем публичные пути, где не требуется токен (страницы входа/регистрации)
-  const publicPaths = ['/', '/login', '/register'];
-
-  const isPublicPath = publicPaths.includes(pathname);
-
-  // Если это публичный путь
-  if (isPublicPath) {
-    // Если токен есть и он не пустой, перенаправляем на /main
-    if (token && token.trim() !== '') {
-      return NextResponse.redirect(new URL('/main', req.url));
-    }
-  } else {
-    // Если это защищенный путь и токена нет, перенаправляем на главную (/ или /login)
-    if (!token || token.trim() === '') {
-      return NextResponse.redirect(new URL('/', req.url));
-    }
+  if (ignoredPaths.some(path => pathname.startsWith(path))) {
+    return NextResponse.next();
   }
 
-  return NextResponse.next(); // Продолжить, если перенаправление не требуется
+  // Если пользователь заходит на главную
+  if (pathname === '/') {
+    if (token && token.trim() !== '') {
+      // Если залогинен — редирект на /main
+      return NextResponse.redirect(new URL('/main', req.url));
+    }
+    // Если не залогинен — остаёмся на /
+    return NextResponse.next();
+  }
+
+  // Если пользователь заходит на /main
+  if (pathname === '/main') {
+    if (!token || token.trim() === '') {
+      // Если нет токена — редирект на главную
+      return NextResponse.redirect(new URL('/', req.url));
+    }
+    return NextResponse.next();
+  }
+
+  // Для всех остальных страниц — пропускаем без проверки
+  return NextResponse.next();
 }
 
 export const config = {
-  matcher: ['/((?!api|_next/static|_next/image|favicon.ico|locales).*)'], // Добавьте |locales
+  matcher: ['/((?!api|_next/static|_next/image|favicon.ico|locales).*)'],
 };
