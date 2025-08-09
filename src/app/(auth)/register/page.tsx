@@ -28,7 +28,7 @@ export default function RegisterPage() {
   const [step, setStep] = useState<1 | 2>(1);
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
-  const [resendTimer, setResendTimer] = useState(30); // таймер
+  const [resendTimer, setResendTimer] = useState(300); // 5 минут
   const router = useRouter();
   const cardRef = useRef<HTMLDivElement | null>(null);
   const spotRef = useRef<HTMLDivElement | null>(null);
@@ -41,14 +41,12 @@ export default function RegisterPage() {
     resolver: zodResolver(verifyEmailSchema),
   });
 
-  // Запуск отсчета при переходе на шаг 2
   useEffect(() => {
     if (step === 2) {
-      setResendTimer(30);
+      setResendTimer(300); // 5 минут
     }
   }, [step]);
 
-  // Обновление таймера каждую секунду
   useEffect(() => {
     if (resendTimer > 0 && step === 2) {
       const interval = setInterval(() => {
@@ -58,7 +56,6 @@ export default function RegisterPage() {
     }
   }, [resendTimer, step]);
 
-  // Эффект 3D анимации карточки
   useEffect(() => {
     const card = cardRef.current;
     const spot = spotRef.current;
@@ -93,6 +90,27 @@ export default function RegisterPage() {
     };
   }, []);
 
+  // функция для извлечения текста ошибок с бэкенда
+  const extractBackendError = (data: any, fallback: string) => {
+    if (!data) return fallback;
+    if (typeof data === "string") return data;
+    if (data.error) return data.error;
+    if (data.message) return data.message;
+    if (typeof data === "object") {
+      // например {"email": ["Email already exists"], "password": ["Too short"]}
+      const messages: string[] = [];
+      for (const key in data) {
+        if (Array.isArray(data[key])) {
+          messages.push(...data[key]);
+        } else if (typeof data[key] === "string") {
+          messages.push(data[key]);
+        }
+      }
+      if (messages.length) return messages.join("\n");
+    }
+    return fallback;
+  };
+
   const onStep1Submit = async (data: Step1FormData) => {
     setIsLoading(true);
     setError(null);
@@ -103,11 +121,11 @@ export default function RegisterPage() {
         setError(result.error);
         toast.error(result.error, { theme: "colored", className: "bg-red-500 text-white rounded-lg shadow-lg" });
       } else {
-        toast.success(t('auth.register.code_sent'), { theme: "colored", className: "bg-green-500 text-white rounded-lg shadow-lg" });
+        toast.success(result.message || t('auth.register.code_sent'), { theme: "colored", className: "bg-green-500 text-white rounded-lg shadow-lg" });
         setStep(2);
       }
-    } catch {
-      const errorMessage = t('auth.register.error_generic');
+    } catch (err: any) {
+      const errorMessage = extractBackendError(err.response?.data, t('auth.register.error_generic'));
       setError(errorMessage);
       toast.error(errorMessage, { theme: "colored", className: "bg-red-500 text-white rounded-lg shadow-lg" });
     } finally {
@@ -125,11 +143,11 @@ export default function RegisterPage() {
         setError(result.error);
         toast.error(result.error, { theme: "colored", className: "bg-red-500 text-white rounded-lg shadow-lg" });
       } else {
-        toast.success(t('auth.register.success'), { theme: "colored", className: "bg-green-500 text-white rounded-lg shadow-lg" });
+        toast.success(result.message || t('auth.register.success'), { theme: "colored", className: "bg-green-500 text-white rounded-lg shadow-lg" });
         setTimeout(() => router.push("/login"), 2000);
       }
     } catch (err: any) {
-      const errorMessage = err.response?.data?.error || t('auth.register.error_invalid_code');
+      const errorMessage = extractBackendError(err.response?.data, t('auth.register.error_invalid_code'));
       setError(errorMessage);
       toast.error(errorMessage, { theme: "colored", className: "bg-red-500 text-white rounded-lg shadow-lg" });
     } finally {
@@ -137,19 +155,20 @@ export default function RegisterPage() {
     }
   };
 
-  // Функция повторной отправки кода
   const handleResendCode = async () => {
     if (resendTimer > 0) return;
     try {
-      await registerStep1({
+      const response = await registerStep1({
         email: step1Form.getValues("email"),
         password: step1Form.getValues("password"),
         confirm_password: step1Form.getValues("confirm_password")
       });
-      toast.success(t('auth.register.code_sent'), { theme: "colored", className: "bg-green-500 text-white rounded-lg shadow-lg" });
-      setResendTimer(30);
-    } catch {
-      toast.error(t('auth.register.error_generic'), { theme: "colored", className: "bg-red-500 text-white rounded-lg shadow-lg" });
+      const result: RegisterStep1Response = response.data;
+      toast.success(result.message || t('auth.register.code_sent'), { theme: "colored", className: "bg-green-500 text-white rounded-lg shadow-lg" });
+      setResendTimer(300); // 5 минут
+    } catch (err: any) {
+      const errorMessage = extractBackendError(err.response?.data, t('auth.register.error_generic'));
+      toast.error(errorMessage, { theme: "colored", className: "bg-red-500 text-white rounded-lg shadow-lg" });
     }
   };
 
@@ -207,7 +226,7 @@ export default function RegisterPage() {
                     error: step1Form.formState.errors.confirm_password,
                     className: cn('focus-visible:ring-2 focus-visible:ring-primary', 'border border-input focus:border-primary')
                   }} />
-                  {error && <p className="text-red-500 text-sm">{error}</p>}
+                  {/* {error && <p className="text-red-500 text-sm">{error}</p>} */}
                 </div>
                 <Button disabled={isLoading || step1Form.formState.isSubmitting} className="w-full">
                   {isLoading ? <><Icons.spinner className="animate-spin w-4 h-4 mr-2" />{t('auth.register.sending')}</> : t('auth.register.send_code')}
@@ -229,13 +248,12 @@ export default function RegisterPage() {
                     error: step2Form.formState.errors.code,
                     className: cn('focus-visible:ring-2 focus-visible:ring-primary', 'border border-input focus:border-primary')
                   }} />
-                  {error && <p className="text-red-500 text-sm">{error}</p>}
+                  {/* {error && <p className="text-red-500 text-sm">{error}</p>} */}
                 </div>
                 <Button disabled={isLoading || step2Form.formState.isSubmitting} className="w-full">
                   {isLoading ? <><Icons.spinner className="animate-spin w-4 h-4 mr-2" />{t('auth.register.verifying')}</> : t('auth.register.confirm')}
                 </Button>
 
-                {/* Кнопка повторной отправки кода */}
                 <Button
                   type="button"
                   onClick={handleResendCode}

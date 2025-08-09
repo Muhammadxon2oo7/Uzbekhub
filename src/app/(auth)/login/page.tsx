@@ -1,6 +1,3 @@
-
-
-
 "use client";
 
 import { useState, useEffect, useRef } from "react";
@@ -44,6 +41,24 @@ export default function LoginPage() {
   } = useForm<FormData>({
     resolver: zodResolver(signInSchema),
   });
+
+  // Универсальная функция получения текста ошибки
+  const getErrorMessage = (err: any) => {
+    if (typeof err?.response?.data?.error === "string") {
+      return err.response.data.error;
+    }
+    if (typeof err?.response?.data?.detail === "string") {
+      return err.response.data.detail;
+    }
+    if (typeof err?.response?.data === "object") {
+      const firstKey = Object.keys(err.response.data)[0];
+      const firstError = err.response.data[firstKey];
+      if (Array.isArray(firstError) && firstError.length > 0) {
+        return firstError[0];
+      }
+    }
+    return t("auth.login.error_generic");
+  };
 
   useEffect(() => {
     const card = cardRef.current;
@@ -112,8 +127,7 @@ export default function LoginPage() {
         setTimeout(() => router.push("/profile"), 1500);
       }
     } catch (err: any) {
-      const errorMessage =
-        err.response?.data?.error || t("auth.login.error_generic");
+      const errorMessage = getErrorMessage(err);
       setError(errorMessage);
       toast.error(errorMessage, {
         position: "top-right",
@@ -154,8 +168,7 @@ export default function LoginPage() {
       });
       setTimeout(() => router.push("/profile"), 1500);
     } catch (error) {
-      console.error("Google login failed:", error);
-      const errorMessage = t("auth.login.google_error");
+      const errorMessage = getErrorMessage(error);
       setError(errorMessage);
       toast.error(errorMessage, {
         position: "top-right",
@@ -254,7 +267,7 @@ export default function LoginPage() {
                   )}
                 </button>
               </div>
-              {error && <p className="text-red-500 text-sm">{error}</p>}
+              {/* {error && <p className="text-red-500 text-sm">{error}</p>} */}
               <Button
                 type="submit"
                 disabled={isLoading || isSubmitting}

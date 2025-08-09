@@ -135,7 +135,7 @@ export default function ForgotPasswordPage() {
             className="pointer-events-none absolute w-40 h-40 rounded-full bg-white/10 blur-2xl opacity-0 transition-opacity duration-200 z-0"
           ></div>
 
-          <Link href="/">
+          <Link href="/login">
             <Button className="absolute top-4 right-4 cursor-pointer" variant="ghost">
               <X />
             </Button>
