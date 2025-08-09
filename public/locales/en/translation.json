@@ -112,7 +112,8 @@
     "verifying": "Verifying...",
     "success": "Successfully registered!",
     "error_generic": "An error occurred, please try again",
-    "error_invalid_code": "Invalid code or an error occurred"
+    "error_invalid_code": "Invalid code or an error occurred",
+    "resend_code": "Resend Code"
   },
     "login": {
       "title": "Login",

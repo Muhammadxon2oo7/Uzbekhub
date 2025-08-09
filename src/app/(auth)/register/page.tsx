@@ -1,19 +1,13 @@
-
-
-
-
-
 'use client'
 import { useState, useEffect, useRef } from 'react';
 import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { cn } from '@/lib/utils';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Icons } from '@/components/icons';
 import { motion } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
-import { ExternalLinkIcon, X } from 'lucide-react';
+import { X } from 'lucide-react';
 import Link from 'next/link';
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -26,7 +20,6 @@ import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import z from "zod";
 
-
 type Step1FormData = z.infer<typeof registerStep1Schema>;
 type Step2FormData = z.infer<typeof verifyEmailSchema>;
 
@@ -35,6 +28,7 @@ export default function RegisterPage() {
   const [step, setStep] = useState<1 | 2>(1);
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [resendTimer, setResendTimer] = useState(30); // таймер
   const router = useRouter();
   const cardRef = useRef<HTMLDivElement | null>(null);
   const spotRef = useRef<HTMLDivElement | null>(null);
@@ -47,6 +41,24 @@ export default function RegisterPage() {
     resolver: zodResolver(verifyEmailSchema),
   });
 
+  // Запуск отсчета при переходе на шаг 2
+  useEffect(() => {
+    if (step === 2) {
+      setResendTimer(30);
+    }
+  }, [step]);
+
+  // Обновление таймера каждую секунду
+  useEffect(() => {
+    if (resendTimer > 0 && step === 2) {
+      const interval = setInterval(() => {
+        setResendTimer(prev => prev - 1);
+      }, 1000);
+      return () => clearInterval(interval);
+    }
+  }, [resendTimer, step]);
+
+  // Эффект 3D анимации карточки
   useEffect(() => {
     const card = cardRef.current;
     const spot = spotRef.current;
@@ -89,42 +101,15 @@ export default function RegisterPage() {
       const result: RegisterStep1Response = response.data;
       if (result.error) {
         setError(result.error);
-        toast.error(result.error, {
-          position: "top-right",
-          autoClose: 3000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          theme: "colored",
-          className: "bg-red-500 text-white rounded-lg shadow-lg",
-        });
+        toast.error(result.error, { theme: "colored", className: "bg-red-500 text-white rounded-lg shadow-lg" });
       } else {
-        toast.success(t('auth.register.code_sent'), {
-          position: "top-right",
-          autoClose: 3000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          theme: "colored",
-          className: "bg-green-500 text-white rounded-lg shadow-lg",
-        });
+        toast.success(t('auth.register.code_sent'), { theme: "colored", className: "bg-green-500 text-white rounded-lg shadow-lg" });
         setStep(2);
       }
-    } catch (err) {
+    } catch {
       const errorMessage = t('auth.register.error_generic');
       setError(errorMessage);
-      toast.error(errorMessage, {
-        position: "top-right",
-        autoClose: 3000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        theme: "colored",
-        className: "bg-red-500 text-white rounded-lg shadow-lg",
-      });
+      toast.error(errorMessage, { theme: "colored", className: "bg-red-500 text-white rounded-lg shadow-lg" });
     } finally {
       setIsLoading(false);
     }
@@ -138,44 +123,33 @@ export default function RegisterPage() {
       const result: VerifyEmailResponse = response.data;
       if (result.error) {
         setError(result.error);
-        toast.error(result.error, {
-          position: "top-right",
-          autoClose: 3000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          theme: "colored",
-          className: "bg-red-500 text-white rounded-lg shadow-lg",
-        });
+        toast.error(result.error, { theme: "colored", className: "bg-red-500 text-white rounded-lg shadow-lg" });
       } else {
-        toast.success(t('auth.register.success'), {
-          position: "top-right",
-          autoClose: 2000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          theme: "colored",
-          className: "bg-green-500 text-white rounded-lg shadow-lg",
-        });
+        toast.success(t('auth.register.success'), { theme: "colored", className: "bg-green-500 text-white rounded-lg shadow-lg" });
         setTimeout(() => router.push("/login"), 2000);
       }
     } catch (err: any) {
       const errorMessage = err.response?.data?.error || t('auth.register.error_invalid_code');
       setError(errorMessage);
-      toast.error(errorMessage, {
-        position: "top-right",
-        autoClose: 3000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        theme: "colored",
-        className: "bg-red-500 text-white rounded-lg shadow-lg",
-      });
+      toast.error(errorMessage, { theme: "colored", className: "bg-red-500 text-white rounded-lg shadow-lg" });
     } finally {
       setIsLoading(false);
+    }
+  };
+
+  // Функция повторной отправки кода
+  const handleResendCode = async () => {
+    if (resendTimer > 0) return;
+    try {
+      await registerStep1({
+        email: step1Form.getValues("email"),
+        password: step1Form.getValues("password"),
+        confirm_password: step1Form.getValues("confirm_password")
+      });
+      toast.success(t('auth.register.code_sent'), { theme: "colored", className: "bg-green-500 text-white rounded-lg shadow-lg" });
+      setResendTimer(30);
+    } catch {
+      toast.error(t('auth.register.error_generic'), { theme: "colored", className: "bg-red-500 text-white rounded-lg shadow-lg" });
     }
   };
 
@@ -186,7 +160,7 @@ export default function RegisterPage() {
 
         <motion.div
           ref={cardRef}
-          initial={{ scale: 0, y: 200, rotateX: 0, rotateY: 0, opacity: 0 }}
+          initial={{ scale: 0, y: 200, opacity: 0 }}
           animate={{ scale: 1, y: 0, rotateX: -10, rotateY: -5, opacity: 1 }}
           transition={{ duration: 0.8, ease: 'easeOut' }}
           className="relative z-10 transition-transform duration-200 ease-out will-change-transform border border-white/20 py-[60px] px-[50px] rounded-2xl bg-[#f7f7f726] backdrop-blur-[20px] md:w-[500px] w-full shadow-2xl"
@@ -205,47 +179,38 @@ export default function RegisterPage() {
             {step === 1 && (
               <form onSubmit={step1Form.handleSubmit(onStep1Submit)} className="space-y-4">
                 <div className="grid w-full items-center gap-2">
-                  <Label htmlFor="email" className="text-primary">
-                    {t('auth.register.email_label')}
-                  </Label>
-                  <FormInput
-                    label={t('auth.register.email_label')}
-                    id="email"
-                    type="email"
-                    placeholder="example@gmail.com"
-                    register={step1Form.register("email")}
-                    error={step1Form.formState.errors.email}
-                    className={cn('focus-visible:ring-2 focus-visible:ring-primary', 'border border-input focus:border-primary')}
-                  />
-                  <FormInput
-                    label={t('auth.register.password_label')}
-                    id="password"
-                    type="password"
-                    placeholder={t('auth.register.password_placeholder')}
-                    register={step1Form.register("password")}
-                    error={step1Form.formState.errors.password}
-                    className={cn('focus-visible:ring-2 focus-visible:ring-primary', 'border border-input focus:border-primary')}
-                  />
-                  <FormInput
-                    label={t('auth.register.confirm_password_label')}
-                    id="confirm_password"
-                    type="password"
-                    placeholder={t('auth.register.confirm_password_placeholder')}
-                    register={step1Form.register("confirm_password")}
-                    error={step1Form.formState.errors.confirm_password}
-                    className={cn('focus-visible:ring-2 focus-visible:ring-primary', 'border border-input focus:border-primary')}
-                  />
+                  <Label htmlFor="email" className="text-primary">{t('auth.register.email_label')}</Label>
+                  <FormInput {...{
+                    label: t('auth.register.email_label'),
+                    id: "email",
+                    type: "email",
+                    placeholder: "example@gmail.com",
+                    register: step1Form.register("email"),
+                    error: step1Form.formState.errors.email,
+                    className: cn('focus-visible:ring-2 focus-visible:ring-primary', 'border border-input focus:border-primary')
+                  }} />
+                  <FormInput {...{
+                    label: t('auth.register.password_label'),
+                    id: "password",
+                    type: "password",
+                    placeholder: t('auth.register.password_placeholder'),
+                    register: step1Form.register("password"),
+                    error: step1Form.formState.errors.password,
+                    className: cn('focus-visible:ring-2 focus-visible:ring-primary', 'border border-input focus:border-primary')
+                  }} />
+                  <FormInput {...{
+                    label: t('auth.register.confirm_password_label'),
+                    id: "confirm_password",
+                    type: "password",
+                    placeholder: t('auth.register.confirm_password_placeholder'),
+                    register: step1Form.register("confirm_password"),
+                    error: step1Form.formState.errors.confirm_password,
+                    className: cn('focus-visible:ring-2 focus-visible:ring-primary', 'border border-input focus:border-primary')
+                  }} />
                   {error && <p className="text-red-500 text-sm">{error}</p>}
                 </div>
                 <Button disabled={isLoading || step1Form.formState.isSubmitting} className="w-full">
-                  {isLoading || step1Form.formState.isSubmitting ? (
-                    <>
-                      <Icons.spinner className="animate-spin w-4 h-4 mr-2" />
-                      {t('auth.register.sending')}
-                    </>
-                  ) : (
-                    t('auth.register.send_code')
-                  )}
+                  {isLoading ? <><Icons.spinner className="animate-spin w-4 h-4 mr-2" />{t('auth.register.sending')}</> : t('auth.register.send_code')}
                 </Button>
               </form>
             )}
@@ -254,47 +219,40 @@ export default function RegisterPage() {
               <form onSubmit={step2Form.handleSubmit(onStep2Submit)} className="space-y-4">
                 <p className="text-sm text-muted-foreground">{t('auth.register.enter_code')}</p>
                 <div className="grid w-full items-center gap-2">
-                  <Label htmlFor="code" className="text-primary">
-                    {t('auth.register.code_label')}
-                  </Label>
-                  <FormInput
-                    label={t('auth.register.code_label')}
-                    id="code"
-                    type="text"
-                    placeholder={t('auth.register.code_placeholder')}
-                    register={step2Form.register("code")}
-                    error={step2Form.formState.errors.code}
-                    className={cn('focus-visible:ring-2 focus-visible:ring-primary', 'border border-input focus:border-primary')}
-                  />
+                  <Label htmlFor="code" className="text-primary">{t('auth.register.code_label')}</Label>
+                  <FormInput {...{
+                    label: t('auth.register.code_label'),
+                    id: "code",
+                    type: "text",
+                    placeholder: t('auth.register.code_placeholder'),
+                    register: step2Form.register("code"),
+                    error: step2Form.formState.errors.code,
+                    className: cn('focus-visible:ring-2 focus-visible:ring-primary', 'border border-input focus:border-primary')
+                  }} />
                   {error && <p className="text-red-500 text-sm">{error}</p>}
                 </div>
                 <Button disabled={isLoading || step2Form.formState.isSubmitting} className="w-full">
-                  {isLoading || step2Form.formState.isSubmitting ? (
-                    <>
-                      <Icons.spinner className="animate-spin w-4 h-4 mr-2" />
-                      {t('auth.register.verifying')}
-                    </>
-                  ) : (
-                    t('auth.register.confirm')
-                  )}
+                  {isLoading ? <><Icons.spinner className="animate-spin w-4 h-4 mr-2" />{t('auth.register.verifying')}</> : t('auth.register.confirm')}
+                </Button>
+
+                {/* Кнопка повторной отправки кода */}
+                <Button
+                  type="button"
+                  onClick={handleResendCode}
+                  disabled={resendTimer > 0}
+                  variant="outline"
+                  className="w-full"
+                >
+                  {resendTimer > 0
+                    ? `${t('auth.register.resend_code')} (${resendTimer}s)`
+                    : t('auth.register.resend_code')}
                 </Button>
               </form>
             )}
           </CardContent>
         </motion.div>
       </div>
-      <ToastContainer
-        position="top-right"
-        autoClose={3000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme="colored"
-      />
+      <ToastContainer position="top-right" autoClose={3000} theme="colored" />
     </div>
   );
 }

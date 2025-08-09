@@ -112,7 +112,8 @@
     "verifying": "Tasdiqlanmoqda...",
     "success": "Ro‘yxatdan muvaffaqiyatli o‘tdingiz!",
     "error_generic": "Xatolik yuz berdi, qayta urinib ko‘ring",
-    "error_invalid_code": "Noto‘g‘ri kod yoki xatolik yuz berdi"
+    "error_invalid_code": "Noto‘g‘ri kod yoki xatolik yuz berdi",
+    "resend_code": "Kodni qayta yuborish"
   },
     "login": {
       "title": "Kirish",

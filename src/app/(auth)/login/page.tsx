@@ -11,7 +11,7 @@ import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Icons } from "@/components/icons";
 import { motion } from "framer-motion";
-import { EyeIcon, EyeOff, X } from "lucide-react";
+import { EyeIcon, EyeOff, KeyIcon, X } from "lucide-react";
 import Link from "next/link";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -270,14 +270,19 @@ export default function LoginPage() {
                 )}
               </Button>
             </form>
-            <div className="mt-4 text-center">
-              <Link
-                href="/forgot-password"
-                className="text-blue-500 hover:underline"
-              >
-                {t("auth.login.forgot_password")}
-              </Link>
-            </div>
+            <Link
+              href="/forgot-password"
+              className="text-text"
+            >
+              <div className="flex items-center gap-2 justify-center pb-[16px] border-b-1 hover:shadow-[0_5px_5px_-5px_#24d97e] rounded-full transition-all duration-200 ease-in-out">
+                <span>
+                  <KeyIcon />
+                </span>
+                <span>
+                  {t("auth.login.forgot_password")}
+                </span>
+              </div>
+            </Link>
             <div className="mt-6 flex justify-center">
               <GoogleLogin
                 onSuccess={handleGoogleSuccess}
