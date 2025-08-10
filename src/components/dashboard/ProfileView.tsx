@@ -827,7 +827,7 @@ export default function ProfileView() {
           phone: data.phone || "",
           email: data.email || "",
           location: data.location || "",
-          created_at: data.created_at || "",
+          created_at: data.date_joined || "",
         })
         setTempProfile({
           first_name: data.first_name || "",
@@ -838,7 +838,7 @@ export default function ProfileView() {
           phone: data.phone || "",
           email: data.email || "",
           location: data.location || "",
-          created_at: data.created_at || "",
+          created_at: data.date_joined || "",
         })
       } catch (error: any) {
         toast.error(error.response?.data?.detail || "Profil yuklanmadi.")
