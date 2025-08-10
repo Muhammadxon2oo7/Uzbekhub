@@ -726,6 +726,7 @@
 // }
 "use client"
 
+import dynamic from "next/dynamic"
 import { useState, useRef, useEffect, useCallback } from "react"
 import { motion } from "framer-motion"
 import { User, MapPin, Phone, Mail, Calendar, Edit3, Camera, Heart, MessageCircle, Users, Loader2, Check, X, Shield, LogOut } from "lucide-react"
@@ -743,9 +744,11 @@ import { toast } from "sonner"
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter, DialogTrigger } from "@/components/ui/dialog"
 import debounce from "lodash/debounce"
 import { useRouter } from "next/navigation"
-import L from "leaflet"
 import "leaflet/dist/leaflet.css"
 
+// Leaflet’ni to‘g‘ri tip bilan dinamik import qilish
+import * as L from "leaflet" // Oddiy import
+import "leaflet/dist/leaflet.css"
 interface Profile {
   first_name: string
   last_name: string
@@ -826,7 +829,7 @@ export default function ProfileView() {
           phone: data.phone || "",
           email: data.email || "",
           location: data.location || "",
-          created_at: data.date_joined || "",
+          created_at: data.created_at || "",
         })
         setTempProfile({
           first_name: data.first_name || "",
@@ -837,7 +840,7 @@ export default function ProfileView() {
           phone: data.phone || "",
           email: data.email || "",
           location: data.location || "",
-          created_at: data.date_joined || "",
+          created_at: data.created_at || "",
         })
       } catch (error: any) {
         toast.error(error.response?.data?.detail || "Profil yuklanmadi.")
@@ -1068,30 +1071,35 @@ export default function ProfileView() {
       const data = await response.json()
       return data.display_name || "Noma'lum joy"
     } catch (error) {
-      console.error("Error fetching location name:", error)
+      console.error("Joy nomini olishda xato:", error)
       return "Noma'lum joy"
     }
   }
 
   const initializeMap = (lat: number, lon: number, containerId: string = "map") => {
-    const container = document.getElementById(containerId)
-    if (!container || leafletMapRef.current) {
-      console.warn(`Map container "${containerId}" not found or map already initialized`)
+    if (typeof window === "undefined") {
+      console.warn("Xarita ishga tushmadi: window obyekti mavjud emas")
       return
     }
 
-    leafletMapRef.current = L.map(containerId, {
-      center: [lat, lon],
-      zoom: 13,
-      zoomControl: false,
-      attributionControl: false,
-    })
+    const container = document.getElementById(containerId)
+  if (!container || leafletMapRef.current) {
+    console.warn(`Xarita konteyneri "${containerId}" topilmadi yoki xarita allaqachon ishga tushirilgan`)
+    return
+  }
 
-    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-      attribution: "© OpenStreetMap contributors",
-    }).addTo(leafletMapRef.current)
+  leafletMapRef.current = L.map(containerId, {
+    center: [lat, lon],
+    zoom: 13,
+    zoomControl: false,
+    attributionControl: false,
+  })
 
-    L.marker([lat, lon]).addTo(leafletMapRef.current)
+  L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+    attribution: "© OpenStreetMap contributors",
+  }).addTo(leafletMapRef.current)
+
+  L.marker([lat, lon]).addTo(leafletMapRef.current)
   }
 
   const handleGetLocation = () => {
@@ -1100,13 +1108,20 @@ export default function ProfileView() {
 
   const handleLocationPermission = () => {
     setIsFetchingLocation(true)
+    if (typeof window === "undefined" || !navigator.geolocation) {
+      setIsFetchingLocation(false)
+      setIsLocationPermissionOpen(false)
+      toast.error("Joylashuvni aniqlash brauzerda qo‘llab-quvvatlanmaydi.")
+      return
+    }
+  
     navigator.geolocation.getCurrentPosition(
       async (position) => {
         const { latitude, longitude } = position.coords
         const locationName = await fetchLocationName(latitude, longitude)
         setDynamicLocation({ latitude, longitude, name: locationName })
         setTimeout(() => {
-          if (mapRef.current) {
+          if (mapRef.current && typeof window !== "undefined") {
             initializeMap(latitude, longitude, "map")
           }
         }, 100)
@@ -1125,7 +1140,7 @@ export default function ProfileView() {
 
   useEffect(() => {
     return () => {
-      if (leafletMapRef.current) {
+      if (typeof window !== "undefined" && leafletMapRef.current) {
         leafletMapRef.current.remove()
         leafletMapRef.current = null
       }
@@ -1322,16 +1337,37 @@ export default function ProfileView() {
                   </CardContent>
                 </Card>
 
-             
-
-                {/* <Card className="bg-white/5 border-white/10 backdrop-blur-[10px] mt-6 overflow-hidden">
+                <Card className="bg-white/5 border-white/10 backdrop-blur-[10px] mt-6">
                   <CardHeader>
-                    <CardTitle className="text-text flex items-center gap-2">
+                    <CardTitle className="text-text">Statistika</CardTitle>
+                  </CardHeader>
+                  <CardContent className="space-y-4">
+                    {stats.map((stat, index) => (
+                      <motion.div
+                        key={stat.label}
+                        initial={{ opacity: 0, x: -20 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ delay: index * 0.1 + 0.4 }}
+                        className="flex items-center justify-between"
+                      >
+                        <div className="flex items-center gap-3">
+                          <stat.icon className={`w-5 h-5 ${stat.color}`} />
+                          <span className="text-text">{stat.label}</span>
+                        </div>
+                        <span className="font-semibold text-text">{stat.value}</span>
+                      </motion.div>
+                    ))}
+                  </CardContent>
+                </Card>
+
+                <Card className="bg-white/5 border-white/10 backdrop-blur-[10px] mt-6 overflow-hidden shadow-lg rounded-xl">
+                  <CardHeader>
+                    <CardTitle className="text-text flex items-center gap-2 text-lg font-semibold">
                       <MapPin className="w-5 h-5 text-primary" />
                       JOYLASHUV
                     </CardTitle>
                   </CardHeader>
-                  <CardContent className="p-6">
+                  <CardContent className="p-4">
                     <motion.div
                       initial={{ opacity: 0, scale: 0.9 }}
                       animate={{ opacity: 1, scale: 1 }}
@@ -1340,13 +1376,13 @@ export default function ProfileView() {
                       {!dynamicLocation ? (
                         <motion.div
                           className="text-center"
-                          initial={{ y: 20 }}
-                          animate={{ y: 0 }}
+                          initial={{ y: 20, opacity: 0 }}
+                          animate={{ y: 0, opacity: 1 }}
                           transition={{ duration: 0.5 }}
                         >
                           <Button
                             onClick={handleGetLocation}
-                            className="bg-primary hover:bg-primary/80"
+                            className="bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary/60 text-white font-medium rounded-lg px-6 py-2 transition-all duration-300 ease-in-out shadow-md hover:shadow-xl"
                             disabled={isFetchingLocation}
                           >
                             {isFetchingLocation ? (
@@ -1363,33 +1399,46 @@ export default function ProfileView() {
                           animate={{ opacity: 1, scale: 1 }}
                           transition={{ duration: 0.5, ease: "easeOut" }}
                         >
-                          <a
-                            href={`https://www.google.com/maps?q=${dynamicLocation.latitude},${dynamicLocation.longitude}`}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="relative h-40 w-full rounded-lg overflow-hidden mb-4 block cursor-pointer"
-                          >
-                            <div
-                              ref={mapRef}
-                              id="map"
-                              className="h-full w-full"
-                              style={{ minHeight: "160px", zIndex: 1 }}
-                            ></div>
-                            <motion.div
-                              className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-2"
-                              initial={{ opacity: 0, y: 10 }}
-                              animate={{ opacity: 1, y: 0 }}
-                              transition={{ delay: 0.3, duration: 0.4 }}
-                            >
-                              <span className="text-white text-sm font-medium truncate">
-                                {dynamicLocation.name}
-                              </span>
-                            </motion.div>
-                          </a>
+                          <TooltipProvider>
+                            <Tooltip>
+                              <TooltipTrigger asChild>
+                                <a
+                                  href={`https://www.google.com/maps?q=${dynamicLocation.latitude},${dynamicLocation.longitude}`}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  className="relative h-48 w-full rounded-lg overflow-hidden mb-4 block cursor-pointer transition-transform duration-300 hover:scale-105 hover:shadow-2xl group"
+                                >
+                                  <div
+                                    ref={mapRef}
+                                    id="map"
+                                    className="h-full w-full bg-gray-200/50"
+                                    style={{ minHeight: "192px", zIndex: 1 }}
+                                  ></div>
+                                  <motion.div
+                                    className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-3 flex items-center gap-2"
+                                    initial={{ opacity: 0, y: 15 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    transition={{ delay: 0.3, duration: 0.4 }}
+                                  >
+                                    <MapPin className="w-4 h-4 text-white flex-shrink-0" />
+                                    <span className="text-white text-sm font-semibold truncate tracking-wide">
+                                      {dynamicLocation.name}
+                                    </span>
+                                  </motion.div>
+                                  <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                                    <span className="text-white text-sm font-medium">Google Maps’da ochish</span>
+                                  </div>
+                                </a>
+                              </TooltipTrigger>
+                              <TooltipContent className="bg-black/90 text-white p-2 rounded-md">
+                                Google Maps’da ochish
+                              </TooltipContent>
+                            </Tooltip>
+                          </TooltipProvider>
                           <Button
                             onClick={() => setDynamicLocation(null)}
                             variant="outline"
-                            className="w-full"
+                            className="w-full bg-gradient-to-r from-gray-700/50 to-gray-600/50 hover:from-gray-600/50 hover:to-gray-500/50 text-white border-white/20 rounded-lg py-2 transition-all duration-300 ease-in-out"
                           >
                             Joylashuvni o'chirish
                           </Button>
@@ -1397,92 +1446,7 @@ export default function ProfileView() {
                       )}
                     </motion.div>
                   </CardContent>
-                </Card> */}
-                <Card className="bg-white/5 border-white/10 backdrop-blur-[10px] mt-6 overflow-hidden shadow-lg rounded-xl">
-  <CardHeader>
-    <CardTitle className="text-text flex items-center gap-1 text-lg font-semibold">
-      <MapPin className="w-5 h-5 text-primary" />
-      JOYLASHUV
-    </CardTitle>
-  </CardHeader>
-  <CardContent className="">
-    <motion.div
-      initial={{ opacity: 0, scale: 0.9 }}
-      animate={{ opacity: 1, scale: 1 }}
-      transition={{ duration: 0.5, ease: "easeOut" }}
-    >
-      {!dynamicLocation ? (
-        <motion.div
-          className="text-center"
-          initial={{ y: 20, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ duration: 0.5 }}
-        >
-          <Button
-            onClick={handleGetLocation}
-            className="bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary/60 text-white font-medium rounded-lg px-6 py-2 transition-all duration-300 ease-in-out shadow-md hover:shadow-xl"
-            disabled={isFetchingLocation}
-          >
-            {isFetchingLocation ? (
-              <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-            ) : (
-              <MapPin className="w-4 h-4 mr-2" />
-            )}
-            Joylashuvni aniqlash
-          </Button>
-        </motion.div>
-      ) : (
-        <motion.div
-          initial={{ opacity: 0, scale: 0.95 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.5, ease: "easeOut" }}
-        >
-          <TooltipProvider>
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <a
-                  href={`https://www.google.com/maps?q=${dynamicLocation.latitude},${dynamicLocation.longitude}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="relative h-48 w-full rounded-lg overflow-hidden mb-4 block cursor-pointer transition-transform duration-300 hover:scale-105 hover:shadow-2xl"
-                >
-                  <div
-                    ref={mapRef}
-                    id="map"
-                    className="h-full w-full"
-                    style={{ minHeight: "192px", zIndex: 1 }}
-                  ></div>
-                  <motion.div
-                    className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-3 flex items-center gap-2"
-                    initial={{ opacity: 0, y: 15 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.3, duration: 0.4 }}
-                  >
-                    <MapPin className="w-4 h-4 text-white" />
-                    <span className="text-white text-sm font-semibold truncate tracking-wide">
-                      {dynamicLocation.name}
-                    </span>
-                  </motion.div>
-                </a>
-              </TooltipTrigger>
-              <TooltipContent className="bg-black/90 text-white p-2 rounded-md">
-                Google Maps’da ochish
-              </TooltipContent>
-            </Tooltip>
-          </TooltipProvider>
-          <Button
-            onClick={() => setDynamicLocation(null)}
-            variant="outline"
-            className="w-full bg-gradient-to-r from-gray-700/50 to-gray-600/50 hover:from-gray-600/50 hover:to-gray-500/50 text-white border-white/20 rounded-lg py-2 transition-all duration-300 ease-in-out"
-          >
-            Joylashuvni o'chirish
-          </Button>
-        </motion.div>
-      )}
-    </motion.div>
-  </CardContent>
-</Card>
-                
+                </Card>
               </motion.div>
 
               <motion.div
