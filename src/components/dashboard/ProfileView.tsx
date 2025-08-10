@@ -271,7 +271,7 @@ export default function ProfileView() {
     }
 
 
-    if (!/^\d{6}$/.test(emailVerifyCode)) {
+    if (!/^\d{5}$/.test(emailVerifyCode)) {
       toast.error("Tasdiqlash kodi 6 raqamdan iborat bo'lishi kerak.")
       return
     }
