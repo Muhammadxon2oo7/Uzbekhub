@@ -24,9 +24,10 @@ import {
 import { Button } from "@/components/ui/button"
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar"
 import { Badge } from "@/components/ui/badge"
-import type { DashboardView } from "@/app/main/page"
+
 import { getProfile } from "@/lib/api" 
 import { toast } from "sonner"
+import { DashboardView } from "./Main"
 
 interface DashboardSidebarProps {
   activeView: DashboardView
