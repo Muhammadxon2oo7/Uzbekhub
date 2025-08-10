@@ -131,7 +131,7 @@ export default function LoginPage() {
           className: "bg-green-500 text-white rounded-lg shadow-lg",
         });
         localStorage.setItem("token", result.token.access);
-        setTimeout(() => router.push("/main?tab=profile"), 1500);
+        setTimeout(() => router.push("/main?tab=profile"), 500);
       }
     } catch (err: any) {
       const errorMessage = getErrorMessage(err);
@@ -178,7 +178,8 @@ export default function LoginPage() {
         theme: "colored",
         className: "bg-green-500 text-white rounded-lg shadow-lg",
       });
-      setTimeout(() => router.push("/profile"), 1500);
+      setTimeout(() => router.push("/main?tab=profile"), 500);
+
     } catch (error) {
       const errorMessage = getErrorMessage(error);
       setError(errorMessage);
