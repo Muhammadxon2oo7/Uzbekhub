@@ -6,6 +6,8 @@ import { Camera, Plus, Play, Pause, Volume2, VolumeX, Heart, Send, X } from "luc
 import { Button } from "@/components/ui/button"
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar"
 import { Input } from "@/components/ui/input"
+import { Dialog, DialogContent, DialogTitle } from "@radix-ui/react-dialog"
+import { DialogHeader } from "../ui/dialog"
 
 export default function StoriesView() {
   const [selectedStory, setSelectedStory] = useState<string | null>(null)
@@ -16,6 +18,10 @@ export default function StoriesView() {
   const [replyText, setReplyText] = useState("")
   const cardRef = useRef<HTMLDivElement>(null)
   const spotRef = useRef<HTMLDivElement>(null)
+
+  const [isPosting, setIsPosting] = useState(false)
+  const [storyImage, setStoryImage] = useState<File | null>(null)
+  const [storyText, setStoryText] = useState("")
 
   // Mock stories data
   const stories = [
@@ -144,6 +150,7 @@ export default function StoriesView() {
     if (storyId === "my") {
       // Open camera for new story
       console.log("Yangi hikoya yaratish")
+      setIsPosting(true)
       return
     }
     setSelectedStory(storyId)
@@ -168,8 +175,41 @@ export default function StoriesView() {
   const currentUser = stories.find((s) => s.id === selectedStory)
   const currentStoryData = currentUser?.stories[currentStoryIndex]
 
+  const pulishStories = () => {
+    if (storyText.trim()) {
+      console.log("Hikoya yuborish:", storyImage, storyText)
+    }
+  }
+
   return (
     <div className="h-full">
+        <Dialog open={isPosting} onOpenChange={setIsPosting}>
+          <DialogContent>
+            <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center">
+              <div className="p-[20px] min-w-[440px] bg-black rounded-lg">
+                <h2 className="text-lg font-bold text-white">Yangi hikoya</h2>
+                <p className="text-sm text-gray-400">Hikoyangizni qo'shing</p>
+                <div className="mt-4">
+                  <Input onChange={(e) => setStoryImage(e.target.files?.[0] || null)} type="file" accept="image/*" className="h-[440px] mb-[16px]" />
+                  <Input
+                    placeholder="Hikoya matni..."
+                    value={storyText}
+                    onChange={(e) => setStoryText(e.target.value)}
+                    className="bg-white/10 border-white/20 text-white placeholder:text-white/50"
+                  />
+                  <div>
+                    <Button onClick={pulishStories} className="mt-4">
+                      Yuborish
+                    </Button>
+                    <Button variant="outline" className="mt-4 ml-2" onClick={() => setIsPosting(false)}>
+                      Bekor qilish
+                    </Button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </DialogContent>
+        </Dialog>
       <motion.div
         ref={cardRef}
         initial={{ opacity: 0, y: 20 }}

@@ -469,8 +469,9 @@ export default function ProfileView() {
                                     <Input
                                       value={newUsername}
                                       onChange={(e) => {
-                                        setNewUsername(e.target.value)
-                                        checkUsernameAvailability(e.target.value)
+                                        const value = e.target.value.toLowerCase();
+                                        setNewUsername(value);
+                                        checkUsernameAvailability(value);
                                       }}
                                       className={`bg-white/5 border-white/20 text-text ${
                                         usernameStatus === "taken" ? "border-red-500" : usernameStatus === "available" ? "border-green-500" : ""

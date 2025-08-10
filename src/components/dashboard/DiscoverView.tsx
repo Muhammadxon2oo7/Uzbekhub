@@ -16,7 +16,7 @@ export default function DiscoverView() {
   const cardRef = useRef<HTMLDivElement>(null)
   const spotRef = useRef<HTMLDivElement>(null)
 
-  // Mock nearby users data
+  // Mock nearby users data 
   const nearbyUsers = [
     {
       id: "1",
