@@ -167,7 +167,7 @@ export default function LoginPage() {
           secure: true, // только HTTPS
           sameSite: "strict", // безопаснее
         });
-      localStorage.setItem("refresh", refresh);
+      localStorage.setItem("token", access);
       toast.success(t("auth.login.google_success"), {
         position: "top-right",
         autoClose: 2000,
