@@ -130,7 +130,8 @@ export default function LoginPage() {
           theme: "colored",
           className: "bg-green-500 text-white rounded-lg shadow-lg",
         });
-        setTimeout(() => router.push("/profile"), 1500);
+        localStorage.setItem("token", result.token.access);
+        setTimeout(() => router.push("/main?tab=profile"), 1500);
       }
     } catch (err: any) {
       const errorMessage = getErrorMessage(err);

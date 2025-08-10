@@ -1,3 +1,5 @@
+
+
 "use client"
 
 import { useRef, useEffect, useState } from "react"
@@ -17,11 +19,14 @@ import {
   Phone,
   Sparkles,
   Zap,
+  Loader2,
 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar"
 import { Badge } from "@/components/ui/badge"
 import type { DashboardView } from "@/app/main/page"
+import { getProfile } from "@/lib/api" 
+import { toast } from "sonner"
 
 interface DashboardSidebarProps {
   activeView: DashboardView
@@ -39,16 +44,16 @@ export default function DashboardSidebar({
   const sidebarRef = useRef<HTMLDivElement>(null)
   const spotRef = useRef<HTMLDivElement>(null)
   const [currentTime, setCurrentTime] = useState(new Date())
-
-  // Mock user data
-  const user = {
-    name: "Aziz Karimov",
-    username: "@azizkarimov",
-    avatar: "/placeholder.svg?height=40&width=40",
-    location: "Toshkent, O'zbekiston",
-    status: "Faol",
+  const [isLoading, setIsLoading] = useState(true)
+  const [user, setUser] = useState({
+    first_name: "",
+    last_name: "",
+    username: "",
+    profile_picture: "",
+    location: "",
+    status: "Faol", 
     mood: "😊",
-  }
+  })
 
   const menuItems = [
     { id: "chat", icon: MessageCircle, label: "Suhbatlar", badge: 5, color: "text-blue-400" },
@@ -61,13 +66,44 @@ export default function DashboardSidebar({
     { id: "settings", icon: Settings, label: "Sozlamalar", color: "text-gray-400" },
   ]
 
-  // Update time every minute
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      const token = localStorage.getItem("token")
+      if (!token) {
+        toast.error("No token found. Please sign in.",{duration: 5000 , position: "top-center" , icon: "🚨"} )
+        setIsLoading(false)
+        return
+      }
+
+      try {
+        const response = await getProfile(token)
+        const data = response.data
+        setUser({
+          first_name: data.first_name || "",
+          last_name: data.last_name || "",
+          username: data.username || "",
+          profile_picture: data.profile_picture || "",
+          location: data.location || "Toshkent, O'zbekiston",
+          status: "Faol",
+          mood: "😊",
+        })
+      } catch (error) {
+        toast("Failed to load user data.", { duration: 5000 , position: "top-center", icon: "🚨" })
+      } finally {
+        setIsLoading(false)
+      }
+    }
+
+    fetchUser()
+  }, [])
+
   useEffect(() => {
     const timer = setInterval(() => setCurrentTime(new Date()), 60000)
     return () => clearInterval(timer)
   }, [])
 
-  // Glass morphism hover effect
+
   useEffect(() => {
     const sidebar = sidebarRef.current
     const spot = spotRef.current
@@ -96,6 +132,16 @@ export default function DashboardSidebar({
     }
   }, [collapsed])
 
+  if (isLoading) {
+    return (
+      <div className="fixed left-0 top-0 h-screen bg-[#f7f7f726] backdrop-blur-[20px] border-r border-white/20 z-40 flex items-center justify-center w-64">
+        <Loader2 className="w-8 h-8 animate-spin text-primary" />
+      </div>
+    )
+  }
+
+  const fullName = `${user.first_name} ${user.last_name}`.trim()
+
   return (
     <motion.div
       ref={sidebarRef}
@@ -104,7 +150,7 @@ export default function DashboardSidebar({
       transition={{ duration: 0.4, ease: "easeInOut" }}
       className="fixed left-0 top-0 h-screen bg-[#f7f7f726] backdrop-blur-[20px] border-r border-white/20 z-40 overflow-hidden"
     >
-      {/* Animated background particles */}
+ 
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         {[...Array(6)].map((_, i) => (
           <motion.div
@@ -128,14 +174,14 @@ export default function DashboardSidebar({
         ))}
       </div>
 
-      {/* Hover spot effect */}
+    
       <div
         ref={spotRef}
         className="pointer-events-none absolute w-32 h-32 rounded-full bg-gradient-to-r from-primary/20 to-purple-500/20 blur-2xl opacity-0 transition-opacity duration-300 z-0"
       />
 
       <div className="relative z-10 p-4 h-full flex flex-col">
-        {/* Header */}
+
         <div className="flex items-center justify-between mb-6">
           {!collapsed && (
             <motion.div
@@ -172,7 +218,6 @@ export default function DashboardSidebar({
           </Button>
         </div>
 
-        {/* User Profile */}
         {!collapsed && (
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -182,8 +227,8 @@ export default function DashboardSidebar({
             <div className="flex items-center gap-3">
               <div className="relative">
                 <Avatar className="w-12 h-12 ring-2 ring-primary/30">
-                  <AvatarImage src={user.avatar || "/placeholder.svg"} />
-                  <AvatarFallback>{user.name[0]}</AvatarFallback>
+                  <AvatarImage src={'https://api.rozievich.uz/'+user.profile_picture || "/placeholder.svg"} />
+                  <AvatarFallback>{user.first_name[0] || "U"}</AvatarFallback>
                 </Avatar>
                 <motion.div
                   className="absolute -bottom-1 -right-1 w-4 h-4 bg-green-500 rounded-full border-2 border-white"
@@ -193,8 +238,8 @@ export default function DashboardSidebar({
                 <div className="absolute -top-1 -right-1 text-lg">{user.mood}</div>
               </div>
               <div className="flex-1 min-w-0">
-                <h3 className="font-semibold text-text truncate">{user.name}</h3>
-                <p className="text-sm text-gray-300 truncate">{user.username}</p>
+                <h3 className="font-semibold text-text truncate">{fullName}</h3>
+                <p className="text-sm text-gray-300 truncate">@{user.username}</p>
                 <div className="flex items-center gap-1 text-xs text-gray-400">
                   <MapPin className="w-3 h-3" />
                   <span className="truncate">{user.location}</span>
@@ -214,7 +259,7 @@ export default function DashboardSidebar({
           </motion.div>
         )}
 
-        {/* Navigation */}
+       
         <nav className="flex-1 space-y-2">
           {menuItems.map((item, index) => (
             <motion.div
@@ -272,7 +317,6 @@ export default function DashboardSidebar({
           </motion.div>
         )}
 
-     
         {!collapsed && (
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="mt-4 pt-4 border-t border-white/10">
             <div className="text-center text-xs text-gray-400">
