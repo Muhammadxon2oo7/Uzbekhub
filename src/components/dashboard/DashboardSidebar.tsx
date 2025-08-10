@@ -141,7 +141,7 @@ export default function DashboardSidebar({
     )
   }
 
-  const fullName = `${user.first_name} ${user.last_name}`.trim()
+  const fullName = `${user.first_name}`.trim()
 
   return (
     <motion.div
@@ -220,45 +220,47 @@ export default function DashboardSidebar({
         </div>
 
         {!collapsed && (
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="bg-gradient-to-br from-white/10 to-white/5 rounded-xl p-4 mb-6 border border-white/20 backdrop-blur-sm"
-          >
-            <div className="flex items-center gap-3">
-              <div className="relative">
-                <Avatar className="w-12 h-12 ring-2 ring-primary/30">
-                  <AvatarImage src={'https://api.rozievich.uz/'+user.profile_picture || "/placeholder.svg"} />
-                  <AvatarFallback>{user.first_name[0] || "U"}</AvatarFallback>
-                </Avatar>
-                <motion.div
-                  className="absolute -bottom-1 -right-1 w-4 h-4 bg-green-500 rounded-full border-2 border-white"
-                  animate={{ scale: [1, 1.1, 1] }}
-                  transition={{ duration: 2, repeat: Number.POSITIVE_INFINITY }}
-                />
-                <div className="absolute -top-1 -right-1 text-lg">{user.mood}</div>
-              </div>
-              <div className="flex-1 min-w-0">
-                <h3 className="font-semibold text-text truncate">{fullName}</h3>
-                <p className="text-sm text-gray-300 truncate">@{user.username}</p>
-                <div className="flex items-center gap-1 text-xs text-gray-400">
-                  <MapPin className="w-3 h-3" />
-                  <span className="truncate">{user.location}</span>
-                </div>
-              </div>
-            </div>
-            <div className="mt-3 flex items-center gap-2">
-              <Badge className="bg-green-500/20 text-green-400 border-green-500/30 text-xs">
-                <Zap className="w-3 h-3 mr-1" />
-                {user.status}
-              </Badge>
-              <Badge className="bg-purple-500/20 text-purple-400 border-purple-500/30 text-xs">
-                <Sparkles className="w-3 h-3 mr-1" />
-                Pro
-              </Badge>
-            </div>
-          </motion.div>
-        )}
+  <motion.div
+    initial={{ opacity: 0, y: 20 }}
+    animate={{ opacity: 1, y: 0 }}
+    className="bg-gradient-to-br from-white/10 to-white/5 rounded-xl p-4 mb-6 border border-white/20 backdrop-blur-sm cursor-pointer hover:bg-white/10 transition"
+    onClick={() => setActiveView("profile")} // 🔹 Bosilganda profile ochiladi
+  >
+    <div className="flex items-center gap-3">
+      <div className="relative">
+        <Avatar className="w-12 h-12 ring-2 ring-primary/30">
+          <AvatarImage src={'https://api.rozievich.uz/' + user.profile_picture || "/placeholder.svg"} />
+          <AvatarFallback>{user.first_name[0] || "U"}</AvatarFallback>
+        </Avatar>
+        <motion.div
+          className="absolute -bottom-1 -right-1 w-4 h-4 bg-green-500 rounded-full border-2 border-white"
+          animate={{ scale: [1, 1.1, 1] }}
+          transition={{ duration: 2, repeat: Number.POSITIVE_INFINITY }}
+        />
+        <div className="absolute -top-1 -right-1 text-lg">{user.mood}</div>
+      </div>
+      <div className="flex-1 min-w-0">
+        <h3 className="font-semibold text-text truncate">{fullName}</h3>
+        <p className="text-sm text-gray-300 truncate">@{user.username}</p>
+        <div className="flex items-center gap-1 text-xs text-gray-400">
+          <MapPin className="w-3 h-3" />
+          <span className="truncate">{user.location}</span>
+        </div>
+      </div>
+    </div>
+    <div className="mt-3 flex items-center gap-2">
+      {/* <Badge className="bg-green-500/20 text-green-400 border-green-500/30 text-xs">
+        <Zap className="w-3 h-3 mr-1" />
+        {user.status}
+      </Badge> */}
+      {/* <Badge className="bg-purple-500/20 text-purple-400 border-purple-500/30 text-xs">
+        <Sparkles className="w-3 h-3 mr-1" />
+        Pro
+      </Badge> */}
+    </div>
+  </motion.div>
+)}
+
 
        
         <nav className="flex-1 space-y-2">
