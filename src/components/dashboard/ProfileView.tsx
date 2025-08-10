@@ -724,10 +724,12 @@
 //     </TooltipProvider>
 //   )
 // }
+
 "use client"
 
-import dynamic from "next/dynamic"
 import { useState, useRef, useEffect, useCallback } from "react"
+import * as L from "leaflet"
+import "leaflet/dist/leaflet.css"
 import { motion } from "framer-motion"
 import { User, MapPin, Phone, Mail, Calendar, Edit3, Camera, Heart, MessageCircle, Users, Loader2, Check, X, Shield, LogOut } from "lucide-react"
 import { Button } from "@/components/ui/button"
@@ -744,11 +746,7 @@ import { toast } from "sonner"
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter, DialogTrigger } from "@/components/ui/dialog"
 import debounce from "lodash/debounce"
 import { useRouter } from "next/navigation"
-import "leaflet/dist/leaflet.css"
 
-// Leaflet’ni to‘g‘ri tip bilan dinamik import qilish
-import * as L from "leaflet" // Oddiy import
-import "leaflet/dist/leaflet.css"
 interface Profile {
   first_name: string
   last_name: string
@@ -1083,23 +1081,23 @@ export default function ProfileView() {
     }
 
     const container = document.getElementById(containerId)
-  if (!container || leafletMapRef.current) {
-    console.warn(`Xarita konteyneri "${containerId}" topilmadi yoki xarita allaqachon ishga tushirilgan`)
-    return
-  }
+    if (!container || leafletMapRef.current) {
+      console.warn(`Xarita konteyneri "${containerId}" topilmadi yoki xarita allaqachon ishga tushirilgan`)
+      return
+    }
 
-  leafletMapRef.current = L.map(containerId, {
-    center: [lat, lon],
-    zoom: 13,
-    zoomControl: false,
-    attributionControl: false,
-  })
+    leafletMapRef.current = L.map(containerId, {
+      center: [lat, lon],
+      zoom: 13,
+      zoomControl: false,
+      attributionControl: false,
+    })
 
-  L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-    attribution: "© OpenStreetMap contributors",
-  }).addTo(leafletMapRef.current)
+    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+      attribution: "© OpenStreetMap contributors",
+    }).addTo(leafletMapRef.current)
 
-  L.marker([lat, lon]).addTo(leafletMapRef.current)
+    L.marker([lat, lon]).addTo(leafletMapRef.current)
   }
 
   const handleGetLocation = () => {
@@ -1114,17 +1112,19 @@ export default function ProfileView() {
       toast.error("Joylashuvni aniqlash brauzerda qo‘llab-quvvatlanmaydi.")
       return
     }
-  
+
     navigator.geolocation.getCurrentPosition(
       async (position) => {
         const { latitude, longitude } = position.coords
         const locationName = await fetchLocationName(latitude, longitude)
         setDynamicLocation({ latitude, longitude, name: locationName })
-        setTimeout(() => {
-          if (mapRef.current && typeof window !== "undefined") {
-            initializeMap(latitude, longitude, "map")
-          }
-        }, 100)
+        if (typeof window !== "undefined") {
+          setTimeout(() => {
+            if (mapRef.current) {
+              initializeMap(latitude, longitude, "map")
+            }
+          }, 100)
+        }
         setIsLocationPermissionOpen(false)
         setIsFetchingLocation(false)
         toast.success("Joylashuv muvaffaqiyatli aniqlandi.")
@@ -1337,7 +1337,7 @@ export default function ProfileView() {
                   </CardContent>
                 </Card>
 
-                <Card className="bg-white/5 border-white/10 backdrop-blur-[10px] mt-6">
+                {/* <Card className="bg-white/5 border-white/10 backdrop-blur-[10px] mt-6">
                   <CardHeader>
                     <CardTitle className="text-text">Statistika</CardTitle>
                   </CardHeader>
@@ -1358,7 +1358,7 @@ export default function ProfileView() {
                       </motion.div>
                     ))}
                   </CardContent>
-                </Card>
+                </Card> */}
 
                 <Card className="bg-white/5 border-white/10 backdrop-blur-[10px] mt-6 overflow-hidden shadow-lg rounded-xl">
                   <CardHeader>
