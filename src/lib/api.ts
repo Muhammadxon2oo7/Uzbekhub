@@ -120,3 +120,18 @@ export const resetPassword = async (token: string, data: { new_password: string;
   console.log("Reset password so‘rovi:", { token, data });
   return api.post(`/accounts/auth/reset-password/${token}/`, data);
 };
+// api.ts
+export const getAllUsers = async (token: any) => {
+  return api.get("/accounts/admin/user", {
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  });
+};
+export const getUserById = async (id: string | number, token: string) => {
+  return api.get(`/accounts/admin/user/${id}`, {
+    headers:  {
+      Authorization: `Bearer ${token}`
+    }
+  });
+};

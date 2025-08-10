@@ -434,6 +434,7 @@ export default function LoginPage() {
     try {
       const response = await signIn(data);
       const result: LoginResponse = response.data;
+      console.log("Login response:", result);
       if (result.error) {
         setError(result.error);
         toast.error(result.error);
