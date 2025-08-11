@@ -188,5 +188,17 @@
     "email": "Your Email (optional)",
     "send": "Send",
     "faq_title": "Frequently asked questions"
+  },
+  "dashboard": {
+    "tabs": {
+      "chat": "Chats",
+      "stories": "Stories",
+      "calls": "Calls",
+      "groups": "Groups",
+      "discover": "Discover",
+      "donate": "Donate",
+      "profile": "Profile",
+      "settings": "Settings"
+    }
   }
 }
