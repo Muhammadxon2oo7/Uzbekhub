@@ -1,5 +1,3 @@
-
-
 "use client"
 
 import { useRef, useEffect, useState } from "react"
@@ -17,17 +15,15 @@ import {
   Bell,
   Camera,
   Phone,
-  Sparkles,
-  Zap,
   Loader2,
 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar"
 import { Badge } from "@/components/ui/badge"
-
-import { getProfile } from "@/lib/api" 
+import { getProfile } from "@/lib/api"
 import { toast } from "sonner"
 import { DashboardView } from "./Main"
+import { useRouter, useSearchParams } from "next/navigation"
 
 interface DashboardSidebarProps {
   activeView: DashboardView
@@ -52,9 +48,12 @@ export default function DashboardSidebar({
     username: "",
     profile_picture: "",
     location: "",
-    status: "Faol", 
+    status: "Faol",
     mood: "😊",
   })
+
+  const router = useRouter()
+  const searchParams = useSearchParams()
 
   const menuItems = [
     { id: "chat", icon: MessageCircle, label: "Suhbatlar", badge: 5, color: "text-blue-400" },
@@ -67,12 +66,19 @@ export default function DashboardSidebar({
     { id: "settings", icon: Settings, label: "Sozlamalar", color: "text-gray-400" },
   ]
 
+  useEffect(() => {
+    // Автоматически активируем таб из URL при загрузке
+    const tab = searchParams.get("tab") as DashboardView | null
+    if (tab) {
+      setActiveView(tab)
+    }
+  }, [searchParams, setActiveView])
 
   useEffect(() => {
     const fetchUser = async () => {
       const token = localStorage.getItem("token")
       if (!token) {
-        toast.error("No token found. Please sign in.",{duration: 5000 , position: "top-center" , icon: "🚨"} )
+        toast.error("No token found. Please sign in.", { duration: 5000, position: "top-center", icon: "🚨" })
         setIsLoading(false)
         return
       }
@@ -90,7 +96,7 @@ export default function DashboardSidebar({
           mood: "😊",
         })
       } catch (error) {
-        toast("Failed to load user data.", { duration: 5000 , position: "top-center", icon: "🚨" })
+        toast("Failed to load user data.", { duration: 5000, position: "top-center", icon: "🚨" })
       } finally {
         setIsLoading(false)
       }
@@ -103,7 +109,6 @@ export default function DashboardSidebar({
     const timer = setInterval(() => setCurrentTime(new Date()), 60000)
     return () => clearInterval(timer)
   }, [])
-
 
   useEffect(() => {
     const sidebar = sidebarRef.current
@@ -151,7 +156,6 @@ export default function DashboardSidebar({
       transition={{ duration: 0.4, ease: "easeInOut" }}
       className="fixed left-0 top-0 h-screen bg-[#f7f7f726] backdrop-blur-[20px] border-r border-white/20 z-40 overflow-hidden"
     >
- 
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         {[...Array(6)].map((_, i) => (
           <motion.div
@@ -175,21 +179,15 @@ export default function DashboardSidebar({
         ))}
       </div>
 
-    
       <div
         ref={spotRef}
         className="pointer-events-none absolute w-32 h-32 rounded-full bg-gradient-to-r from-primary/20 to-purple-500/20 blur-2xl opacity-0 transition-opacity duration-300 z-0"
       />
 
       <div className="relative z-10 p-4 h-full flex flex-col">
-
         <div className="flex items-center justify-between mb-6">
           {!collapsed && (
-            <motion.div
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: 1, scale: 1 }}
-              className="flex items-center gap-2"
-            >
+            <motion.div initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }} className="flex items-center gap-2">
               <div className="relative">
                 <MessageCircle className="w-8 h-8 text-primary" />
                 <motion.div
@@ -220,57 +218,43 @@ export default function DashboardSidebar({
         </div>
 
         {!collapsed && (
-  <motion.div
-    initial={{ opacity: 0, y: 20 }}
-    animate={{ opacity: 1, y: 0 }}
-    className="bg-gradient-to-br from-white/10 to-white/5 rounded-xl p-4 mb-6 border border-white/20 backdrop-blur-sm cursor-pointer hover:bg-white/10 transition"
-    onClick={() => setActiveView("profile")} // 🔹 Bosilganda profile ochiladi
-  >
-    <div className="flex items-center gap-3">
-      <div className="relative">
-        <Avatar className="w-12 h-12 ring-2 ring-primary/30">
-          <AvatarImage src={'https://api.rozievich.uz/' + user.profile_picture || "/placeholder.svg"} />
-          <AvatarFallback>{user.first_name[0] || "U"}</AvatarFallback>
-        </Avatar>
-        <motion.div
-          className="absolute -bottom-1 -right-1 w-4 h-4 bg-green-500 rounded-full border-2 border-white"
-          animate={{ scale: [1, 1.1, 1] }}
-          transition={{ duration: 2, repeat: Number.POSITIVE_INFINITY }}
-        />
-        <div className="absolute -top-1 -right-1 text-lg">{user.mood}</div>
-      </div>
-      <div className="flex-1 min-w-0">
-        <h3 className="font-semibold text-text truncate">{fullName}</h3>
-        <p className="text-sm text-gray-300 truncate">@{user.username}</p>
-        <div className="flex items-center gap-1 text-xs text-gray-400">
-          <MapPin className="w-3 h-3" />
-          <span className="truncate">{user.location}</span>
-        </div>
-      </div>
-    </div>
-    <div className="mt-3 flex items-center gap-2">
-      {/* <Badge className="bg-green-500/20 text-green-400 border-green-500/30 text-xs">
-        <Zap className="w-3 h-3 mr-1" />
-        {user.status}
-      </Badge> */}
-      {/* <Badge className="bg-purple-500/20 text-purple-400 border-purple-500/30 text-xs">
-        <Sparkles className="w-3 h-3 mr-1" />
-        Pro
-      </Badge> */}
-    </div>
-  </motion.div>
-)}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="bg-gradient-to-br from-white/10 to-white/5 rounded-xl p-4 mb-6 border border-white/20 backdrop-blur-sm cursor-pointer hover:bg-white/10 transition"
+            onClick={() => {
+              setActiveView("profile")
+              router.push("/main?tab=profile")
+            }}
+          >
+            <div className="flex items-center gap-3">
+              <div className="relative">
+                <Avatar className="w-12 h-12 ring-2 ring-primary/30">
+                  <AvatarImage src={'https://api.rozievich.uz/' + user.profile_picture || "/placeholder.svg"} />
+                  <AvatarFallback>{user.first_name[0] || "U"}</AvatarFallback>
+                </Avatar>
+                <motion.div
+                  className="absolute -bottom-1 -right-1 w-4 h-4 bg-green-500 rounded-full border-2 border-white"
+                  animate={{ scale: [1, 1.1, 1] }}
+                  transition={{ duration: 2, repeat: Number.POSITIVE_INFINITY }}
+                />
+                <div className="absolute -top-1 -right-1 text-lg">{user.mood}</div>
+              </div>
+              <div className="flex-1 min-w-0">
+                <h3 className="font-semibold text-text truncate">{fullName}</h3>
+                <p className="text-sm text-gray-300 truncate">@{user.username}</p>
+                <div className="flex items-center gap-1 text-xs text-gray-400">
+                  <MapPin className="w-3 h-3" />
+                  <span className="truncate">{user.location}</span>
+                </div>
+              </div>
+            </div>
+          </motion.div>
+        )}
 
-
-       
         <nav className="flex-1 space-y-2">
           {menuItems.map((item, index) => (
-            <motion.div
-              key={item.id}
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: index * 0.1 }}
-            >
+            <motion.div key={item.id} initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: index * 0.1 }}>
               <Button
                 variant={activeView === item.id ? "secondary" : "ghost"}
                 className={`w-full justify-start gap-3 h-12 transition-all duration-300 group ${
@@ -278,12 +262,13 @@ export default function DashboardSidebar({
                     ? "bg-gradient-to-r from-primary/30 to-purple-500/20 text-primary border border-primary/30 shadow-lg"
                     : "hover:bg-white/10 text-text hover:scale-105"
                 } ${collapsed ? "px-3" : "px-4"}`}
-                onClick={() => setActiveView(item.id as DashboardView)}
+                onClick={() => {
+                  setActiveView(item.id as DashboardView)
+                  router.push(`/main?tab=${item.id}`)
+                }}
               >
                 <motion.div whileHover={{ rotate: 360 }} transition={{ duration: 0.5 }}>
-                  <item.icon
-                    className={`w-5 h-5 flex-shrink-0 ${item.color} group-hover:scale-110 transition-transform`}
-                  />
+                  <item.icon className={`w-5 h-5 flex-shrink-0 ${item.color} group-hover:scale-110 transition-transform`} />
                 </motion.div>
                 {!collapsed && (
                   <>
@@ -303,31 +288,6 @@ export default function DashboardSidebar({
             </motion.div>
           ))}
         </nav>
-
-        {!collapsed && (
-          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="mt-6 space-y-2">
-            <Button variant="ghost" className="w-full justify-start gap-3 h-10 hover:bg-white/10 text-text group">
-              <Search className="w-4 h-4 group-hover:scale-110 transition-transform" />
-              <span>Qidirish</span>
-            </Button>
-            <Button variant="ghost" className="w-full justify-start gap-3 h-10 hover:bg-white/10 text-text group">
-              <Bell className="w-4 h-4 group-hover:scale-110 transition-transform" />
-              <span>Bildirishnomalar</span>
-              <Badge className="bg-gradient-to-r from-red-500 to-pink-500 text-white text-xs ml-auto shadow-lg">
-                8
-              </Badge>
-            </Button>
-          </motion.div>
-        )}
-
-        {!collapsed && (
-          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="mt-4 pt-4 border-t border-white/10">
-            <div className="text-center text-xs text-gray-400">
-              <p>UzbekHub v2.0</p>
-              <p>© 2024 Barcha huquqlar himoyalangan</p>
-            </div>
-          </motion.div>
-        )}
       </div>
     </motion.div>
   )
