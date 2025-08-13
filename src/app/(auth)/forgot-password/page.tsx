@@ -89,8 +89,8 @@
 //           className: "bg-red-500 text-white rounded-lg shadow-lg",
 //         });
 //       } else {
-//         setSuccess(t("auth.forgot_password.success"));
-//         toast.success(t("auth.forgot_password.success"), {
+//         setSuccess(t("forgot_password.success"));
+//         toast.success(t("forgot_password.success"), {
 //           position: "top-right",
 //           autoClose: 3000,
 //           hideProgressBar: false,
@@ -103,7 +103,7 @@
 //       }
 //     } catch (err: any) {
 //       const errorMessage =
-//         err.response?.data?.error || t("auth.forgot_password.error_generic");
+//         err.response?.data?.error || t("forgot_password.error_generic");
 //       setError(errorMessage);
 //       toast.error(errorMessage, {
 //         position: "top-right",
@@ -143,7 +143,7 @@
 
 //           <CardHeader>
 //             <CardTitle className="text-2xl text-primary text-center">
-//               {t("auth.forgot_password.title")}
+//               {t("forgot_password.title")}
 //             </CardTitle>
 //           </CardHeader>
 //           <CardContent className="space-y-4">
@@ -153,13 +153,13 @@
 //               <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
 //                 <div className="grid w-full items-center gap-2">
 //                   <Label htmlFor="email" className="text-primary">
-//                     {t("auth.forgot_password.email_label")}
+//                     {t("forgot_password.email_label")}
 //                   </Label>
 //                   <FormInput
-//                     label={t("auth.forgot_password.email_label")}
+//                     label={t("forgot_password.email_label")}
 //                     id="email"
 //                     type="email"
-//                     placeholder={t("auth.forgot_password.email_placeholder")}
+//                     placeholder={t("forgot_password.email_placeholder")}
 //                     register={register("email")}
 //                     error={errors.email}
 //                     className="focus-visible:ring-2 focus-visible:ring-primary border border-input focus:border-primary w-full sm:w-[400px] mx-auto"
@@ -174,10 +174,10 @@
 //                   {isLoading || isSubmitting ? (
 //                     <>
 //                       <Icons.spinner  />
-//                       {t("auth.forgot_password.sending")}
+//                       {t("forgot_password.sending")}
 //                     </>
 //                   ) : (
-//                     t("auth.forgot_password.submit_button")
+//                     t("forgot_password.submit_button")
 //                   )}
 //                 </Button>
 //               </form>
@@ -221,7 +221,7 @@ import { toast } from "sonner"; // shadcn toast
 type FormData = z.infer<typeof forgotPasswordSchema>;
 
 export default function ForgotPasswordPage() {
-  const { t } = useTranslation();
+  const { t } = useTranslation("auth");
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -281,13 +281,13 @@ export default function ForgotPasswordPage() {
         setError(result.error);
         toast.error(result.error);
       } else {
-        const successMsg = t("auth.forgot_password.success");
+        const successMsg = t("forgot_password.success");
         setSuccess(successMsg);
         toast.success(successMsg);
       }
     } catch (err: any) {
       const errorMessage =
-        err.response?.data?.error || t("auth.forgot_password.error_generic");
+        err.response?.data?.error || t("forgot_password.error_generic");
       setError(errorMessage);
       toast.error(errorMessage);
     } finally {
@@ -321,7 +321,7 @@ export default function ForgotPasswordPage() {
 
           <CardHeader>
             <CardTitle className="text-2xl text-primary text-center">
-              {t("auth.forgot_password.title")}
+              {t("forgot_password.title")}
             </CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
@@ -331,13 +331,13 @@ export default function ForgotPasswordPage() {
               <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
                 <div className="grid w-full items-center gap-2">
                   <Label htmlFor="email" className="text-primary">
-                    {t("auth.forgot_password.email_label")}
+                    {t("forgot_password.email_label")}
                   </Label>
                   <FormInput
-                    label={t("auth.forgot_password.email_label")}
+                    label={t("forgot_password.email_label")}
                     id="email"
                     type="email"
-                    placeholder={t("auth.forgot_password.email_placeholder")}
+                    placeholder={t("forgot_password.email_placeholder")}
                     register={register("email")}
                     error={errors.email}
                     className="focus-visible:ring-2 focus-visible:ring-primary border border-input focus:border-primary w-full sm:w-[400px] mx-auto"
@@ -354,10 +354,10 @@ export default function ForgotPasswordPage() {
                   {isLoading || isSubmitting ? (
                     <>
                       <span className="animate-spin mr-2">⏳</span>
-                      {t("auth.forgot_password.sending")}
+                      {t("forgot_password.sending")}
                     </>
                   ) : (
-                    t("auth.forgot_password.submit_button")
+                    t("forgot_password.submit_button")
                   )}
                 </Button>
               </form>

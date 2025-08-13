@@ -108,9 +108,9 @@ export const SectionPpl = ({
             <Link href={`https://github.com/${github}`} target="_blank" rel="noopener noreferrer">
               <Github width={32} height={32} />
             </Link>
-            <Link href={`/msg/${tag}`}>
+            <Link href={`/u/${tag}`}>
               <Button>
-                {t(`about.contact`)}
+                {t(`contact`)}
               </Button>
             </Link>
           </div>

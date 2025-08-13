@@ -29,7 +29,7 @@ const faqs = [
 ];
 
 const HelpPage = () => {
-	const { t } = useTranslation("translation");
+	const { t } = useTranslation("help");
 	const [type, setType] = useState("question");
 	const [message, setMessage] = useState("");
 	const [email, setEmail] = useState("");
@@ -61,7 +61,7 @@ const HelpPage = () => {
 				<Card className="mb-10 bg-[var(--card-bg-gray)] backdrop-blur-lg border-1 border-white shadow-xl">
 					<CardHeader>
 						<CardTitle className="text-2xl text-primary text-center">
-							{t("help.title")}
+							{t("title")}
 						</CardTitle>
 					</CardHeader>
 					<CardContent>
@@ -71,7 +71,7 @@ const HelpPage = () => {
 									htmlFor="type"
 									className="block text-primary font-semibold mb-1"
 								>
-									{t("help.reason")}
+									{t("reason")}
 								</label>
 								{/* <select
 									id="type"
@@ -91,10 +91,10 @@ const HelpPage = () => {
                   <SelectContent>
                     <SelectGroup>
                       <SelectLabel>Тип обращения</SelectLabel>
-                      <SelectItem value="question">{t("help.reasons.question")}</SelectItem>
-                      <SelectItem value="suggestion">{t("help.reasons.suggestion")}</SelectItem>
-                      <SelectItem value="bug">{t("help.reasons.bug")}</SelectItem>
-                      <SelectItem value="other">{t("help.reasons.other")}</SelectItem>
+                      <SelectItem value="question">{t("reasons.question")}</SelectItem>
+                      <SelectItem value="suggestion">{t("reasons.suggestion")}</SelectItem>
+                      <SelectItem value="bug">{t("reasons.bug")}</SelectItem>
+                      <SelectItem value="other">{t("reasons.other")}</SelectItem>
                     </SelectGroup>
                   </SelectContent>
                 </Select>
@@ -104,13 +104,13 @@ const HelpPage = () => {
 									htmlFor="message"
 									className="block text-primary font-semibold mb-1"
 								>
-									{t("help.message")}
+									{t("message")}
 								</label>
 								<Textarea
 									id="message"
 									value={message}
 									onChange={(e) => setMessage(e.target.value)}
-									placeholder={t("help.message_placeholder")}
+									placeholder={t("message_placeholder")}
 									className="w-full min-h-[100px] rounded-lg border border-primary bg-white/80 text-primary px-3 py-2 focus:outline-none"
 									required
 								/>
@@ -120,7 +120,7 @@ const HelpPage = () => {
 									htmlFor="email"
 									className="block text-primary font-semibold mb-1"
 								>
-									{t("help.email")}
+									{t("email")}
 								</label>
 								<Input
 									id="email"
@@ -135,7 +135,7 @@ const HelpPage = () => {
 								type="submit"
 								className="w-full bg-primary text-white hover:bg-primary/80 transition"
 							>
-								{t("help.send")}
+								{t("send")}
 							</Button>
 						</form>
 					</CardContent>
@@ -143,7 +143,7 @@ const HelpPage = () => {
         <Card className="bg-[var(--card-bg-gray)] backdrop-blur-lg border-1 border-white shadow-xl">
           <CardHeader>
             <CardTitle className="text-2xl text-primary text-center">
-              {}{t("help.faq_title")}
+              {}{t("faq_title")}
             </CardTitle>
           </CardHeader>
           <CardContent>

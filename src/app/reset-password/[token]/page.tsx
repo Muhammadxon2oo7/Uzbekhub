@@ -21,7 +21,7 @@ import { Label } from "@radix-ui/react-label";
 type FormData = z.infer<typeof resetPasswordSchema>;
 
 export default function ResetPasswordPage() {
-  const { t } = useTranslation();
+  const { t } = useTranslation("auth");
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -94,8 +94,8 @@ export default function ResetPasswordPage() {
           className: "bg-red-500 text-white rounded-lg shadow-lg",
         });
       } else {
-        setSuccess(t("auth.reset_password.success"));
-        toast.success(t("auth.reset_password.success"), {
+        setSuccess(t("reset_password.success"));
+        toast.success(t("reset_password.success"), {
           position: "top-right",
           autoClose: 2000,
           hideProgressBar: false,
@@ -109,7 +109,7 @@ export default function ResetPasswordPage() {
       }
     } catch (err: any) {
       const errorMessage =
-        err.response?.data?.error || t("auth.reset_password.error_generic");
+        err.response?.data?.error || t("reset_password.error_generic");
       setError(errorMessage);
       toast.error(errorMessage, {
         position: "top-right",
@@ -149,7 +149,7 @@ export default function ResetPasswordPage() {
 
           <CardHeader>
             <CardTitle className="text-2xl text-primary text-center">
-              {t("auth.reset_password.title")}
+              {t("reset_password.title")}
             </CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
@@ -159,13 +159,13 @@ export default function ResetPasswordPage() {
               <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
                 <div className="grid w-full items-center gap-2 relative">
                   <Label htmlFor="new_password" className="text-primary">
-                    {t("auth.reset_password.new_password_label")}
+                    {t("reset_password.new_password_label")}
                   </Label>
                   <FormInput
-                    label={t("auth.reset_password.new_password_label")}
+                    label={t("reset_password.new_password_label")}
                     id="new_password"
                     type={showPassword ? "text" : "password"}
-                    placeholder={t("auth.reset_password.new_password_placeholder")}
+                    placeholder={t("reset_password.new_password_placeholder")}
                     register={register("new_password")}
                     error={errors.new_password}
                     className="focus-visible:ring-2 focus-visible:ring-primary border border-input focus:border-primary pr-10"
@@ -184,13 +184,13 @@ export default function ResetPasswordPage() {
                 </div>
                 <div className="grid w-full items-center gap-2 relative">
                   <Label htmlFor="confirm_password" className="text-primary">
-                    {t("auth.reset_password.confirm_password_label")}
+                    {t("reset_password.confirm_password_label")}
                   </Label>
                   <FormInput
-                    label={t("auth.reset_password.confirm_password_label")}
+                    label={t("reset_password.confirm_password_label")}
                     id="confirm_password"
                     type={showConfirmPassword ? "text" : "password"}
-                    placeholder={t("auth.reset_password.confirm_password_placeholder")}
+                    placeholder={t("reset_password.confirm_password_placeholder")}
                     register={register("confirm_password")}
                     error={errors.confirm_password}
                     className="focus-visible:ring-2 focus-visible:ring-primary border border-input focus:border-primary pr-10"
@@ -216,10 +216,10 @@ export default function ResetPasswordPage() {
                   {isLoading || isSubmitting ? (
                     <>
                       <Icons.spinner  />
-                      {t("auth.reset_password.sending")}
+                      {t("reset_password.sending")}
                     </>
                   ) : (
-                    t("auth.reset_password.submit_button")
+                    t("reset_password.submit_button")
                   )}
                 </Button>
               </form>

@@ -58,7 +58,7 @@
 //         return firstError[0];
 //       }
 //     }
-//     return t("auth.login.error_generic");
+//     return t("login.error_generic");
 //   };
 
 //   useEffect(() => {
@@ -120,7 +120,7 @@
 //           secure: true, // только HTTPS
 //           sameSite: "strict", // безопаснее
 //         });
-//         toast.success(t("auth.login.success"), {
+//         toast.success(t("login.success"), {
 //           position: "top-right",
 //           autoClose: 2000,
 //           hideProgressBar: false,
@@ -168,7 +168,7 @@
 //           sameSite: "strict", // безопаснее
 //         });
 //       localStorage.setItem("token", access);
-//       toast.success(t("auth.login.google_success"), {
+//       toast.success(t("login.google_success"), {
 //         position: "top-right",
 //         autoClose: 2000,
 //         hideProgressBar: false,
@@ -199,7 +199,7 @@
 //   };
 
 //   const handleGoogleError = () => {
-//     const errorMessage = t("auth.login.google_cancel");
+//     const errorMessage = t("login.google_cancel");
 //     setError(errorMessage);
 //     toast.error(errorMessage, {
 //       position: "top-right",
@@ -236,20 +236,20 @@
 
 //           <CardHeader>
 //             <CardTitle className="text-2xl text-primary text-center">
-//               {t("auth.login.title")}
+//               {t("login.title")}
 //             </CardTitle>
 //           </CardHeader>
 //           <CardContent className="space-y-4">
 //             <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
 //               <div className="grid w-full items-center gap-2">
 //                 <Label htmlFor="email" className="text-primary">
-//                   {t("auth.login.identifier_label")}
+//                   {t("login.identifier_label")}
 //                 </Label>
 //                 <FormInput
-//                   label={t("auth.login.identifier_label")}
+//                   label={t("login.identifier_label")}
 //                   id="email"
 //                   type="email"
-//                   placeholder={t("auth.login.identifier_placeholder")}
+//                   placeholder={t("login.identifier_placeholder")}
 //                   register={register("email")}
 //                   error={errors.email}
 //                   className="focus-visible:ring-2 focus-visible:ring-primary border border-input focus:border-primary w-full sm:w-[400px] mx-auto"
@@ -257,13 +257,13 @@
 //               </div>
 //               <div className="grid w-full items-center gap-2 relative">
 //                 <Label htmlFor="password" className="text-primary">
-//                   {t("auth.login.password_label")}
+//                   {t("login.password_label")}
 //                 </Label>
 //                 <FormInput
-//                   label={t("auth.login.password_label")}
+//                   label={t("login.password_label")}
 //                   id="password"
 //                   type={showPassword ? "text" : "password"}
-//                   placeholder={t("auth.login.password_placeholder")}
+//                   placeholder={t("login.password_placeholder")}
 //                   register={register("password")}
 //                   error={errors.password}
 //                   className="focus-visible:ring-2 focus-visible:ring-primary border border-input focus:border-primary pr-10"
@@ -289,10 +289,10 @@
 //                 {isLoading || isSubmitting ? (
 //                   <>
 //                     <Icons.spinner className="animate-spin w-4 h-4 mr-2" />
-//                     {t("auth.login.sending")}
+//                     {t("login.sending")}
 //                   </>
 //                 ) : (
-//                   t("auth.login.login_button")
+//                   t("login.login_button")
 //                 )}
 //               </Button>
 //             </form>
@@ -305,7 +305,7 @@
 //                   <KeyIcon />
 //                 </span>
 //                 <span>
-//                   {t("auth.login.forgot_password")}
+//                   {t("login.forgot_password")}
 //                 </span>
 //               </div>
 //             </Link>
@@ -361,7 +361,7 @@ import { toast } from "sonner"; // ⬅ заменили импорт
 type FormData = z.infer<typeof signInSchema>;
 
 export default function LoginPage() {
-  const { t } = useTranslation();
+  const { t } = useTranslation("auth");
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
@@ -391,7 +391,7 @@ export default function LoginPage() {
         return firstError[0];
       }
     }
-    return t("auth.login.error_generic");
+    return t("login.error_generic");
   };
 
   useEffect(() => {
@@ -445,7 +445,7 @@ export default function LoginPage() {
           sameSite: "strict",
         });
         localStorage.setItem("token", result.token.access);
-        toast.success(t("auth.login.success"));
+        toast.success(t("login.success"));
         setTimeout(() => router.push("/main?tab=profile"), 500);
       }
     } catch (err: any) {
@@ -473,7 +473,7 @@ export default function LoginPage() {
         sameSite: "strict",
       });
       localStorage.setItem("token", access);
-      toast.success(t("auth.login.google_success"));
+      toast.success(t("login.google_success"));
       setTimeout(() => router.push("/main?tab=profile"), 500);
     } catch (error) {
       const errorMessage = getErrorMessage(error);
@@ -485,7 +485,7 @@ export default function LoginPage() {
   };
 
   const handleGoogleError = () => {
-    const errorMessage = t("auth.login.google_cancel");
+    const errorMessage = t("login.google_cancel");
     setError(errorMessage);
     toast.error(errorMessage);
   };
@@ -513,20 +513,20 @@ export default function LoginPage() {
 
           <CardHeader>
             <CardTitle className="text-2xl text-primary text-center">
-              {t("auth.login.title")}
+              {t("login.title")}
             </CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
             <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
               <div className="grid w-full items-center gap-2">
                 <Label htmlFor="email" className="text-primary">
-                  {t("auth.login.identifier_label")}
+                  {t("login.identifier_label")}
                 </Label>
                 <FormInput
-                  label={t("auth.login.identifier_label")}
+                  label={t("login.identifier_label")}
                   id="email"
                   type="email"
-                  placeholder={t("auth.login.identifier_placeholder")}
+                  placeholder={t("login.identifier_placeholder")}
                   register={register("email")}
                   error={errors.email}
                   className="focus-visible:ring-2 focus-visible:ring-primary border border-input focus:border-primary w-full sm:w-[400px] mx-auto"
@@ -534,13 +534,13 @@ export default function LoginPage() {
               </div>
               <div className="grid w-full items-center gap-2 relative">
                 <Label htmlFor="password" className="text-primary">
-                  {t("auth.login.password_label")}
+                  {t("login.password_label")}
                 </Label>
                 <FormInput
-                  label={t("auth.login.password_label")}
+                  label={t("login.password_label")}
                   id="password"
                   type={showPassword ? "text" : "password"}
-                  placeholder={t("auth.login.password_placeholder")}
+                  placeholder={t("login.password_placeholder")}
                   register={register("password")}
                   error={errors.password}
                   className="focus-visible:ring-2 focus-visible:ring-primary border border-input focus:border-primary pr-10"
@@ -565,10 +565,10 @@ export default function LoginPage() {
                 {isLoading || isSubmitting ? (
                   <>
                     <Icons.spinner className="animate-spin w-4 h-4 mr-2" />
-                    {t("auth.login.sending")}
+                    {t("login.sending")}
                   </>
                 ) : (
-                  t("auth.login.login_button")
+                  t("login.login_button")
                 )}
               </Button>
             </form>
@@ -577,7 +577,7 @@ export default function LoginPage() {
                 <span>
                   <KeyIcon />
                 </span>
-                <span>{t("auth.login.forgot_password")}</span>
+                <span>{t("login.forgot_password")}</span>
               </div>
             </Link>
             <div className="mt-6 flex justify-center">

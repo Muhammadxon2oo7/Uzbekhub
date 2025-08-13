@@ -105,7 +105,7 @@ import { useTranslation } from "react-i18next"
 import { communities } from "../fake-backends/communities"
 
 export default function RecommendedCommunities() {
-  const { t } = useTranslation("translation")
+  const { t } = useTranslation("recommended")
   const { ref, inView } = useInView({
     triggerOnce: false,
     threshold: 0.15,
@@ -131,7 +131,7 @@ export default function RecommendedCommunities() {
           className="text-center text-4xl md:text-5xl font-bold mb-16"
           
         >
-          ✨ {t("recommended.title")} <span className="text-primary" >{t("recommended.highlight")}</span>
+          ✨ {t("title")} <span className="text-primary" >{t("highlight")}</span>
         </motion.h2>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
@@ -158,13 +158,13 @@ export default function RecommendedCommunities() {
                 <h3 className="text-xl font-semibold mb-2" >{t(community.title)}</h3>
                 <p className="text-sm text-gray-300 mb-4" >{t(community.desc)}</p>
                 <div className="flex items-center justify-between">
-                  <span className="text-sm text-gray-400"  >{community.members} {t("recommended.members")}</span>
+                  <span className="text-sm text-gray-400"  >{community.members} {t("members")}</span>
                   <Button
                     variant="secondary"
                     className="cursor-pointer text-sm px-4 py-1 bg-primary hover:bg-primary/80"
                     
                   >
-                    {t("recommended.join")}
+                    {t("join")}
                   </Button>
                 </div>
               </div>

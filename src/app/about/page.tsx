@@ -10,7 +10,7 @@ import { SectionPpl } from './section'
 import { members } from '@/components/fake-backends/members'
 
 export default function AboutPage() {
-  const { t } = useTranslation("translation")
+  const { t } = useTranslation("about")
   const ref = useRef<HTMLDivElement>(null)
 
   // motion values (начало = немного наклонён)
@@ -69,7 +69,7 @@ export default function AboutPage() {
               transition={{ delay: 0.3, duration: 0.6 }}
               className="text-base sm:text-lg md:text-xl text-[var(--darker-text)]"
             >
-              {t("about.description", {
+              {t("description", {
                 defaultValue:
                   "Bizning jamoa foydalanuvchilar uchun eng mos va qiziqarli jamiyatlarni yaratishga intiladi. Frontend, backend va dizayn bo‘yicha tajribali jamoamiz siz uchun shu yerda."
               })}
@@ -87,7 +87,7 @@ export default function AboutPage() {
                   <Link href={`#${member.name}`}>
                     <h3 className="text-primary text-base sm:text-lg font-semibold">{member.role}</h3>
                     <p className="text-text text-sm mt-1">{member.name}</p>
-                    <p className="text-gray-400 text-xs sm:text-sm">{t(`about.members_desc.${member.tag}`)}</p>
+                    <p className="text-gray-400 text-xs sm:text-sm">{t(`members_desc.${member.tag}`)}</p>
                   </Link>
                 </motion.div>
               ))}
@@ -95,7 +95,7 @@ export default function AboutPage() {
 
             <Link href="/">
               <Button variant="secondary" className="mt-6 bg-primary text-white hover:bg-primary/80 transition w-full sm:w-auto">
-                {t("about.back_to_home", { defaultValue: "Bosh sahifaga qaytish" })}
+                {t("back_to_home", { defaultValue: "Bosh sahifaga qaytish" })}
               </Button>
             </Link>
           </motion.div>
@@ -108,7 +108,7 @@ export default function AboutPage() {
               key={member.name}
               name={member.name}
               role={member.role}
-              desc={t(`about.members_desc.${member.tag}`)}
+              desc={t(`members_desc.${member.tag}`)}
               tag={member.tag}
               github={member.github}
               tools={member.tools}

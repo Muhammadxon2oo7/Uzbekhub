@@ -1,10 +1,4 @@
 {
-  "welcome": "Assalomu alaykum",
-  "language": "Til",
-  "theme": "Mavzu",
-  "dark": "Qorong'u",
-  "light": "Yorug'",
-  "help": {
     "title": "Biz bilan bog'lanish",
     "reason": "Bog'lanish sababi",
     "reasons": {
@@ -18,17 +12,4 @@
     "email": "Sizning elektron pochtangiz (ixtiyoriy)",
     "send": "Yuborish",
     "faq_title": "Ko'p so'raladigan savollar"
-  },
-  "dashboard": {
-    "tabs": {
-      "chat": "Suhbatlar",
-      "stories": "Hikoyalar",
-      "calls": "Qo‘ng‘iroqlar",
-      "groups": "Guruhlar",
-      "discover": "Kashf etish",
-      "donate": "Xayriya",
-      "profile": "Profil",
-      "settings": "Sozlamalar"
-    }
   }
-}

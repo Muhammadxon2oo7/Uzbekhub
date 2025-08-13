@@ -10,7 +10,7 @@ import { useTranslation } from "react-i18next"
 import RecommendedCommunities from "../Recommended-Communities/RecommendedCommunities"
 
 export default function HeroSection() {
-  const { t } = useTranslation("translation")
+  const { t } = useTranslation("hero")
   const [query, setQuery] = useState("")
   const cardRef = useRef<HTMLDivElement | null>(null)
   const spotRef = useRef<HTMLDivElement | null>(null)
@@ -82,19 +82,19 @@ export default function HeroSection() {
               </Link>
               <div className="mb-8 w-full">
                 <h1 className="text-2xl sm:text-3xl md:text-5xl font-bold text-text text-center">
-                  {t("hero.find_community_title")}{" "}
+                  {t("find_community_title")}{" "}
                   <span className="text-primary text-shadow-sm text-shadow-primary">
-                    {t("hero.community")}
+                    {t("community")}
                   </span>{" "}
-                  {t("hero.find_community_title_2")}
+                  {t("find_community_title_2")}
                 </h1>
                 <p className="mt-3 text-text text-center text-base md:text-lg">
-                  {t("hero.join_learn_share")}
+                  {t("join_learn_share")}
                 </p>
               </div>
               <div className="w-full flex flex-col sm:flex-row items-center justify-between gap-2">
                 <Input
-                  placeholder={t("hero.search_placeholder")}
+                  placeholder={t("search_placeholder")}
                   className="h-12 w-full text-base md:text-lg"
                   value={query}
                   onChange={(e) => setQuery(e.target.value)}
@@ -105,7 +105,7 @@ export default function HeroSection() {
                   className="h-12 w-full sm:w-auto mt-2 sm:mt-0 bg-primary hover:scale-105 hover:rotate-3 cursor-pointer"
                 >
                   <Search className="w-4 h-4 mr-2" />
-                  {t("hero.search")}
+                  {t("search")}
                 </Button>
               </div>
             </div>

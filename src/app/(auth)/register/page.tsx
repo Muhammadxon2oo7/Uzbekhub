@@ -121,11 +121,11 @@
 //         setError(result.error);
 //         toast.error(result.error, { theme: "colored", className: "bg-red-500 text-white rounded-lg shadow-lg" });
 //       } else {
-//         toast.success(result.message || t('auth.register.code_sent'), { theme: "colored", className: "bg-green-500 text-white rounded-lg shadow-lg" });
+//         toast.success(result.message || t('register.code_sent'), { theme: "colored", className: "bg-green-500 text-white rounded-lg shadow-lg" });
 //         setStep(2);
 //       }
 //     } catch (err: any) {
-//       const errorMessage = extractBackendError(err.response?.data, t('auth.register.error_generic'));
+//       const errorMessage = extractBackendError(err.response?.data, t('register.error_generic'));
 //       setError(errorMessage);
 //       toast.error(errorMessage, { theme: "colored", className: "bg-red-500 text-white rounded-lg shadow-lg" });
 //     } finally {
@@ -143,11 +143,11 @@
 //         setError(result.error);
 //         toast.error(result.error, { theme: "colored", className: "bg-red-500 text-white rounded-lg shadow-lg" });
 //       } else {
-//         toast.success(result.message || t('auth.register.success'), { theme: "colored", className: "bg-green-500 text-white rounded-lg shadow-lg" });
+//         toast.success(result.message || t('register.success'), { theme: "colored", className: "bg-green-500 text-white rounded-lg shadow-lg" });
 //         setTimeout(() => router.push("/login"), 2000);
 //       }
 //     } catch (err: any) {
-//       const errorMessage = extractBackendError(err.response?.data, t('auth.register.error_invalid_code'));
+//       const errorMessage = extractBackendError(err.response?.data, t('register.error_invalid_code'));
 //       setError(errorMessage);
 //       toast.error(errorMessage, { theme: "colored", className: "bg-red-500 text-white rounded-lg shadow-lg" });
 //     } finally {
@@ -164,10 +164,10 @@
 //         confirm_password: step1Form.getValues("confirm_password")
 //       });
 //       const result: RegisterStep1Response = response.data;
-//       toast.success(result.message || t('auth.register.code_sent'), { theme: "colored", className: "bg-green-500 text-white rounded-lg shadow-lg" });
+//       toast.success(result.message || t('register.code_sent'), { theme: "colored", className: "bg-green-500 text-white rounded-lg shadow-lg" });
 //       setResendTimer(300); // 5 минут
 //     } catch (err: any) {
-//       const errorMessage = extractBackendError(err.response?.data, t('auth.register.error_generic'));
+//       const errorMessage = extractBackendError(err.response?.data, t('register.error_generic'));
 //       toast.error(errorMessage, { theme: "colored", className: "bg-red-500 text-white rounded-lg shadow-lg" });
 //     }
 //   };
@@ -191,16 +191,16 @@
 //           </Link>
 //           <CardHeader>
 //             <CardTitle className="text-2xl text-primary">
-//               {step === 1 ? t('auth.register.register_title') : t('auth.register.verify_title')}
+//               {step === 1 ? t('register.register_title') : t('register.verify_title')}
 //             </CardTitle>
 //           </CardHeader>
 //           <CardContent className="space-y-4">
 //             {step === 1 && (
 //               <form onSubmit={step1Form.handleSubmit(onStep1Submit)} className="space-y-4">
 //                 <div className="grid w-full items-center gap-2">
-//                   <Label htmlFor="email" className="text-primary">{t('auth.register.email_label')}</Label>
+//                   <Label htmlFor="email" className="text-primary">{t('register.email_label')}</Label>
 //                   <FormInput {...{
-//                     label: t('auth.register.email_label'),
+//                     label: t('register.email_label'),
 //                     id: "email",
 //                     type: "email",
 //                     placeholder: "example@gmail.com",
@@ -208,22 +208,22 @@
 //                     error: step1Form.formState.errors.email,
 //                     className: cn('focus-visible:ring-2 focus-visible:ring-primary', 'border border-input focus:border-primary')
 //                   }} />
-//                   <Label htmlFor="email" className="text-primary">{t('auth.register.password_label')}</Label>
+//                   <Label htmlFor="email" className="text-primary">{t('register.password_label')}</Label>
 //                   <FormInput {...{
-//                     label: t('auth.register.password_label'),
+//                     label: t('register.password_label'),
 //                     id: "password",
 //                     type: "password",
-//                     placeholder: t('auth.register.password_placeholder'),
+//                     placeholder: t('register.password_placeholder'),
 //                     register: step1Form.register("password"),
 //                     error: step1Form.formState.errors.password,
 //                     className: cn('focus-visible:ring-2 focus-visible:ring-primary', 'border border-input focus:border-primary')
 //                   }} />
-//                   <Label htmlFor="email" className="text-primary">{t('auth.register.confirm_password_label')}</Label>
+//                   <Label htmlFor="email" className="text-primary">{t('register.confirm_password_label')}</Label>
 //                   <FormInput {...{
-//                     label: t('auth.register.confirm_password_label'),
+//                     label: t('register.confirm_password_label'),
 //                     id: "confirm_password",
 //                     type: "password",
-//                     placeholder: t('auth.register.confirm_password_placeholder'),
+//                     placeholder: t('register.confirm_password_placeholder'),
 //                     register: step1Form.register("confirm_password"),
 //                     error: step1Form.formState.errors.confirm_password,
 //                     className: cn('focus-visible:ring-2 focus-visible:ring-primary', 'border border-input focus:border-primary')
@@ -231,21 +231,21 @@
 //                   {/* {error && <p className="text-red-500 text-sm">{error}</p>} */}
 //                 </div>
 //                 <Button disabled={isLoading || step1Form.formState.isSubmitting} className="w-full">
-//                   {isLoading ? <><Icons.spinner className="animate-spin w-4 h-4 mr-2" />{t('auth.register.sending')}</> : t('auth.register.send_code')}
+//                   {isLoading ? <><Icons.spinner className="animate-spin w-4 h-4 mr-2" />{t('register.sending')}</> : t('register.send_code')}
 //                 </Button>
 //               </form>
 //             )}
 
 //             {step === 2 && (
 //               <form onSubmit={step2Form.handleSubmit(onStep2Submit)} className="space-y-4">
-//                 <p className="text-sm text-muted-foreground">{t('auth.register.enter_code')}</p>
+//                 <p className="text-sm text-muted-foreground">{t('register.enter_code')}</p>
 //                 <div className="grid w-full items-center gap-2">
-//                   <Label htmlFor="code" className="text-primary">{t('auth.register.code_label')}</Label>
+//                   <Label htmlFor="code" className="text-primary">{t('register.code_label')}</Label>
 //                   <FormInput {...{
-//                     label: t('auth.register.code_label'),
+//                     label: t('register.code_label'),
 //                     id: "code",
 //                     type: "text",
-//                     placeholder: t('auth.register.code_placeholder'),
+//                     placeholder: t('register.code_placeholder'),
 //                     register: step2Form.register("code"),
 //                     error: step2Form.formState.errors.code,
 //                     className: cn('focus-visible:ring-2 focus-visible:ring-primary', 'border border-input focus:border-primary')
@@ -253,7 +253,7 @@
 //                   {/* {error && <p className="text-red-500 text-sm">{error}</p>} */}
 //                 </div>
 //                 <Button disabled={isLoading || step2Form.formState.isSubmitting} className="w-full">
-//                   {isLoading ? <><Icons.spinner className="animate-spin w-4 h-4 mr-2" />{t('auth.register.verifying')}</> : t('auth.register.confirm')}
+//                   {isLoading ? <><Icons.spinner className="animate-spin w-4 h-4 mr-2" />{t('register.verifying')}</> : t('register.confirm')}
 //                 </Button>
 //                 <Button
 //                   type="button"
@@ -263,8 +263,8 @@
 //                   className="w-full"
 //                 >
 //                   {resendTimer > 0
-//                     ? `${t('auth.register.resend_code')} (${resendTimer}s)`
-//                     : t('auth.register.resend_code')}
+//                     ? `${t('register.resend_code')} (${resendTimer}s)`
+//                     : t('register.resend_code')}
 //                 </Button>
 //               </form>
 //             )}
@@ -300,7 +300,7 @@ type Step1FormData = z.infer<typeof registerStep1Schema>;
 type Step2FormData = z.infer<typeof verifyEmailSchema>;
 
 export default function RegisterPage() {
-  const { t } = useTranslation();
+  const { t } = useTranslation("auth");
   const [step, setStep] = useState<1 | 2>(1);
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -390,11 +390,11 @@ export default function RegisterPage() {
         setError(result.error);
         toast.error(result.error);
       } else {
-        toast.success(result.message || t('auth.register.code_sent'));
+        toast.success(result.message || t('register.code_sent'));
         setStep(2);
       }
     } catch (err: any) {
-      const errorMessage = extractBackendError(err.response?.data, t('auth.register.error_generic'));
+      const errorMessage = extractBackendError(err.response?.data, t('register.error_generic'));
       setError(errorMessage);
       toast.error(errorMessage);
     } finally {
@@ -412,11 +412,11 @@ export default function RegisterPage() {
         setError(result.error);
         toast.error(result.error);
       } else {
-        toast.success(result.message || t('auth.register.success'));
+        toast.success(result.message || t('register.success'));
         setTimeout(() => router.push("/login"), 2000);
       }
     } catch (err: any) {
-      const errorMessage = extractBackendError(err.response?.data, t('auth.register.error_invalid_code'));
+      const errorMessage = extractBackendError(err.response?.data, t('register.error_invalid_code'));
       setError(errorMessage);
       toast.error(errorMessage);
     } finally {
@@ -433,10 +433,10 @@ export default function RegisterPage() {
         confirm_password: step1Form.getValues("confirm_password")
       });
       const result: RegisterStep1Response = response.data;
-      toast.success(result.message || t('auth.register.code_sent'));
+      toast.success(result.message || t('register.code_sent'));
       setResendTimer(300);
     } catch (err: any) {
-      const errorMessage = extractBackendError(err.response?.data, t('auth.register.error_generic'));
+      const errorMessage = extractBackendError(err.response?.data, t('register.error_generic'));
       toast.error(errorMessage);
     }
   };
@@ -460,16 +460,16 @@ export default function RegisterPage() {
           </Link>
           <CardHeader>
             <CardTitle className="text-2xl text-primary">
-              {step === 1 ? t('auth.register.register_title') : t('auth.register.verify_title')}
+              {step === 1 ? t('register.register_title') : t('register.verify_title')}
             </CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
             {step === 1 && (
               <form onSubmit={step1Form.handleSubmit(onStep1Submit)} className="space-y-4">
                 <div className="grid w-full items-center gap-2">
-                  <Label htmlFor="email" className="text-primary">{t('auth.register.email_label')}</Label>
+                  <Label htmlFor="email" className="text-primary">{t('register.email_label')}</Label>
                   <FormInput {...{
-                    label: t('auth.register.email_label'),
+                    label: t('register.email_label'),
                     id: "email",
                     type: "email",
                     placeholder: "example@gmail.com",
@@ -477,50 +477,50 @@ export default function RegisterPage() {
                     error: step1Form.formState.errors.email,
                     className: cn('focus-visible:ring-2 focus-visible:ring-primary', 'border border-input focus:border-primary')
                   }} />
-                  <Label htmlFor="password" className="text-primary">{t('auth.register.password_label')}</Label>
+                  <Label htmlFor="password" className="text-primary">{t('register.password_label')}</Label>
                   <FormInput {...{
-                    label: t('auth.register.password_label'),
+                    label: t('register.password_label'),
                     id: "password",
                     type: "password",
-                    placeholder: t('auth.register.password_placeholder'),
+                    placeholder: t('register.password_placeholder'),
                     register: step1Form.register("password"),
                     error: step1Form.formState.errors.password,
                     className: cn('focus-visible:ring-2 focus-visible:ring-primary', 'border border-input focus:border-primary')
                   }} />
-                  <Label htmlFor="confirm_password" className="text-primary">{t('auth.register.confirm_password_label')}</Label>
+                  <Label htmlFor="confirm_password" className="text-primary">{t('register.confirm_password_label')}</Label>
                   <FormInput {...{
-                    label: t('auth.register.confirm_password_label'),
+                    label: t('register.confirm_password_label'),
                     id: "confirm_password",
                     type: "password",
-                    placeholder: t('auth.register.confirm_password_placeholder'),
+                    placeholder: t('register.confirm_password_placeholder'),
                     register: step1Form.register("confirm_password"),
                     error: step1Form.formState.errors.confirm_password,
                     className: cn('focus-visible:ring-2 focus-visible:ring-primary', 'border border-input focus:border-primary')
                   }} />
                 </div>
                 <Button disabled={isLoading || step1Form.formState.isSubmitting} className="w-full">
-                  {isLoading ? <><Icons.spinner className="animate-spin w-4 h-4 mr-2" />{t('auth.register.sending')}</> : t('auth.register.send_code')}
+                  {isLoading ? <><Icons.spinner className="animate-spin w-4 h-4 mr-2" />{t('register.sending')}</> : t('register.send_code')}
                 </Button>
               </form>
             )}
 
             {step === 2 && (
               <form onSubmit={step2Form.handleSubmit(onStep2Submit)} className="space-y-4">
-                <p className="text-sm text-muted-foreground">{t('auth.register.enter_code')}</p>
+                <p className="text-sm text-muted-foreground">{t('register.enter_code')}</p>
                 <div className="grid w-full items-center gap-2">
-                  <Label htmlFor="code" className="text-primary">{t('auth.register.code_label')}</Label>
+                  <Label htmlFor="code" className="text-primary">{t('register.code_label')}</Label>
                   <FormInput {...{
-                    label: t('auth.register.code_label'),
+                    label: t('register.code_label'),
                     id: "code",
                     type: "text",
-                    placeholder: t('auth.register.code_placeholder'),
+                    placeholder: t('register.code_placeholder'),
                     register: step2Form.register("code"),
                     error: step2Form.formState.errors.code,
                     className: cn('focus-visible:ring-2 focus-visible:ring-primary', 'border border-input focus:border-primary')
                   }} />
                 </div>
                 <Button disabled={isLoading || step2Form.formState.isSubmitting} className="w-full">
-                  {isLoading ? <><Icons.spinner className="animate-spin w-4 h-4 mr-2" />{t('auth.register.verifying')}</> : t('auth.register.confirm')}
+                  {isLoading ? <><Icons.spinner className="animate-spin w-4 h-4 mr-2" />{t('register.verifying')}</> : t('register.confirm')}
                 </Button>
                 <Button
                   type="button"
@@ -530,8 +530,8 @@ export default function RegisterPage() {
                   className="w-full"
                 >
                   {resendTimer > 0
-                    ? `${t('auth.register.resend_code')} (${resendTimer}s)`
-                    : t('auth.register.resend_code')}
+                    ? `${t('register.resend_code')} (${resendTimer}s)`
+                    : t('register.resend_code')}
                 </Button>
               </form>
             )}

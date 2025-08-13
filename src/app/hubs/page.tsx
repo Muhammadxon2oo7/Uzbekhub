@@ -13,7 +13,7 @@ import { SpotCard } from "@/components/SpotCard/spotcard";
 
 const Hubs = () => {
   const [query, setQuery] = useState("");
-  const { t } = useTranslation();
+  const { t } = useTranslation("hubs");
 
   const handleSearch = () => {
     console.log("Qidirilyapti:", query);
@@ -29,7 +29,7 @@ const Hubs = () => {
             className="z-10 w-full max-w-lg flex flex-col sm:flex-row items-stretch sm:items-end justify-between gap-2"
           >
             <Input
-              placeholder={t("hubs.search_placeholder")}
+              placeholder={t("search_placeholder")}
               className="h-12 w-full text-base"
               value={query}
               onChange={(e) => setQuery(e.target.value)}
@@ -40,7 +40,7 @@ const Hubs = () => {
               className="h-12 w-full sm:w-auto bg-primary hover:scale-105 cursor-pointer"
             >
               <Search className="w-4 h-4 mr-2" />
-              {t("hubs.search_button")}
+              {t("search_button")}
             </Button>
           </form>
         </div>

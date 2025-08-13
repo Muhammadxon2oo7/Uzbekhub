@@ -66,7 +66,7 @@ export function SpotCard({ community }: { community: Community }) {
         <div>
           <h3 className="text-xl font-semibold">{t(community.title) || community.title}</h3>
           <span className="text-sm text-gray-400">
-            {community.members} {t("hubs.members") || "members"}
+            {community.members} {t("members") || "members"}
           </span>
         </div>
       </div>

@@ -153,7 +153,7 @@ import { useTranslation } from 'react-i18next';
 import Link from 'next/link';
 
 const Header = () => {
-  const { t } = useTranslation();
+  const { t } = useTranslation("header");
   const [user, setUser] = useState<null | { name: string; avatar?: string }>(null);
   const [scrolled, setScrolled] = useState(false);
 
@@ -184,13 +184,13 @@ const Header = () => {
         {/* Desktop nav */}
         <nav className="hidden md:flex items-center gap-6 text-sm">
           <Link href="/hubs" className="nav-link">
-            {t('header.rooms')}
+            {t('rooms')}
           </Link>
           <Link href="/about" className="nav-link">
-            {t('header.about')}
+            {t('about')}
           </Link>
           <Link href="/help" className="nav-link">
-            {t('header.help')}
+            {t('help')}
           </Link>
         </nav>
 
@@ -200,12 +200,12 @@ const Header = () => {
             <>
               <Link href="/login">
                 <Button variant="link" size="sm">
-                  {t('header.login')}
+                  {t('login')}
                 </Button>
               </Link>
               <Link href="/register">
                 <Button size="lg">
-                  {t('header.register')}
+                  {t('register')}
                 </Button>
               </Link>
             </>
@@ -232,13 +232,13 @@ const Header = () => {
               <div className="mt-6 space-y-4 text-sm text-gray-700 w-full p-[5px]">
                 <div className="flex gap-[5px] items-center justify-center flex-wrap">
                   <Link href="/hubs" className="w-full text-[18px] text-center block" >
-                    {t('header.rooms')}
+                    {t('rooms')}
                   </Link>
                   <Link href="/about" className="w-full text-[18px] text-center block">
-                    {t('header.about')}
+                    {t('about')}
                   </Link>
                   <Link href="/help" className="w-full text-[18px] text-center block"> 
-                    {t('header.help')}
+                    {t('help')}
                   </Link>
                 </div>
                 <div className="pt-4 border-t">
@@ -246,12 +246,12 @@ const Header = () => {
                     <>
                       <Link href="/login">
                         <Button variant="ghost" size="sm" className="w-full">
-                          {t('header.login')}
+                          {t('login')}
                         </Button>
                       </Link>
                       <Link href="/register">
                         <Button size="sm" className="w-full">
-                          {t('header.register')}
+                          {t('register')}
                         </Button>
                       </Link>
                     </>
