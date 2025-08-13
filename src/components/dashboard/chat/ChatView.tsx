@@ -927,22 +927,68 @@ export default function ChatView() {
   const [message, setMessage] = useState("")
   const [isRecording, setIsRecording] = useState(false)
   const [isTyping, setIsTyping] = useState(false)
+  const [messagesByChatId, setMessagesByChatId] = useState(mockMessagesByChatId)
   const messagesEndRef = useRef<HTMLDivElement>(null)
   const fileInputRef = useRef<HTMLInputElement>(null)
 
   const currentChat = mockChats.find((chat) => chat.id === selectedChat)
-  const messages = selectedChat ? mockMessagesByChatId[selectedChat] || [] : []
+  const messages = selectedChat ? messagesByChatId[selectedChat] || [] : []
 
   const handleSendMessage = () => {
-    if (message.trim()) {
+    if (message.trim() && selectedChat) {
+      const newMessage: Message = {
+        id: Date.now().toString(),
+        sender: "Me",
+        content: message,
+        time: new Date().toLocaleTimeString().slice(0, 5),
+        isOwn: true,
+        type: "text",
+        status: "sent",
+      }
+
+      setMessagesByChatId((prev) => ({
+        ...prev,
+        [selectedChat]: [...(prev[selectedChat] || []), newMessage],
+      }))
+
       console.log("Yangi xabar:", message)
       setMessage("")
     }
   }
 
-  const handleFileUpload = (type: string) => {
-    console.log("Fayl yuklash:", type)
+  const handleFileUpload = () => {
     fileInputRef.current?.click()
+  }
+
+  const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (selectedChat && e.target.files && e.target.files.length > 0) {
+      const file = e.target.files[0]
+      const fileUrl = URL.createObjectURL(file)
+
+      const fileType = file.type.startsWith("image/")
+        ? "image"
+        : file.type.startsWith("video/")
+        ? "video"
+        : "file"
+
+      const newMessage: Message = {
+        id: Date.now().toString(),
+        sender: "Me",
+        content: fileUrl,
+        time: new Date().toLocaleTimeString().slice(0, 5),
+        isOwn: true,
+        type: fileType,
+        status: "sent",
+      }
+
+      setMessagesByChatId((prev) => ({
+        ...prev,
+        [selectedChat]: [...(prev[selectedChat] || []), newMessage],
+      }))
+
+      console.log("Fayl yuborildi:", file)
+      e.target.value = ""
+    }
   }
 
   const handleVoiceRecord = () => {
@@ -968,13 +1014,10 @@ export default function ChatView() {
 
   return (
     <div className="h-full flex bg-white/5 backdrop-blur-[10px] border border-white/10 rounded-2xl overflow-hidden">
-
       <ChatList chats={mockChats} selectedChat={selectedChat} setSelectedChat={setSelectedChat} />
-
 
       {selectedChat && currentChat ? (
         <div className="flex-1 flex flex-col">
-
           <ChatHeader
             chatName={currentChat.name}
             chatAvatar={currentChat.avatar}
@@ -1012,7 +1055,7 @@ export default function ChatView() {
             type="file"
             className="hidden"
             accept="image/*,video/*,audio/*,.pdf,.doc,.docx"
-            onChange={(e) => console.log("Fayl tanlandi:", e.target.files)}
+            onChange={handleFileSelect}
           />
         </div>
       ) : (

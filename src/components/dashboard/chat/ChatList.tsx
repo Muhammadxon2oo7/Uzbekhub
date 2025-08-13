@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar"
 import { Badge } from "@/components/ui/badge"
+import { useTranslation } from "react-i18next"
 
 interface Chat {
   id: string
@@ -27,6 +28,7 @@ interface ChatListProps {
 
 export default function ChatList({ chats, selectedChat, setSelectedChat }: ChatListProps) {
   const [searchQuery, setSearchQuery] = useState("")
+  const { t } = useTranslation("dashboardChatList")
 
   const filteredChats = chats.filter((chat) =>
     chat.name.toLowerCase().includes(searchQuery.toLowerCase())
@@ -37,7 +39,7 @@ export default function ChatList({ chats, selectedChat, setSelectedChat }: ChatL
       {/* Chat Header */}
       <div className="p-4 border-b border-white/10">
         <div className="flex items-center justify-between mb-4">
-          <h2 className="text-xl font-semibold text-text">Suhbatlar</h2>
+          <h2 className="text-xl font-semibold text-text">{t("title")}</h2>
           <Button
             size="icon"
             variant="ghost"
@@ -50,7 +52,7 @@ export default function ChatList({ chats, selectedChat, setSelectedChat }: ChatL
         <div className="relative">
           <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" />
           <Input
-            placeholder="Suhbatlarni qidirish..."
+            placeholder={`${t("search")} ...`}
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             className="pl-10 bg-white/5 border-white/20 text-text"
@@ -59,7 +61,7 @@ export default function ChatList({ chats, selectedChat, setSelectedChat }: ChatL
       </div>
 
       {/* Chat List */}
-      <div className="flex-1 overflow-y-auto">
+      <div className="flex-1 overflow-y-auto overflow-x-hidden">
         {filteredChats.map((chat, index) => (
           <motion.div
             key={chat.id}

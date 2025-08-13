@@ -52,20 +52,20 @@ export default function DashboardSidebar({
     status: "Faol",
     mood: "😊",
   })
-  const { t } = useTranslation()
+  const { t } = useTranslation("dashboardSidebar")
 
   const router = useRouter()
   const searchParams = useSearchParams()
 
   const menuItems = [
-    { id: "chat", icon: MessageCircle, label: "dashboard.tabs.chat", badge: 5, color: "text-blue-400" },
-    { id: "stories", icon: Camera, label: "dashboard.tabs.stories", badge: 3, color: "text-purple-400" },
-    { id: "calls", icon: Phone, label: "dashboard.tabs.calls", badge: 2, color: "text-green-400" },
-    { id: "groups", icon: Users, label: "dashboard.tabs.groups", badge: 12, color: "text-orange-400" },
-    { id: "discover", icon: MapPin, label: "dashboard.tabs.discover", color: "text-pink-400" },
-    { id: "donate", icon: Heart, label: "dashboard.tabs.donate", color: "text-red-400" },
-    { id: "profile", icon: User, label: "dashboard.tabs.profile", color: "text-indigo-400" },
-    { id: "settings", icon: Settings, label: "dashboard.tabs.settings", color: "text-gray-400" },
+    { id: "chat", icon: MessageCircle, label: "tabs.chat", badge: 5, color: "text-blue-400" },
+    { id: "stories", icon: Camera, label: "tabs.stories", badge: 3, color: "text-purple-400" },
+    { id: "calls", icon: Phone, label: "tabs.calls", badge: 2, color: "text-green-400" },
+    { id: "groups", icon: Users, label: "tabs.groups", badge: 12, color: "text-orange-400" },
+    { id: "discover", icon: MapPin, label: "tabs.discover", color: "text-pink-400" },
+    { id: "donate", icon: Heart, label: "tabs.donate", color: "text-red-400" },
+    { id: "profile", icon: User, label: "tabs.profile", color: "text-indigo-400" },
+    { id: "settings", icon: Settings, label: "tabs.settings", color: "text-gray-400" },
   ]
 
   useEffect(() => {

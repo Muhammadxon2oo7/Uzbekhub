@@ -1,0 +1,12 @@
+{
+    "tabs": {
+      "chat": "Chats",
+      "stories": "Stories",
+      "calls": "Calls",
+      "groups": "Groups",
+      "discover": "Discover",
+      "donate": "Donate",
+      "profile": "Profile",
+      "settings": "Settings"
+    }
+  }
