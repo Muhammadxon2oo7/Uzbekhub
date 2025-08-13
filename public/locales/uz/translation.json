@@ -4,21 +4,6 @@
   "theme": "Mavzu",
   "dark": "Qorong'u",
   "light": "Yorug'",
-  "help": {
-    "title": "Biz bilan bog'lanish",
-    "reason": "Bog'lanish sababi",
-    "reasons": {
-      "question": "Savol",
-      "bug": "Xato haqida xabar berish",
-      "suggestion": "Taklif",
-      "other": "Boshqa"
-    },
-    "message": "Xabar",
-    "message_placeholder": "Xabaringizni kiriting...",
-    "email": "Sizning elektron pochtangiz (ixtiyoriy)",
-    "send": "Yuborish",
-    "faq_title": "Ko'p so'raladigan savollar"
-  },
   "dashboard": {
     "tabs": {
       "chat": "Suhbatlar",

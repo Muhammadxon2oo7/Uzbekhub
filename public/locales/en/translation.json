@@ -4,21 +4,6 @@
   "theme": "Theme",
   "dark": "Dark",
   "light": "Light",
-  "help": {
-    "title": "Contact us",
-    "reason": "Reason for contact",
-    "reasons": {
-      "question": "Question",
-      "bug": "Bug report",
-      "suggestion": "Suggestion",
-      "other": "Other"
-    },
-    "message": "Message",
-    "message_placeholder": "Your message here...",
-    "email": "Your Email (optional)",
-    "send": "Send",
-    "faq_title": "Frequently asked questions"
-  },
   "dashboard": {
     "tabs": {
       "chat": "Chats",
