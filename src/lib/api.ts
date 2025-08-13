@@ -135,3 +135,20 @@ export const getUserById = async (id: string | number, token: string) => {
     }
   });
 };
+
+
+export const updateLocation = async (token: string, data: { lat: string; long: string }) => {
+  console.log("Update location so‘rovi:", { token, data });
+  return api.post("/accounts/account/location/", data, {
+    headers: { Authorization: `Bearer ${token}` },
+  });
+};
+
+export const searchUsers = async (key: string, token: string) => {
+  console.log("Search users so‘rovi:", { key, token });
+  return api.get(`/accounts/account/search/${key}/`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+};
