@@ -5,7 +5,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { MessageCircle, User, Phone, Clock, MessageSquare, Mail, Calendar, Users } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
-import ChatList from "./ChatList";
+import ChatList, { Chat } from "./ChatList";
 import ChatHeader from "./ChatHeader";
 import MessageInput from "./MessageInput";
 import MessageBubble, { Message } from "./MessageBubble";
@@ -27,18 +27,7 @@ interface UserProfile {
 }
 
 // Интерфейс для чата
-interface Chat {
-  id: string;
-  name: string;
-  avatar: string | null;
-  lastMessage: string;
-  time: string;
-  unread: number;
-  online: boolean;
-  typing: boolean;
-  lastSeen: string | null;
-  isGroup: boolean;
-}
+
 
 // Интерфейс для ответа API
 interface ApiUser {

@@ -8,17 +8,17 @@ import { Badge } from "@/components/ui/badge";
 import { useTranslation } from "react-i18next";
 import { searchUsers } from "@/lib/api";
 
-interface Chat {
+export interface Chat {
   id: string;
   name: string;
-  avatar: string;
+  avatar: string | null; // Allow null to accommodate ChatView's usage
   lastMessage: string;
   time: string;
   unread: number;
   online: boolean;
   typing: boolean;
-  lastSeen: string;
-  isGroup?: boolean;
+  lastSeen: string | null; // Allow null to accommodate ChatView's usage
+  isGroup: boolean; // Required to match ChatView; you can make it optional if needed
 }
 
 interface ChatListProps {
@@ -128,7 +128,7 @@ export default function ChatList({ chats, selectedChat, setSelectedChat }: ChatL
             <div className="flex items-center gap-3">
               <div className="relative">
                 <Avatar className="w-12 h-12">
-                  <AvatarImage src={chat.avatar} />
+                  <AvatarImage src={chat.avatar ?? "/placeholder.svg"} />
                   <AvatarFallback>{chat.name[0]}</AvatarFallback>
                 </Avatar>
                 {chat.online && (
