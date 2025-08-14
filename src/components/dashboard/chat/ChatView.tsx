@@ -1,269 +1,3 @@
-// "use client"
-
-// import { useState, useRef, useEffect } from "react"
-// import { AnimatePresence, motion } from "framer-motion"
-// import { MessageCircle } from "lucide-react"
-// import ChatList from "./ChatList"
-// import ChatHeader from "./ChatHeader"
-// import MessageInput from "./MessageInput"
-// import MessageBubble, { Message } from "./MessageBubble"
-
-// const mockChats = [
-//   {
-//     id: "1",
-//     name: "Dilshod Rahimov",
-//     avatar: "/placeholder.svg",
-//     lastMessage: "Salom, qalaysan? 😊",
-//     time: "2 daqiqa",
-//     unread: 3,
-//     online: true,
-//     typing: false,
-//     lastSeen: "Hozir faol",
-//   },
-//   {
-//     id: "2",
-//     name: "Malika Karimova",
-//     avatar: "/placeholder.svg",
-//     lastMessage: "🎵 Ovozli xabar",
-//     time: "15 daqiqa",
-//     unread: 0,
-//     online: false,
-//     typing: false,
-//     lastSeen: "15 daqiqa oldin",
-//   },
-//   {
-//     id: "3",
-//     name: "IT Developers UZ",
-//     avatar: "/placeholder.svg",
-//     lastMessage: "📷 Rasm yuborildi",
-//     time: "1 soat",
-//     unread: 7,
-//     online: true,
-//     typing: true,
-//     isGroup: true,
-//     lastSeen: "Faol",
-//   },
-// ]
-
-// const mockMessagesByChatId: Record<string, Message[]> = {
-//   "1": [
-//     {
-//       id: "1",
-//       sender: "Dilshod Rahimov",
-//       content: "Salom! Qalaysan bugun? 😊",
-//       time: "14:30",
-//       isOwn: false,
-//       type: "text",
-//       status: "read",
-//       reactions: [{ emoji: "👍", count: 2, users: ["Aziz", "Malika"] }],
-//     },
-//     {
-//       id: "2",
-//       sender: "Me",
-//       content: "Yaxshi, rahmat. Sen-chi?",
-//       time: "14:31",
-//       isOwn: true,
-//       type: "text",
-//       status: "read",
-//     },
-//   ],
-//   "2": [
-//     {
-//       id: "1",
-//       sender: "Malika Karimova",
-//       content: "Salom! Yangi loyihang haqida eshitdim 😊",
-//       time: "13:00",
-//       isOwn: false,
-//       type: "text",
-//       status: "read",
-//     },
-//     {
-//       id: "2",
-//       sender: "Me",
-//       content: "Ha, to‘g‘ri. Endi rasmiy beta bosqichda!",
-//       time: "13:03",
-//       isOwn: true,
-//       type: "text",
-//       status: "read",
-//     },
-//   ],
-//   "3": [
-//     {
-//       id: "1",
-//       sender: "IT Developers UZ",
-//       content: "📢 Eslatma: ertaga miting 10:00da",
-//       time: "10:00",
-//       isOwn: false,
-//       type: "text",
-//       status: "delivered",
-//     },
-//     {
-//       id: "2",
-//       sender: "Me",
-//       content: "Ok, qatnashaman!",
-//       time: "10:02",
-//       isOwn: true,
-//       type: "text",
-//       status: "read",
-//     },
-//   ],
-// }
-
-// export default function ChatView() {
-//   const [selectedChat, setSelectedChat] = useState<string | null>("1")
-//   const [message, setMessage] = useState("")
-//   const [isRecording, setIsRecording] = useState(false)
-//   const [isTyping, setIsTyping] = useState(false)
-//   const [messagesByChatId, setMessagesByChatId] = useState(mockMessagesByChatId)
-//   const messagesEndRef = useRef<HTMLDivElement>(null)
-//   const fileInputRef = useRef<HTMLInputElement>(null)
-
-//   const currentChat = mockChats.find((chat) => chat.id === selectedChat)
-//   const messages = selectedChat ? messagesByChatId[selectedChat] || [] : []
-
-//   const handleSendMessage = () => {
-//     if (message.trim() && selectedChat) {
-//       const newMessage: Message = {
-//         id: Date.now().toString(),
-//         sender: "Me",
-//         content: message,
-//         time: new Date().toLocaleTimeString().slice(0, 5),
-//         isOwn: true,
-//         type: "text",
-//         status: "sent",
-//       }
-
-//       setMessagesByChatId((prev) => ({
-//         ...prev,
-//         [selectedChat]: [...(prev[selectedChat] || []), newMessage],
-//       }))
-
-//       console.log("Yangi xabar:", message)
-//       setMessage("")
-//     }
-//   }
-
-//   const handleFileUpload = () => {
-//     fileInputRef.current?.click()
-//   }
-
-//   const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
-//     if (selectedChat && e.target.files && e.target.files.length > 0) {
-//       const file = e.target.files[0]
-//       const fileUrl = URL.createObjectURL(file)
-
-//       const fileType = file.type.startsWith("image/")
-//         ? "image"
-//         : file.type.startsWith("video/")
-//         ? "video"
-//         : "file"
-
-//       const newMessage: Message = {
-//         id: Date.now().toString(),
-//         sender: "Me",
-//         content: fileUrl,
-//         time: new Date().toLocaleTimeString().slice(0, 5),
-//         isOwn: true,
-//         type: fileType,
-//         status: "sent",
-//       }
-
-//       setMessagesByChatId((prev) => ({
-//         ...prev,
-//         [selectedChat]: [...(prev[selectedChat] || []), newMessage],
-//       }))
-
-//       console.log("Fayl yuborildi:", file)
-//       e.target.value = ""
-//     }
-//   }
-
-//   const handleVoiceRecord = () => {
-//     setIsRecording(!isRecording)
-//     console.log("Ovoz yozish:", !isRecording)
-//   }
-
-//   const addReaction = (messageId: string, emoji: string) => {
-//     console.log("Reaktsiya:", messageId, emoji)
-//   }
-
-//   useEffect(() => {
-//     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" })
-//   }, [messages])
-
-//   useEffect(() => {
-//     if (message.length > 0) {
-//       setIsTyping(true)
-//       const timer = setTimeout(() => setIsTyping(false), 1000)
-//       return () => clearTimeout(timer)
-//     }
-//   }, [message])
-
-//   return (
-//     <div className="h-full flex bg-white/5 backdrop-blur-[10px] border border-white/10 rounded-2xl overflow-hidden">
-//       <ChatList chats={mockChats} selectedChat={selectedChat} setSelectedChat={setSelectedChat} />
-
-//       {selectedChat && currentChat ? (
-//         <div className="flex-1 flex flex-col">
-//           <ChatHeader
-//             chatName={currentChat.name}
-//             chatAvatar={currentChat.avatar}
-//             onlineStatus={currentChat.lastSeen}
-//           />
-
-//           <div className="flex-1 overflow-y-auto p-4 space-y-4">
-//             <AnimatePresence>
-//               {messages.map((msg, index) => (
-//                 <motion.div
-//                   key={msg.id}
-//                   initial={{ opacity: 0, y: 20 }}
-//                   animate={{ opacity: 1, y: 0 }}
-//                   transition={{ delay: index * 0.05 }}
-//                 >
-//                   <MessageBubble message={msg} addReaction={addReaction} />
-//                 </motion.div>
-//               ))}
-//             </AnimatePresence>
-//             <div ref={messagesEndRef} />
-//           </div>
-
-//           <MessageInput
-//             message={message}
-//             setMessage={setMessage}
-//             handleSendMessage={handleSendMessage}
-//             handleFileUpload={handleFileUpload}
-//             handleVoiceRecord={handleVoiceRecord}
-//             isRecording={isRecording}
-//             fileInputRef={fileInputRef}
-//           />
-
-//           <input
-//             ref={fileInputRef}
-//             type="file"
-//             className="hidden"
-//             accept="image/*,video/*,audio/*,.pdf,.doc,.docx"
-//             onChange={handleFileSelect}
-//           />
-//         </div>
-//       ) : (
-//         <div className="flex-1 flex items-center justify-center">
-//           <motion.div
-//             className="text-center"
-//             initial={{ opacity: 0, scale: 0.8 }}
-//             animate={{ opacity: 1, scale: 1 }}
-//           >
-//             <MessageCircle className="w-16 h-16 text-gray-400 mx-auto mb-4" />
-//             <h3 className="text-lg font-medium text-text mb-2">Suhbatni tanlang</h3>
-//             <p className="text-gray-400">Xabar almashishni boshlash uchun suhbatni tanlang</p>
-//           </motion.div>
-//         </div>
-//       )}
-//     </div>
-//   )
-// }
-
-
-
 "use client";
 
 import { useState, useRef, useEffect } from "react";
@@ -277,6 +11,7 @@ import MessageInput from "./MessageInput";
 import MessageBubble, { Message } from "./MessageBubble";
 import { getUserById } from "@/lib/api";
 
+// Интерфейс для профиля пользователя
 interface UserProfile {
   id: string;
   name: string;
@@ -291,6 +26,7 @@ interface UserProfile {
   groups: string[];
 }
 
+// Интерфейс для чата
 interface Chat {
   id: string;
   name: string;
@@ -304,14 +40,59 @@ interface Chat {
   isGroup: boolean;
 }
 
+// Интерфейс для ответа API
+interface ApiUser {
+  id: number;
+  first_name: string | null;
+  last_name: string | null;
+  username: string | null;
+  email: string;
+  bio: string | null;
+  phone: string | null;
+  profile_picture: string | null;
+  last_login: string | null;
+  is_active: boolean;
+  date_joined: string | null;
+  groups: string[];
+}
+
+// Интерфейс пропсов для компонентов
+interface ChatListProps {
+  chats: Chat[];
+  selectedChat: string;
+  setSelectedChat: (id: string) => void;
+}
+
+interface ChatHeaderProps {
+  chatName: string;
+  chatAvatar: string;
+  onlineStatus: string;
+  onAvatarClick: () => void;
+}
+
+interface MessageInputProps {
+  message: string;
+  setMessage: (value: string) => void;
+  handleSendMessage: () => void;
+  handleFileUpload: (type: string) => void;
+  handleVoiceRecord: () => void;
+  isRecording: boolean;
+  fileInputRef: React.RefObject<HTMLInputElement>;
+}
+
+interface MessageBubbleProps {
+  message: Message;
+  addReaction: (messageId: string, emoji: string) => void;
+}
+
 export default function ChatView() {
-  const [selectedChat, setSelectedChat] = useState<string | null>(null);
-  const [message, setMessage] = useState("");
-  const [isRecording, setIsRecording] = useState(false);
-  const [isTyping, setIsTyping] = useState(false);
+  const [selectedChat, setSelectedChat] = useState<string>("");
+  const [message, setMessage] = useState<string>("");
+  const [isRecording, setIsRecording] = useState<boolean>(false);
+  const [isTyping, setIsTyping] = useState<boolean>(false);
   const [messagesByChatId, setMessagesByChatId] = useState<Record<string, Message[]>>({});
   const [userProfile, setUserProfile] = useState<UserProfile | null>(null);
-  const [isChatStarted, setIsChatStarted] = useState(false);
+  const [isChatStarted, setIsChatStarted] = useState<boolean>(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -333,13 +114,12 @@ export default function ChatView() {
     localStorage.setItem("messages", JSON.stringify(messages));
   };
 
-
-  const fetchUserProfile = async (userId: string) => {
+  const fetchUserProfile = async (userId: string): Promise<UserProfile | null> => {
     const token = localStorage.getItem("token");
     if (token) {
       try {
         const response = await getUserById(userId, token);
-        const user = response.data;
+        const user: ApiUser = response.data;
         const profile: UserProfile = {
           id: user.id.toString(),
           name: user.first_name && user.last_name ? `${user.first_name} ${user.last_name}` : user.username || user.email,
@@ -456,11 +236,12 @@ export default function ChatView() {
       const file = e.target.files[0];
       const fileUrl = URL.createObjectURL(file);
 
-      const fileType = file.type.startsWith("image/")
-        ? "image"
-        : file.type.startsWith("video/")
-        ? "video"
-        : "file";
+      const fileType: "image" | "text" | "voice" =
+        file.type.startsWith("image/")
+          ? "image"
+          : file.type.startsWith("audio/")
+          ? "voice"
+          : "text";
 
       const newMessage: Message = {
         id: Date.now().toString(),
@@ -535,7 +316,9 @@ export default function ChatView() {
   };
 
   useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    if (messagesEndRef.current) {
+      messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
+    }
   }, [messagesByChatId[selectedChat]]);
 
   useEffect(() => {
@@ -548,7 +331,11 @@ export default function ChatView() {
 
   return (
     <div className="h-full flex bg-white/5 backdrop-blur-lg border border-white/10 rounded-2xl overflow-hidden">
-      <ChatList chats={getChatsFromStorage()} selectedChat={selectedChat} setSelectedChat={setSelectedChat} />
+      <ChatList
+        chats={getChatsFromStorage()}
+        selectedChat={selectedChat}
+        setSelectedChat={setSelectedChat}
+      />
 
       {selectedChat ? (
         <div className="flex-1 flex flex-col">
@@ -612,7 +399,7 @@ export default function ChatView() {
                   className="relative"
                 >
                   <Avatar className="w-32 h-32 mx-auto mb-4 border-4 border-primary/20 rounded-full shadow-lg">
-                    <AvatarImage src={userProfile.profile_picture} />
+                    <AvatarImage src={userProfile.profile_picture ?? ""} />
                     <AvatarFallback className="text-4xl">{userProfile.name[0]}</AvatarFallback>
                   </Avatar>
                   {userProfile.is_active && (
@@ -725,15 +512,15 @@ export default function ChatView() {
                   animate={{ y: 0, opacity: 1 }}
                   transition={{ delay: 0.5, duration: 0.4 }}
                 >
-                  <Button
+                  <motion.button
                     className="mt-8 bg-gradient-to-r from-primary to-purple-500 hover:from-primary/80 hover:to-purple-500/80 text-white font-semibold py-3 px-6 rounded-full shadow-lg transition-all duration-300 hover:scale-105"
                     onClick={startChat}
                     whileHover={{ scale: 1.1 }}
                     whileTap={{ scale: 0.95 }}
                   >
-                    <MessageSquare className="w-5 h-5 mr-2" />
+                    <MessageSquare className="w-5 h-5 mr-2 inline-block" />
                     Chatni boshlash
-                  </Button>
+                  </motion.button>
                 </motion.div>
               </div>
             </motion.div>
