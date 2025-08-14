@@ -1,5 +1,5 @@
 "use client";
-
+import FloatingAssistant from "./tool/FloatingAssistant";
 import { usePathname } from "next/navigation";
 import Header from "@/components/header/Header";
 import { useEffect } from "react";
@@ -17,6 +17,7 @@ export default function LayoutClient({ children }: { children: React.ReactNode }
     <>
       {!isAuth && !isMain && <Header />}
       {children}
+      {!isMain && <FloatingAssistant />}
     </>
   );  
 }
