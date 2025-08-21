@@ -39,7 +39,6 @@
 
 
 
-
 import axios, { AxiosInstance } from "axios";
 
 const api: AxiosInstance = axios.create({
@@ -86,15 +85,9 @@ export const updateProfile = async (token: string, data: FormData) => {
 export const checkUsername = async (username: string) => {
   console.log("Check username so‘rovi:", username);
   const token = localStorage.getItem("token");
-
-  return api.get(
-    `/accounts/account/check/username/?username=${username}`,
-    {
-      headers: {
-        Authorization: `Bearer ${token}`
-      }
-    }
-  );
+  return api.get(`/accounts/account/check/username/?username=${username}`, {
+    headers: { Authorization: `Bearer ${token}` },
+  });
 };
 
 export const changeEmail = async (token: string, data: { new_email: string; password: string }) => {
@@ -120,22 +113,18 @@ export const resetPassword = async (token: string, data: { new_password: string;
   console.log("Reset password so‘rovi:", { token, data });
   return api.post(`/accounts/auth/reset-password/${token}/`, data);
 };
-// api.ts
-export const getAllUsers = async (token: any) => {
+
+export const getAllUsers = async (token: string) => {
   return api.get("/accounts/admin/user", {
-    headers: {
-      Authorization: `Bearer ${token}`
-    }
-  });
-};
-export const getUserById = async (id: string | number, token: string) => {
-  return api.get(`/accounts/admin/user/${id}`, {
-    headers:  {
-      Authorization: `Bearer ${token}`
-    }
+    headers: { Authorization: `Bearer ${token}` },
   });
 };
 
+export const getUserById = async (id: string | number, token: string) => {
+  return api.get(`/accounts/admin/user/${id}`, {
+    headers: { Authorization: `Bearer ${token}` },
+  });
+};
 
 export const updateLocation = async (token: string, data: { lat: string; long: string }) => {
   console.log("Update location so‘rovi:", { token, data });
@@ -144,11 +133,22 @@ export const updateLocation = async (token: string, data: { lat: string; long: s
   });
 };
 
+export const deleteLocation = async (token: string) => {
+  console.log("Delete location so‘rovi:", { token });
+  return api.delete("/accounts/account/location/", {
+    headers: { Authorization: `Bearer ${token}` },
+  });
+};
+
 export const searchUsers = async (key: string, token: string) => {
   console.log("Search users so‘rovi:", { key, token });
   return api.get(`/accounts/account/search/${key}/`, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
+    headers: { Authorization: `Bearer ${token}` },
+  });
+};
+
+export const uploadFile = async (data: FormData, token: string) => {
+  return api.post("/chat/upload/", data, {
+    headers: { Authorization: `Bearer ${token}` },
   });
 };

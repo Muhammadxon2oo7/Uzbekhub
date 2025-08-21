@@ -93,7 +93,9 @@ export default function DashboardSidebar({
           last_name: data.last_name || "",
           username: data.username || "",
           profile_picture: data.profile_picture || "",
-          location: data.location || "Toshkent, O'zbekiston",
+          location: data.location
+            ? `${data.location.city || data.location.county || ""}, ${data.location.country || ""}`
+            : "Toshkent, O'zbekiston",
           status: "Faol",
           mood: "😊",
         })
