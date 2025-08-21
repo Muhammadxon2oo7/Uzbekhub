@@ -65,6 +65,7 @@ export default function ProfileView() {
   const [dynamicLocation, setDynamicLocation] = useState<DynamicLocation | null>(null)
   const [isLocationPermissionOpen, setIsLocationPermissionOpen] = useState(false)
   const [isFetchingLocation, setIsFetchingLocation] = useState(false)
+  const [avatarKey, setAvatarKey] = useState(Date.now())
 
   const cardRef = useRef<HTMLDivElement>(null)
   const spotRef = useRef<HTMLDivElement>(null)
@@ -91,7 +92,7 @@ export default function ProfileView() {
       try {
         const response = await getProfile(token)
         const data = response.data
-        setProfile({
+        const newProfile = {
           first_name: data.first_name || "",
           last_name: data.last_name || "",
           username: data.username || "",
@@ -101,18 +102,30 @@ export default function ProfileView() {
           email: data.email || "",
           location: data.location || "",
           created_at: data.date_joined || "",
-        })
-        setTempProfile({
-          first_name: data.first_name || "",
-          last_name: data.last_name || "",
-          username: data.username || "",
-          bio: data.bio || "",
-          profile_picture: data.profile_picture || "",
-          phone: data.phone || "",
-          email: data.email || "",
-          location: data.location || "",
-          created_at: data.date_joined || "",
-        })
+        }
+        setProfile(newProfile)
+        setTempProfile(newProfile)
+
+        if (data.location) {
+          try {
+            const [latStr, longStr] = data.location.split(',')
+            const lat = parseFloat(latStr)
+            const long = parseFloat(longStr)
+            if (!isNaN(lat) && !isNaN(long)) {
+              const name = await fetchLocationName(lat, long)
+              setDynamicLocation({ latitude: lat, longitude: long, name })
+              setTimeout(() => {
+                if (mapRef.current) {
+                  initializeMap(lat, long)
+                }
+              }, 100)
+            } else {
+              console.warn("Invalid location format:", data.location)
+            }
+          } catch (error) {
+            console.error("Error parsing location:", error)
+          }
+        }
       } catch (error: any) {
         toast.error(error.response?.data?.detail || "Profil yuklanmadi.")
       } finally {
@@ -190,20 +203,18 @@ export default function ProfileView() {
       formData.append("last_name", tempProfile.last_name)
       formData.append("bio", tempProfile.bio)
       formData.append("phone", tempProfile.phone)
-      formData.append("location", tempProfile.location)
       if (avatarFile) {
         formData.append("profile_picture", avatarFile)
       }
 
-      const response = await updateProfile(token, formData)
-      setProfile({ ...profile, ...response.data })
-      if (avatarFile) {
-        const updatedResponse = await getProfile(token)
-        setProfile(updatedResponse.data)
-        setAvatarFile(null)
-      }
+      await updateProfile(token, formData)
+      const updatedResponse = await getProfile(token)
+      setProfile(updatedResponse.data)
+      setTempProfile(updatedResponse.data)
+      setAvatarFile(null)
+      setAvatarKey(Date.now())
       setIsEditing(false)
-      toast.success(response.data?.message || "Profil muvaffaqiyatli yangilandi.")
+      toast.success("Profil muvaffaqiyatli yangilandi.")
     } catch (error: any) {
       toast.error(error.response?.data?.detail || "Profil yangilashda xato.")
     } finally {
@@ -354,9 +365,14 @@ export default function ProfileView() {
     }
 
     const container = document.getElementById(containerId)
-    if (!container || leafletMapRef.current) {
-      console.warn(`Xarita konteyneri "${containerId}" topilmadi yoki xarita allaqachon ishga tushirilgan`)
+    if (!container) {
+      console.warn(`Xarita konteyneri "${containerId}" topilmadi`)
       return
+    }
+
+    if (leafletMapRef.current) {
+      leafletMapRef.current.remove()
+      leafletMapRef.current = null
     }
 
     leafletMapRef.current = L.map(containerId, {
@@ -392,7 +408,6 @@ export default function ProfileView() {
         const locationName = await fetchLocationName(latitude, longitude)
         setDynamicLocation({ latitude, longitude, name: locationName })
 
-      
         const token = localStorage.getItem("token")
         if (!token) {
           setIsFetchingLocation(false)
@@ -406,21 +421,26 @@ export default function ProfileView() {
             lat: latitude.toString(),
             long: longitude.toString(),
           })
+          const updatedResponse = await getProfile(token)
+          const newProfile = updatedResponse.data
+          setProfile({
+            ...newProfile,
+            location: `${latitude},${longitude}`, // Update location in profile state
+          })
+          setTempProfile({
+            ...newProfile,
+            location: `${latitude},${longitude}`,
+          })
           toast.success("Joylashuv backendga muvaffaqiyatli yuborildi.")
+          if (typeof window !== "undefined" && mapRef.current) {
+            initializeMap(latitude, longitude)
+          }
         } catch (error: any) {
-          toast.error(error.response?.data?.detail || "Joylashuvni yuborishda xato.")
+          toast.error(error.response?.data?.detail || "Joylashuvni saqlashda xato.")
+        } finally {
+          setIsFetchingLocation(false)
+          setIsLocationPermissionOpen(false)
         }
-
-        if (typeof window !== "undefined") {
-          setTimeout(() => {
-            if (mapRef.current) {
-              initializeMap(latitude, longitude, "map")
-            }
-          }, 100)
-        }
-        setIsLocationPermissionOpen(false)
-        setIsFetchingLocation(false)
-        toast.success("Joylashuv muvaffaqiyatli aniqlandi.")
       },
       (error) => {
         setIsFetchingLocation(false)
@@ -454,6 +474,15 @@ export default function ProfileView() {
   }
 
   const fullName = `${profile.first_name} ${profile.last_name}`.trim()
+
+  let avatarSrc = "/placeholder.svg"
+  if (tempProfile.profile_picture) {
+    if (tempProfile.profile_picture.startsWith("blob:") || tempProfile.profile_picture.startsWith("data:")) {
+      avatarSrc = tempProfile.profile_picture
+    } else {
+      avatarSrc = `https://api.rozievich.uz/${tempProfile.profile_picture}?v=${avatarKey}`
+    }
+  }
 
   return (
     <TooltipProvider>
@@ -525,9 +554,9 @@ export default function ProfileView() {
                     >
                       <input {...getInputProps()} />
                       <Avatar className="w-32 h-32 mx-auto">
-                        <AvatarImage src={'https://api.rozievich.uz/' + tempProfile.profile_picture || "/placeholder.svg"} />
+                        <AvatarImage src={avatarSrc} className="object-cover"/>
                         <AvatarFallback className="text-2xl">
-                          {profile.first_name[0] || "U"}
+                          {profile.first_name[0] || profile.first_name.slice(0, 1) || profile.username.slice(0, 1) || ":)"}
                         </AvatarFallback>
                       </Avatar>
                       {isEditing && (
@@ -630,29 +659,6 @@ export default function ProfileView() {
                   </CardContent>
                 </Card>
 
-                {/* <Card className="bg-white/5 border-white/10 backdrop-blur-[10px] mt-6">
-                  <CardHeader>
-                    <CardTitle className="text-text">Statistika</CardTitle>
-                  </CardHeader>
-                  <CardContent className="space-y-4">
-                    {stats.map((stat, index) => (
-                      <motion.div
-                        key={stat.label}
-                        initial={{ opacity: 0, x: -20 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        transition={{ delay: index * 0.1 + 0.4 }}
-                        className="flex items-center justify-between"
-                      >
-                        <div className="flex items-center gap-3">
-                          <stat.icon className={`w-5 h-5 ${stat.color}`} />
-                          <span className="text-text">{stat.label}</span>
-                        </div>
-                        <span className="font-semibold text-text">{stat.value}</span>
-                      </motion.div>
-                    ))}
-                  </CardContent>
-                </Card> */}
-
                 <Card className="bg-white/5 border-white/10 backdrop-blur-[10px] mt-6 overflow-hidden shadow-lg rounded-xl">
                   <CardHeader>
                     <CardTitle className="text-text flex items-center gap-2 text-lg font-semibold">
@@ -729,7 +735,11 @@ export default function ProfileView() {
                             </Tooltip>
                           </TooltipProvider>
                           <Button
-                            onClick={() => setDynamicLocation(null)}
+                            onClick={() => {
+                              setDynamicLocation(null)
+                              setProfile({ ...profile, location: "" })
+                              setTempProfile({ ...tempProfile, location: "" })
+                            }}
                             variant="outline"
                             className="w-full bg-gradient-to-r from-gray-700/50 to-gray-600/50 hover:from-gray-600/50 hover:to-gray-500/50 text-white border-white/20 rounded-lg py-2 transition-all duration-300 ease-in-out"
                           >
@@ -783,23 +793,6 @@ export default function ProfileView() {
                         ) : (
                           <p className="text-gray-300 bg-white/5 rounded-lg p-3 border border-white/10">
                             {profile.phone || "Telefon yo'q"}
-                          </p>
-                        )}
-                      </div>
-                      <div>
-                        <label className="block text-sm font-medium text-text mb-2">
-                          <MapPin className="w-4 h-4 inline mr-2" />
-                          Qo'lda kiritilgan manzil
-                        </label>
-                        {isEditing ? (
-                          <Input
-                            value={tempProfile.location}
-                            onChange={(e) => setTempProfile({ ...tempProfile, location: e.target.value })}
-                            className="bg-white/5 border-white/20 text-text"
-                          />
-                        ) : (
-                          <p className="text-gray-300 bg-white/5 rounded-lg p-3 border border-white/10">
-                            {profile.location || "Manzil yo'q"}
                           </p>
                         )}
                       </div>
