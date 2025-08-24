@@ -903,7 +903,7 @@ export default function ProfileView() {
                                   </DialogTrigger>
                                   <DialogContent className="bg-white/5 backdrop-blur-[10px] border-white/10">
                                     <DialogHeader>
-                                      <DialogTitle>Foydalanuvchi nomini o‘zgartirish</DialogTitle>
+                                      <DialogTitle>{t("changeUsername")}</DialogTitle>
                                     </DialogHeader>
                                     <div className="relative">
                                       <Input
@@ -916,7 +916,7 @@ export default function ProfileView() {
                                         className={`bg-white/5 border-white/20 text-text ${
                                           usernameStatus === "taken" ? "border-red-500" : usernameStatus === "available" ? "border-green-500" : ""
                                         }`}
-                                        placeholder="Yangi foydalanuvchi nomi"
+                                        placeholder={t("newUsername")}
                                       />
                                       {usernameStatus === "checking" && (
                                         <Loader2 className="absolute right-2 top-1/2 -translate-y-1/2 w-4 h-4 animate-spin text-gray-400" />
@@ -930,7 +930,7 @@ export default function ProfileView() {
                                     </div>
                                     <DialogFooter>
                                       <Button variant="outline" onClick={() => setIsUsernameChangeOpen(false)}>
-                                        Bekor qilish
+                                        {t("cancel")}
                                       </Button>
                                       <Button
                                         onClick={handleUsernameChange}
@@ -938,7 +938,7 @@ export default function ProfileView() {
                                         disabled={isLoading || usernameStatus !== "available"}
                                       >
                                         {isLoading && <Loader2 className="w-4 h-4 mr-2 animate-spin" />}
-                                        <span className="relative z-10">Saqlash</span>
+                                        <span className="relative z-10">{t("save")}</span>
                                         {/* <div className="absolute inset-0 bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 opacity-0 hover:opacity-100 transition-opacity duration-300 rounded-lg"></div> */}
                                       </Button>
                                     </DialogFooter>
@@ -956,11 +956,10 @@ export default function ProfileView() {
                       <div className="flex items-center justify-center gap-1 text-gray-400 mb-4">
                         <Calendar className="w-4 h-4" />
                         <span className="text-sm">
-                          Qo‘shilgan sana: {new Date(profile.created_at).toLocaleDateString() || "Mavjud emas"}
+                          {t("addedDate")}: {new Date(profile.created_at).toLocaleDateString() || "Mavjud emas"}
                         </span>
                       </div>
 
-                      <Badge className="bg-green-500/20 text-green-400 border-green-500/30">Faol</Badge>
                     </CardContent>
                   </Card>
 
@@ -1001,13 +1000,13 @@ export default function ProfileView() {
                 >
                   <Card className="bg-white/5 border-white/10 backdrop-blur-[10px] mb-6">
                     <CardHeader>
-                      <CardTitle className="text-text">Profil ma'lumotlari</CardTitle>
+                      <CardTitle className="text-text">{t("profileInformation")}</CardTitle>
                     </CardHeader>
                     <CardContent className="space-y-6">
                       <div>
                         <label className="block text-sm font-medium text-text mb-2">
                           <BookOpen className="w-4 h-4 inline mr-2" />
-                          Bio
+                          {t("bio")}
                         </label>
                         {isEditing ? (
                           <Textarea
@@ -1017,7 +1016,7 @@ export default function ProfileView() {
                             rows={3}
                           />
                         ) : (
-                          <p className="text-gray-300 bg-white/5 rounded-lg p-3 border border-white/10">{profile.bio || "Bio mavjud emas"}</p>
+                          <p className="text-gray-300 bg-white/5 rounded-lg p-3 border border-white/10">{profile.bio || t("notHaveBio")}</p>
                         )}
                       </div>
 
@@ -1025,7 +1024,7 @@ export default function ProfileView() {
                         <div>
                           <label className="block text-sm font-medium text-text mb-2">
                             <Phone className="w-4 h-4 inline mr-2" />
-                            Telefon
+                            {t("phone")}
                           </label>
                           {isEditing ? (
                             <Input
@@ -1036,14 +1035,14 @@ export default function ProfileView() {
                             />
                           ) : (
                             <p className="text-gray-300 bg-white/5 rounded-lg p-3 border border-white/10">
-                              {profile.phone || "Telefon raqami mavjud emas"}
+                              {profile.phone || t("notHavePhone")}
                             </p>
                           )}
                         </div>
                         <div>
                           <label className="block text-sm font-medium text-text mb-2">
                             <Smile className="w-4 h-4 inline mr-2" />
-                            Status
+                            {t("status")}
                           </label>
                           {isEditing ? (
                             <Input
@@ -1054,7 +1053,7 @@ export default function ProfileView() {
                             />
                           ) : (
                             <p className="text-gray-300 bg-white/5 rounded-lg p-3 border border-white/10">
-                              {profile.status || "Status mavjud emas"}
+                              {profile.status || t("notHaveStatus")}
                             </p>
                           )}
                         </div>
@@ -1080,14 +1079,14 @@ export default function ProfileView() {
                     <CardHeader>
                       <CardTitle className="text-text flex items-center gap-2">
                         <Shield className="w-5 h-5 text-primary" />
-                        Xavfsizlik
+                        {t("security")}
                       </CardTitle>
                     </CardHeader>
                     <CardContent className="space-y-4">
                       <div className="flex items-center justify-between">
                         <div className="flex items-center gap-2">
                           <Mail className="w-4 h-4 text-text" />
-                          <span className="text-gray-300">{profile.email || "Email mavjud emas"}</span>
+                          <span className="text-gray-300">{profile.email || t("notHaveEmail")}</span>
                         </div>
                         <Tooltip>
                           <TooltipTrigger asChild>
@@ -1099,11 +1098,11 @@ export default function ProfileView() {
                               </DialogTrigger>
                               <DialogContent className="bg-white/5 backdrop-blur-[10px] border-white/10">
                                 <DialogHeader>
-                                  <DialogTitle>Email o‘zgartirish</DialogTitle>
+                                  <DialogTitle>{t("changeEmail")}</DialogTitle>
                                 </DialogHeader>
                                 <div className="space-y-4">
                                   <div>
-                                    <label className="block text-sm font-medium text-text mb-2">Yangi email</label>
+                                    <label className="block text-sm font-medium text-text mb-2">{t("newEmail")}</label>
                                     <Input
                                       type="email"
                                       value={emailChangeData.new_email}
@@ -1113,7 +1112,7 @@ export default function ProfileView() {
                                     />
                                   </div>
                                   <div>
-                                    <label className="block text-sm font-medium text-text mb-2">Parol</label>
+                                    <label className="block text-sm font-medium text-text mb-2">{t("password")}</label>
                                     <Input
                                       type="password"
                                       value={emailChangeData.password}
@@ -1124,7 +1123,7 @@ export default function ProfileView() {
                                 </div>
                                 <DialogFooter>
                                   <Button variant="outline" onClick={() => handleEmailModalClose(false)}>
-                                    Bekor qilish
+                                    {t("cancel")}
                                   </Button>
                                   <Button
                                     onClick={handleEmailChangeRequest}
@@ -1132,7 +1131,7 @@ export default function ProfileView() {
                                     disabled={isLoading || !emailChangeData.new_email || !emailChangeData.password}
                                   >
                                     {isLoading && <Loader2 className="w-4 h-4 mr-2 animate-spin" />}
-                                    <span className="relative z-10">Yuborish</span>
+                                    <span className="relative z-10">{t("send")}</span>
                                     {/* <div className="absolute inset-0 bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 opacity-0 hover:opacity-100 transition-opacity duration-300 rounded-lg"></div> */}
                                   </Button>
                                 </DialogFooter>
@@ -1155,10 +1154,10 @@ export default function ProfileView() {
         <Dialog open={isEmailVerifyOpen} onOpenChange={setIsEmailVerifyOpen}>
           <DialogContent className="bg-white/5 backdrop-blur-[10px] border-white/10">
             <DialogHeader>
-              <DialogTitle>Email tasdiqlash</DialogTitle>
+              <DialogTitle>{t("ConfirmEmail")}</DialogTitle>
             </DialogHeader>
             <div>
-              <label className="block text-sm font-medium text-text mb-2">Tasdiqlash kodi</label>
+              <label className="block text-sm font-medium text-text mb-2">{t("ConfirmCode")}</label>
               <Input
                 value={emailVerifyCode}
                 onChange={(e) => setEmailVerifyCode(e.target.value)}
@@ -1168,7 +1167,7 @@ export default function ProfileView() {
             </div>
             <DialogFooter>
               <Button variant="outline" onClick={() => setIsEmailVerifyOpen(false)}>
-                Bekor qilish
+                {t("cancel")}
               </Button>
               <Button
                 onClick={handleEmailVerify}
@@ -1176,7 +1175,7 @@ export default function ProfileView() {
                 disabled={isLoading || !emailVerifyCode}
               >
                 {isLoading && <Loader2 className="w-4 h-4 mr-2 animate-spin" />}
-                <span className="relative z-10">Tasdiqlash</span>
+                <span className="relative z-10">{t("send")}</span>
                 {/* <div className="absolute inset-0 bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 opacity-0 hover:opacity-100 transition-opacity duration-300 rounded-lg"></div> */}
               </Button>
             </DialogFooter>
