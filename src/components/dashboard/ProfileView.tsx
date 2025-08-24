@@ -4,7 +4,7 @@ import { useState, useRef, useEffect, useCallback } from "react"
 import * as L from "leaflet"
 import "leaflet/dist/leaflet.css"
 import { motion } from "framer-motion"
-import { User, MapPin, Phone, Mail, Calendar, Edit3, Camera, Heart, MessageCircle, Users, Loader2, Check, X, Shield, LogOut, RefreshCcw } from "lucide-react"
+import { User, MapPin, Phone, Mail, Calendar, Edit3, Camera, Heart, MessageCircle, Users, Loader2, Check, X, Shield, LogOut, RefreshCcw, Smile, Paperclip, PaperclipIcon, FileText, BookOpen } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
@@ -18,6 +18,7 @@ import { toast } from "sonner"
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter, DialogTrigger } from "@/components/ui/dialog"
 import debounce from "lodash/debounce"
 import { useRouter } from "next/navigation"
+import { stat } from "fs"
 
 interface Location {
   id: number
@@ -38,6 +39,7 @@ interface Profile {
   bio: string
   profile_picture: string
   phone: string
+  status: string
   email: string
   location: Location | null
   created_at: string
@@ -417,6 +419,7 @@ export default function ProfileView() {
     bio: "",
     profile_picture: "",
     phone: "",
+    status: "",
     email: "",
     location: null,
     created_at: "",
@@ -451,6 +454,8 @@ export default function ProfileView() {
       try {
         const response = await getProfile(token)
         const data = response.data
+        console.log(data);
+        
         const newProfile = {
           first_name: data.first_name || "",
           last_name: data.last_name || "",
@@ -458,10 +463,13 @@ export default function ProfileView() {
           bio: data.bio || "",
           profile_picture: data.profile_picture || "",
           phone: data.phone || "",
+          status: data.status || "",
           email: data.email || "",
           location: data.location || null,
           created_at: data.date_joined || "",
         }
+        console.log(newProfile);
+
         setProfile(newProfile)
         setTempProfile(newProfile)
 
@@ -993,7 +1001,10 @@ export default function ProfileView() {
                     </CardHeader>
                     <CardContent className="space-y-6">
                       <div>
-                        <label className="block text-sm font-medium text-text mb-2">Bio</label>
+                        <label className="block text-sm font-medium text-text mb-2">
+                          <BookOpen className="w-4 h-4 inline mr-2" />
+                          Bio
+                        </label>
                         {isEditing ? (
                           <Textarea
                             value={tempProfile.bio}
@@ -1022,6 +1033,24 @@ export default function ProfileView() {
                           ) : (
                             <p className="text-gray-300 bg-white/5 rounded-lg p-3 border border-white/10">
                               {profile.phone || "Telefon raqami mavjud emas"}
+                            </p>
+                          )}
+                        </div>
+                        <div>
+                          <label className="block text-sm font-medium text-text mb-2">
+                            <Smile className="w-4 h-4 inline mr-2" />
+                            Status
+                          </label>
+                          {isEditing ? (
+                            <Input
+                              type="text"
+                              value={tempProfile.status}
+                              onChange={(e) => setTempProfile({ ...tempProfile, status: e.target.value })}
+                              className="bg-white/5 border-white/20 text-text"
+                            />
+                          ) : (
+                            <p className="text-gray-300 bg-white/5 rounded-lg p-3 border border-white/10">
+                              {profile.status || "Status mavjud emas"}
                             </p>
                           )}
                         </div>
