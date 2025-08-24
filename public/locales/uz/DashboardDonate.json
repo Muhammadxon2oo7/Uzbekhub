@@ -1,0 +1,20 @@
+{
+    "title": "Xayriya",
+    "send_donation": "Xayriya qilish",
+    "recipient": "Qabul qiluvchi",
+    "amount": "Qiymat",
+    "quick_amounts": "Tez miqdorlar",
+    "send": "Yuborish",
+    "statistics": "Statistika",
+    "total_sent": "Jami yuborilgan",
+    "total_received": "Jami olingan",
+    "this_month": "Ushbu oy",
+    "donations_count": "Xayriya soni",
+    "transaction_history": "Transaktsiyalar tarixi",
+    "sent_to": "Yuborilgan",
+    "ga": "ga",
+    "received_from": "Olingan",
+    "dan":  "dan",
+    "sent": "yuborilgan",
+    "received": "olingan"
+}

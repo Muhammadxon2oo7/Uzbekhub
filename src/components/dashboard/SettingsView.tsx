@@ -9,10 +9,22 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { useTranslation } from "react-i18next"
+import i18n from "@/lib/i18n"
+import { SelectGroup } from "@radix-ui/react-select"
+
+const languages = [
+  { code: "uz", label: "O‘zbek" },
+  { code: "en", label: "English" },
+  { code: "ru", label: "Русский" },
+];
 
 export default function SettingsView() {
   const { t } = useTranslation("translation")
   const [darkMode, setDarkMode] = useState(false)
+  const [currentLang, setCurrentLang] = useState<string | null>(null); 
+  useEffect(() => {
+    setCurrentLang(i18n.language);
+  }, []);
   const [notifications, setNotifications] = useState({
     messages: true,
     groups: true,
@@ -57,6 +69,11 @@ export default function SettingsView() {
       card.removeEventListener("mouseleave", handleMouseLeave)
     }
   }, [])
+
+  const handleChange = (langCode: string) => {
+    setCurrentLang(langCode)
+    i18n.changeLanguage(langCode)
+  }
 
   return (
     <div className="h-full">
@@ -109,27 +126,27 @@ export default function SettingsView() {
                     </CardTitle>
                   </CardHeader>
                   <CardContent className="space-y-4">
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center gap-3">
-                        {darkMode ? <Moon className="w-5 h-5" /> : <Sun className="w-5 h-5" />}
-                        <div>
-                          <p className="font-medium text-text">{t("dashboard.dark_mode")}</p>
-                          <p className="text-sm text-gray-400">{t("dashboard.dark_mode_desc")}</p>
-                        </div>
-                      </div>
-                      <Switch checked={darkMode} onCheckedChange={setDarkMode} />
-                    </div>
-
                     <div className="space-y-2">
                       <label className="text-sm font-medium text-text">{t("dashboard.language")}</label>
-                      <Select defaultValue="uz">
+                      <Select defaultValue="uz" onValueChange={handleChange}>
                         <SelectTrigger className="bg-white/5 border-white/20 text-text">
                           <SelectValue />
                         </SelectTrigger>
                         <SelectContent>
-                          <SelectItem value="uz">O'zbek tili</SelectItem>
-                          <SelectItem value="ru">Русский</SelectItem>
-                          <SelectItem value="en">English</SelectItem>
+                          <SelectGroup>
+                            {
+                              currentLang && 
+                              languages.map((lang) => (
+                                <SelectItem
+                                  key={lang.code}
+                                  value={lang.code}
+                                >
+                                  {lang.label}
+                                </SelectItem>
+                              ))
+                            }
+                            
+                          </SelectGroup>
                         </SelectContent>
                       </Select>
                     </div>

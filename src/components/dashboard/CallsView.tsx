@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar"
 import { Badge } from "@/components/ui/badge"
+import { useTranslation } from "react-i18next"
 
 type CallType = "incoming" | "outgoing" | "missed"
 type MediaType = "audio" | "video"
@@ -24,6 +25,7 @@ interface CallLog {
 export default function CallsView() {
   const [searchQuery, setSearchQuery] = useState("")
   const [activeCallId, setActiveCallId] = useState<string | null>(null)
+  const { t } = useTranslation("DashboardCalls")
 
   // 💾  Mock call history
   const callLogs: CallLog[] = [
@@ -87,11 +89,11 @@ export default function CallsView() {
       {/* Header */}
       <div className="p-4 border-b border-white/10 flex items-center gap-3">
         <Phone className="w-6 h-6 text-primary" />
-        <h1 className="text-xl font-bold text-text flex-1">Qo‘ng‘iroqlar</h1>
+        <h1 className="text-xl font-bold text-text flex-1">{t("title")}</h1>
         <div className="relative w-64">
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
           <Input
-            placeholder="Qidirish..."
+            placeholder={t("search")}
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             className="pl-10 bg-white/5 border-white/20 text-text h-9"

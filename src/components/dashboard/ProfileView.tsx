@@ -19,6 +19,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter, DialogT
 import debounce from "lodash/debounce"
 import { useRouter } from "next/navigation"
 import { stat } from "fs"
+import { useTranslation } from "react-i18next"
 
 interface Location {
   id: number
@@ -412,6 +413,9 @@ export default function ProfileView() {
   const [newUsername, setNewUsername] = useState("")
   const [emailChangeData, setEmailChangeData] = useState({ new_email: "", password: "" })
   const [emailVerifyCode, setEmailVerifyCode] = useState("")
+
+  const { t } = useTranslation("DashboardProfile")
+
   const [profile, setProfile] = useState<Profile>({
     first_name: "",
     last_name: "",
@@ -794,12 +798,12 @@ export default function ProfileView() {
             >
               <div className="flex items-center gap-3">
                 <User className="w-8 h-8 text-primary" />
-                <h1 className="text-2xl font-bold text-text">Profil</h1>
+                <h1 className="text-2xl font-bold text-text">{t("title")}</h1>
               </div>
               <div className="flex gap-2">
                 {isEditing && (
                   <Button variant="outline" onClick={handleCancel}>
-                    Bekor qilish
+                    {t("cancel")}
                   </Button>
                 )}
                 <Button
@@ -808,7 +812,7 @@ export default function ProfileView() {
                   disabled={isLoading}
                 >
                   {isLoading ? <Loader2 className="w-4 h-4 mr-2 animate-spin" /> : <Edit3 className="w-4 h-4 mr-2" />}
-                  <span className="relative z-10">{isEditing ? "Saqlash" : "Tahrirlash"}</span>
+                  <span className="relative z-10">{isEditing ? t("save") : t("edit")}</span>
                   {/* <div className="absolute inset-0 bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 opacity-0 hover:opacity-100 transition-opacity duration-300 rounded-lg"></div> */}
                 </Button>
                 <Button
@@ -817,7 +821,7 @@ export default function ProfileView() {
                   disabled={isLoading}
                 >
                   <LogOut className="w-4 h-4 mr-2" />
-                  <span className="relative z-10">Chiqish</span>
+                  <span className="relative z-10">{t("leave")}</span>
                   {/* <div className="absolute inset-0 bg-gradient-to-r from-red-600 via-rose-600 to-pink-600 opacity-0 hover:opacity-100 transition-opacity duration-300 rounded-lg"></div> */}
                 </Button>
               </div>

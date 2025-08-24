@@ -2,7 +2,7 @@
 
 import { useState, useRef, useEffect } from "react"
 import { motion } from "framer-motion"
-import { Heart, Send, History, TrendingUp, Gift } from "lucide-react"
+import { Heart, Send, History, TrendingUp, Gift, DollarSign } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar"
@@ -11,7 +11,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { useTranslation } from "react-i18next"
 
 export default function DonateView() {
-  const { t } = useTranslation("translation")
+  const { t } = useTranslation("DashboardDonate")
   const [amount, setAmount] = useState("")
   const [recipient, setRecipient] = useState("")
   const cardRef = useRef<HTMLDivElement>(null)
@@ -107,7 +107,7 @@ export default function DonateView() {
         ref={cardRef}
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="relative bg-white/5 backdrop-blur-[10px] border border-white/10 rounded-2xl p-6 h-full overflow-hidden"
+        className="relative bg-white/5 backdrop-blur-[10px] border border-white/10 rounded-2xl p-6 h-full overflow-scroll"
       >
         {/* Hover spot effect */}
         <div
@@ -120,7 +120,7 @@ export default function DonateView() {
           <div className="flex items-center justify-between mb-6">
             <div className="flex items-center gap-3">
               <Heart className="w-8 h-8 text-primary" />
-              <h1 className="text-2xl font-bold text-text">{t("dashboard.donate")}</h1>
+              <h1 className="text-2xl font-bold text-text">{t("title")}</h1>
             </div>
           </div>
 
@@ -130,15 +130,15 @@ export default function DonateView() {
               <Card className="bg-white/5 border-white/10 backdrop-blur-[10px] mb-6">
                 <CardHeader>
                   <CardTitle className="text-text flex items-center gap-2">
-                    <Send className="w-5 h-5" />
-                    {t("dashboard.send_donation")}
+                    <DollarSign className="w-5 h-5" />
+                    {t("send_donation")}
                   </CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-4">
                   <div>
-                    <label className="block text-sm font-medium text-text mb-2">{t("dashboard.recipient")}</label>
+                    <label className="block text-sm font-medium text-text mb-2">{t("recipient")}</label>
                     <Input
-                      placeholder="@username yoki ism"
+                      placeholder="@username"
                       value={recipient}
                       onChange={(e) => setRecipient(e.target.value)}
                       className="bg-white/5 border-white/20 text-text"
@@ -146,7 +146,7 @@ export default function DonateView() {
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-text mb-2">{t("dashboard.amount")}</label>
+                    <label className="block text-sm font-medium text-text mb-2">{t("amount")}</label>
                     <Input
                       type="number"
                       placeholder="0"
@@ -158,7 +158,7 @@ export default function DonateView() {
 
                   {/* Quick amounts */}
                   <div>
-                    <label className="block text-sm font-medium text-text mb-2">{t("dashboard.quick_amounts")}</label>
+                    <label className="block text-sm font-medium text-text mb-2">{t("quick_amounts")}</label>
                     <div className="grid grid-cols-2 gap-2">
                       {quickAmounts.map((quickAmount) => (
                         <Button
@@ -180,7 +180,7 @@ export default function DonateView() {
                     disabled={!amount || !recipient}
                   >
                     <Gift className="w-4 h-4 mr-2" />
-                    {t("dashboard.send")}
+                    {t("send")}
                   </Button>
                 </CardContent>
               </Card>
@@ -190,24 +190,24 @@ export default function DonateView() {
                 <CardHeader>
                   <CardTitle className="text-text flex items-center gap-2">
                     <TrendingUp className="w-5 h-5" />
-                    {t("dashboard.statistics")}
+                    {t("statistics")}
                   </CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-4">
                   <div className="flex justify-between">
-                    <span className="text-gray-300">{t("dashboard.total_sent")}</span>
+                    <span className="text-gray-300">{t("total_sent")}</span>
                     <span className="font-semibold text-red-400">{formatCurrency(stats.totalSent)}</span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-gray-300">{t("dashboard.total_received")}</span>
+                    <span className="text-gray-300">{t("total_received")}</span>
                     <span className="font-semibold text-green-400">{formatCurrency(stats.totalReceived)}</span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-gray-300">{t("dashboard.this_month")}</span>
+                    <span className="text-gray-300">{t("this_month")}</span>
                     <span className="font-semibold text-primary">{formatCurrency(stats.thisMonth)}</span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-gray-300">{t("dashboard.donations_count")}</span>
+                    <span className="text-gray-300">{t("donations_count")}</span>
                     <span className="font-semibold text-text">{stats.donationsCount}</span>
                   </div>
                 </CardContent>
@@ -220,7 +220,7 @@ export default function DonateView() {
                 <CardHeader>
                   <CardTitle className="text-text flex items-center gap-2">
                     <History className="w-5 h-5" />
-                    {t("dashboard.transaction_history")}
+                    {t("transaction_history")}
                   </CardTitle>
                 </CardHeader>
                 <CardContent className="h-full overflow-y-auto">
@@ -246,8 +246,8 @@ export default function DonateView() {
                               <div>
                                 <p className="font-medium text-text">
                                   {donation.type === "sent"
-                                    ? `${t("dashboard.sent_to")} ${donation.recipient}`
-                                    : `${t("dashboard.received_from")} ${donation.sender}`}
+                                    ? `${t("sent_to")} ${donation.recipient}${t("ga")}`
+                                    : `${t("received_from")} ${donation.sender}${t("dan")}`}
                                 </p>
                                 <p className="text-sm text-gray-400">{new Date(donation.date).toLocaleDateString()}</p>
                               </div>
@@ -267,7 +267,7 @@ export default function DonateView() {
                                       : "bg-green-500/20 text-green-400 border-green-500/30"
                                   }`}
                                 >
-                                  {donation.type === "sent" ? t("dashboard.sent") : t("dashboard.received")}
+                                  {donation.type === "sent" ? t("sent") : t("received")}
                                 </Badge>
                               </div>
                             </div>

@@ -1,0 +1,20 @@
+{
+    "title": "Пожертвование",
+    "send_donation": "Отправить пожертвование",
+    "recipient": "Получатель",
+    "amount": "Сумма",
+    "quick_amounts": "Быстрые суммы",
+    "send": "Отправить",
+    "statistics": "Статистика",
+    "total_sent": "Всего отправлено",
+    "total_received": "Всего получено",
+    "this_month": "В этом месяце",
+    "donations_count": "Количество пожертвований",
+    "transaction_history": "История транзакций",
+    "sent_to": "Отправлено к",
+    "ga": "",
+    "received_from": "Получено от",
+    "dan":  "",
+    "sent": "отправлено",
+    "received": "получено"
+}

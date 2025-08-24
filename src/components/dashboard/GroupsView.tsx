@@ -11,7 +11,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { useTranslation } from "react-i18next"
 
 export default function GroupsView() {
-  const { t } = useTranslation("translation")
+  const { t } = useTranslation("DashboardGroups")
   const [searchQuery, setSearchQuery] = useState("")
   const cardRef = useRef<HTMLDivElement>(null)
   const spotRef = useRef<HTMLDivElement>(null)
@@ -145,11 +145,11 @@ export default function GroupsView() {
           <div className="flex items-center justify-between mb-6">
             <div className="flex items-center gap-3">
               <Users className="w-8 h-8 text-primary" />
-              <h1 className="text-2xl font-bold text-text">{t("dashboard.groups")}</h1>
+              <h1 className="text-2xl font-bold text-text">{t("title")}</h1>
             </div>
             <Button className="bg-primary hover:bg-primary/80">
               <Plus className="w-4 h-4 mr-2" />
-              {t("dashboard.create_group")}
+              {t("create")}
             </Button>
           </div>
 
@@ -157,7 +157,7 @@ export default function GroupsView() {
           <div className="relative mb-6">
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" />
             <Input
-              placeholder={t("dashboard.search_groups")}
+              placeholder={t("search")}
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               className="pl-10 bg-white/5 border-white/20 text-text"
@@ -168,10 +168,10 @@ export default function GroupsView() {
           <Tabs defaultValue="my-groups" className="flex-1 flex flex-col">
             <TabsList className="grid w-full grid-cols-2 bg-white/5 border border-white/10">
               <TabsTrigger value="my-groups" className="data-[state=active]:bg-primary data-[state=active]:text-white">
-                {t("dashboard.my_groups")}
+                {t("myGroups")}
               </TabsTrigger>
               <TabsTrigger value="discover" className="data-[state=active]:bg-primary data-[state=active]:text-white">
-                {t("dashboard.discover_groups")}
+                {t("discoverGroups")}
               </TabsTrigger>
             </TabsList>
 
@@ -183,7 +183,7 @@ export default function GroupsView() {
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: index * 0.1 }}
-                    whileHover={{ scale: 1.02, rotate: 1 }}
+                    // whileHover={{ scale: 1.02, rotate: 1 }}
                     className="bg-white/5 backdrop-blur-[10px] border border-white/10 rounded-xl p-4 cursor-pointer group hover:border-primary/30 transition-all duration-300"
                   >
                     <div className="flex items-start gap-3 mb-3">
@@ -203,10 +203,10 @@ export default function GroupsView() {
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-2">
                         <Badge className={`text-xs ${getRoleBadge(group.role)}`}>
-                          {t(`dashboard.role_${group.role}`)}
+                          {t(`role.${group.role}`)}
                         </Badge>
                         <span className="text-xs text-gray-400">
-                          {group.members} {t("dashboard.members")}
+                          {group.members} {t("members")}
                         </span>
                       </div>
                       {group.unread > 0 && <Badge className="bg-primary text-white text-xs">{group.unread}</Badge>}
@@ -230,7 +230,7 @@ export default function GroupsView() {
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: index * 0.1 }}
-                    whileHover={{ scale: 1.02, rotate: -1 }}
+                    // whileHover={{ scale: 1.02, rotate: -1 }}
                     className="bg-white/5 backdrop-blur-[10px] border border-white/10 rounded-xl p-4 cursor-pointer group hover:border-primary/30 transition-all duration-300"
                   >
                     <div className="flex items-start gap-3 mb-3">
@@ -246,7 +246,7 @@ export default function GroupsView() {
 
                     <div className="flex items-center justify-between mb-3">
                       <span className="text-sm text-gray-400">
-                        {group.members} {t("dashboard.members")}
+                        {group.members} {t("members")}
                       </span>
                       <Badge variant="outline" className="text-xs border-white/20 text-gray-300">
                         {group.category}
@@ -254,7 +254,7 @@ export default function GroupsView() {
                     </div>
 
                     <Button className="w-full bg-primary hover:bg-primary/80" size="sm">
-                      {t("dashboard.join_group")}
+                      {t("join_group")}
                     </Button>
                   </motion.div>
                 ))}

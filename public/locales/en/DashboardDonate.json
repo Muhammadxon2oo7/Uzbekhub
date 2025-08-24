@@ -1,0 +1,22 @@
+{
+    "title": "Donate",
+    "send_donation": "Send donation",
+    "recipient": "Recipient",
+    "amount": "Amount",
+    "quick_amounts": "Quick amounts",
+    "send": "Send",
+
+    "statistics": "Statistics",
+    "total_sent": "Total sent",
+    "total_received": "Total received",
+    "this_month": "This month",
+    "donations_count": "Donations count",
+
+    "transaction_history": "Transaction history",
+    "sent_to": "Sent to",
+    "ga": "",
+    "received_from": "Received from",
+    "dan":  "",
+    "sent": "sent",
+    "received": "received"
+}
