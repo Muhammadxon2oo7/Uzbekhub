@@ -120,6 +120,7 @@ const ProfileLocation: React.FC<{
         attributionControl: true,
       })
 
+
       L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
         attribution: "© OpenStreetMap contributors",
       }).addTo(leafletMapRef.current)
@@ -233,6 +234,8 @@ const ProfileLocation: React.FC<{
       setIsFetchingLocation(false)
     }
   }
+  const { t } = useTranslation("DashboardProfile")
+
 
   return (
     <motion.div
@@ -253,7 +256,7 @@ const ProfileLocation: React.FC<{
         <CardHeader>
           <CardTitle className="text-text flex items-center gap-2 text-lg font-semibold">
             <MapPin className="w-5 h-5 text-primary" />
-            Joylashuv
+            {t("location")}
           </CardTitle>
         </CardHeader>
         <CardContent className="p-4">
@@ -279,7 +282,7 @@ const ProfileLocation: React.FC<{
                   ) : (
                     <MapPin className="w-5 h-5 mr-2" />
                   )}
-                  <span className="relative z-10">Joylashuvni aniqlash</span>
+                  <span className="relative z-10">{t("getLocation")}</span>
                   {/* <div className="absolute inset-0 bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 opacity-0 hover:opacity-100 transition-opacity duration-300 rounded-lg"></div> */}
                 </Button>
               </motion.div>
@@ -315,35 +318,36 @@ const ProfileLocation: React.FC<{
                             {dynamicLocation.name}
                           </span>
                         </motion.div>
+
                         <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                          <span className="text-white text-sm font-medium">Google xaritalarda ochish</span>
+                          <span className="text-white text-sm font-medium">{t("openInGoogleMaps")}</span>
                         </div>
                       </a>
                     </TooltipTrigger>
                     <TooltipContent className="bg-black/90 text-white p-2 rounded-md">
-                      Google xaritalarda ochish
+                      {t("openInGoogleMaps")}
                     </TooltipContent>
                   </Tooltip>
                 </TooltipProvider>
                 <div className="space-y-2 text-gray-300">
                   {dynamicLocation.country && (
                     <p className="text-sm">
-                      <span className="font-medium">Davlat:</span> {dynamicLocation.country}
+                      <span className="font-medium">{t("State")}:</span> {dynamicLocation.country}
                     </p>
                   )}
                   {dynamicLocation.county && (
                     <p className="text-sm">
-                      <span className="font-medium">Viloyat:</span> {dynamicLocation.county}
+                      <span className="font-medium">{t("region")}:</span> {dynamicLocation.county}
                     </p>
                   )}
                   {dynamicLocation.city && (
                     <p className="text-sm">
-                      <span className="font-medium">Shahar:</span> {dynamicLocation.city}
+                      <span className="font-medium">{t("city")}:</span> {dynamicLocation.city}
                     </p>
                   )}
                   {dynamicLocation.neighbourhood && (
                     <p className="text-sm">
-                      <span className="font-medium">Mahalla:</span> {dynamicLocation.neighbourhood}
+                      <span className="font-medium">{t("neighbourhood")}:</span> {dynamicLocation.neighbourhood}
                     </p>
                   )}
                 </div>
@@ -357,7 +361,7 @@ const ProfileLocation: React.FC<{
                     ) : (
                       <RefreshCcw className="w-5 h-5 mr-2" />
                     )}
-                    <span className="relative z-10">Joylashuvni yangilash</span>
+                    <span className="relative z-10">{t("refreshLocation")}</span>
                     {/* <div className="absolute inset-0 bg-gradient-to-r from-blue-600 via-cyan-600 to-teal-600 opacity-0 hover:opacity-100 transition-opacity duration-300 rounded-lg"></div> */}
                   </Button>
                   <Button
@@ -366,7 +370,7 @@ const ProfileLocation: React.FC<{
                     disabled={isFetchingLocation}
                   >
                     <X className="w-5 h-5 mr-2" />
-                    <span className="relative z-10">Joylashuvni o‘chirish</span>
+                    <span className="relative z-10">{t("deleteLocation")}</span>
                     {/* <div className="absolute inset-0 bg-gradient-to-r from-red-600 via-rose-600 to-pink-600 opacity-0 hover:opacity-100 transition-opacity duration-300 rounded-lg"></div> */}
                   </Button>
                 </div>
@@ -387,6 +391,7 @@ const ProfileLocation: React.FC<{
                 </Button>
                 <Button
                   onClick={handleLocationPermission}
+
                   className="relative bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 text-white font-semibold rounded-lg px-6 py-3 transition-all duration-300 ease-in-out shadow-md hover:shadow-xl hover:scale-105 transform"
                   disabled={isFetchingLocation}
                 >
@@ -476,6 +481,7 @@ export default function ProfileView() {
 
         setProfile(newProfile)
         setTempProfile(newProfile)
+
 
         if (data.location && data.location.lat && data.location.long) {
           try {
@@ -613,6 +619,7 @@ export default function ProfileView() {
     setIsEditing(false)
   }
 
+
   const handleUsernameChange = async () => {
     if (usernameStatus !== "available") {
       toast.error("Foydalanuvchi nomi mavjud emas yoki band.")
@@ -731,6 +738,7 @@ export default function ProfileView() {
     }
   }
 
+
   const fetchLocationName = async (lat: number, lon: number): Promise<string> => {
     try {
       const controller = new AbortController()
@@ -789,6 +797,7 @@ export default function ProfileView() {
             transition={{ duration: 2, repeat: Infinity }}
           />
 
+
           <div className="relative z-10 max-w-4xl mx-auto">
             <motion.div
               className="flex items-center justify-between mb-8"
@@ -827,6 +836,7 @@ export default function ProfileView() {
               </div>
             </motion.div>
 
+
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
               <motion.div
                 className="lg:col-span-1 perspective-[1000px]"
@@ -860,7 +870,7 @@ export default function ProfileView() {
                         <Avatar className="w-32 h-32 mx-auto">
                           <AvatarImage src={avatarSrc} className="object-cover" />
                           <AvatarFallback className="text-2xl">
-                            {profile.first_name[0] || profile.username[0] || ":)"}
+                            {profile.first_name?.slice(0, 1) || profile.username?.slice(0, 1) || ":)"}
                           </AvatarFallback>
                         </Avatar>
                         {isEditing && (
@@ -872,6 +882,7 @@ export default function ProfileView() {
                           </motion.div>
                         )}
                       </div>
+
 
                       {isEditing ? (
                         <div className="space-y-3">
@@ -934,6 +945,7 @@ export default function ProfileView() {
                                       </Button>
                                       <Button
                                         onClick={handleUsernameChange}
+
                                         // className="relative bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 text-white font-semibold rounded-lg px-6 py-3 transition-all duration-300 ease-in-out shadow-md hover:shadow-xl hover:scale-105 transform"
                                         disabled={isLoading || usernameStatus !== "available"}
                                       >
@@ -978,6 +990,7 @@ export default function ProfileView() {
                 />
               </motion.div>
 
+
               <motion.div
                 className="lg:col-span-2 perspective-[1000px]"
                 initial={{ opacity: 0, scale: 0.9 }}
@@ -1019,6 +1032,7 @@ export default function ProfileView() {
                           <p className="text-gray-300 bg-white/5 rounded-lg p-3 border border-white/10">{profile.bio || t("notHaveBio")}</p>
                         )}
                       </div>
+
 
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div>
@@ -1096,6 +1110,7 @@ export default function ProfileView() {
                                   <Edit3 className="w-4 h-4 text-primary" />
                                 </Button>
                               </DialogTrigger>
+
                               <DialogContent className="bg-white/5 backdrop-blur-[10px] border-white/10">
                                 <DialogHeader>
                                   <DialogTitle>{t("changeEmail")}</DialogTitle>
@@ -1150,6 +1165,7 @@ export default function ProfileView() {
             </div>
           </div>
         </motion.div>
+
 
         <Dialog open={isEmailVerifyOpen} onOpenChange={setIsEmailVerifyOpen}>
           <DialogContent className="bg-white/5 backdrop-blur-[10px] border-white/10">

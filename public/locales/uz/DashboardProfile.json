@@ -21,5 +21,14 @@
     "password": "Parol",
     "send": "Yuborish",
     "ConfirmEmail": "Emailni tasdiqlash",
-    "ConfirmCode": "Tasdiqlash kodi"
+    "ConfirmCode": "Kodni tasdiqlash",
+    "location": "Joylashuv",
+    "getLocation": "Joylashuvni topish",
+    "openInGoogleMaps": "Google xaritalarida ochish",
+    "State": "Viloyat",
+    "region": "Mintaqa",
+    "city": "Shahar",
+    "neighbourhood": "Mahalla",
+    "refreshLocation": "Joylashuvni yangilash",
+    "deleteLocation": "Joylashuvni o'chirish"
 }

@@ -21,5 +21,14 @@
     "password": "Пароль",
     "send": "Отправить",
     "ConfirmEmail": "Подтвердить email",
-    "ConfirmCode": "Код подтверждения"
+    "ConfirmCode": "Подтвердить код",
+    "location": "Местоположение",
+    "getLocation": "Найти местоположение",
+    "openInGoogleMaps": "Открыть в Google картах",
+    "State": "Штат",
+    "region": "Регион",
+    "city": "Город",
+    "neighbourhood": "Район",
+    "refreshLocation": "Обновить местоположение",
+    "deleteLocation": "Удалить местоположение"
 }

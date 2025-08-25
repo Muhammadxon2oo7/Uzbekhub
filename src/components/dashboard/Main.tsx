@@ -159,45 +159,6 @@ export default function Dashboard() {
     }
   }, [tab])
 
-  // WebSocket ulanishini boshlash
-  useEffect(() => {
-    const token = getCookie("token");
-    if (!token) {
-      console.error("Cookie da token topilmadi");
-      return;
-    }
-
-    // ⚠️ BU YERDA roomId ni haqiqiy qiymat bilan o‘zgartirishingiz kerak
-    const roomId = "123"; 
-
-    console.log("WebSocket uchun token:", token);
-
-    wsRef.current = new WebSocket(
-      `wss://api.rozievich.uz/ws/chat/${roomId}/?token=${token}`
-    );
-
-    wsRef.current.onopen = () => {
-      console.log("WebSocket ulandi");
-    };
-
-    wsRef.current.onmessage = (event) => {
-      const data = JSON.parse(event.data);
-      console.log("WebSocket xabar qabul qilindi:", data);
-    };
-
-    wsRef.current.onclose = (event) => {
-      console.log("WebSocket uzildi. Kod:", event.code, "Sabab:", event.reason);
-    };
-
-    wsRef.current.onerror = (error) => {
-      console.error("WebSocket xatosi:", error);
-    };
-
-    return () => {
-      wsRef.current?.close();
-    };
-  }, []);
-
   const renderView = () => {
     switch (activeView) {
       case "chat":

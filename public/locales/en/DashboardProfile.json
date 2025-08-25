@@ -21,5 +21,14 @@
     "password": "Password",
     "send": "Send",
     "ConfirmEmail": "Confirm email",
-    "ConfirmCode": "Confirm code"
+    "ConfirmCode": "Confirm code",
+    "location": "Location",
+    "getLocation": "Find location",
+    "openInGoogleMaps": "Open in Google maps",
+    "State": "State",
+    "region": "Region",
+    "city": "City",
+    "neighbourhood": "Neighbourhood",
+    "refreshLocation": "Refresh location",
+    "deleteLocation": "Delete location"
 }

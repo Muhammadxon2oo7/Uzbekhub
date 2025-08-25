@@ -21,7 +21,7 @@ const languages = [
 export default function SettingsView() {
   const { t } = useTranslation("translation")
   const [darkMode, setDarkMode] = useState(false)
-  const [currentLang, setCurrentLang] = useState<string | null>(null); 
+  const [currentLang, setCurrentLang] = useState<string | undefined>(undefined); 
   useEffect(() => {
     setCurrentLang(i18n.language);
   }, []);
@@ -128,7 +128,7 @@ export default function SettingsView() {
                   <CardContent className="space-y-4">
                     <div className="space-y-2">
                       <label className="text-sm font-medium text-text">{t("dashboard.language")}</label>
-                      <Select defaultValue="uz" onValueChange={handleChange}>
+                      <Select defaultValue="uz" value={currentLang} onValueChange={handleChange}>
                         <SelectTrigger className="bg-white/5 border-white/20 text-text">
                           <SelectValue />
                         </SelectTrigger>
