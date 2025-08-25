@@ -1,0 +1,15 @@
+{
+    "title": "Guruhlar",
+    "create": "Guruh yaratish",
+    "search": "Guruhlarni qidirish",
+    "myGroups": "Mening guruhlarim",
+    "discoverGroups": "Guruhlarni ko'rish",
+    "role": {
+        "owner": "Ega",
+        "admin": "Admin",
+        "member": "Azo",
+        "moderator": "Moderator"
+    },
+    "members": "azolar",
+    "join_group": "Guruhga qo'shilish"
+}

@@ -11,7 +11,7 @@ import { Slider } from "@/components/ui/slider"
 import { useTranslation } from "react-i18next"
 
 export default function DiscoverView() {
-  const { t } = useTranslation("translation")
+  const { t } = useTranslation("DashboardDiscover")
   const [radius, setRadius] = useState([5])
   const cardRef = useRef<HTMLDivElement>(null)
   const spotRef = useRef<HTMLDivElement>(null)
@@ -112,11 +112,11 @@ export default function DiscoverView() {
           <div className="flex items-center justify-between mb-6">
             <div className="flex items-center gap-3">
               <MapPin className="w-8 h-8 text-primary" />
-              <h1 className="text-2xl font-bold text-text">{t("dashboard.discover")}</h1>
+              <h1 className="text-2xl font-bold text-text">{t("title")}</h1>
             </div>
             <Button className="bg-primary hover:bg-primary/80">
               <Navigation className="w-4 h-4 mr-2" />
-              {t("dashboard.update_location")}
+              {t("update_location")}
             </Button>
           </div>
 
@@ -125,12 +125,12 @@ export default function DiscoverView() {
             <CardContent className="p-4">
               <div className="flex items-center gap-3 mb-4">
                 <div className="w-3 h-3 bg-green-500 rounded-full animate-pulse" />
-                <span className="text-text font-medium">{t("dashboard.your_location")}: Tashkent, Uzbekistan</span>
+                <span className="text-text font-medium">{t("your_location")}: hali location uchun kod yozilamgan</span>
               </div>
 
               <div className="space-y-3">
                 <div className="flex items-center justify-between">
-                  <span className="text-sm text-gray-300">{t("dashboard.search_radius")}</span>
+                  <span className="text-sm text-gray-300">{t("search_radius")}</span>
                   <span className="text-sm text-primary font-medium">{radius[0]} km</span>
                 </div>
                 <Slider value={radius} onValueChange={setRadius} max={50} min={1} step={1} className="w-full" />
@@ -142,7 +142,7 @@ export default function DiscoverView() {
           <div className="flex-1 overflow-y-auto">
             <h2 className="text-lg font-semibold text-text mb-4 flex items-center gap-2">
               <Users className="w-5 h-5" />
-              {t("dashboard.nearby_people")} ({nearbyUsers.length})
+              {t("nearby_people")} ({nearbyUsers.length})
             </h2>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -152,7 +152,7 @@ export default function DiscoverView() {
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: index * 0.1 }}
-                  whileHover={{ scale: 1.02, rotate: 1 }}
+                  // whileHover={{ scale: 1.02, rotate: 1 }}
                   className="bg-white/5 backdrop-blur-[10px] border border-white/10 rounded-xl p-4 cursor-pointer group hover:border-primary/30 transition-all duration-300"
                 >
                   <div className="flex items-start gap-3 mb-3">
@@ -196,11 +196,11 @@ export default function DiscoverView() {
                   <div className="flex gap-2">
                     <Button size="sm" className="flex-1 bg-primary hover:bg-primary/80">
                       <MessageCircle className="w-3 h-3 mr-1" />
-                      {t("dashboard.message")}
+                      {t("message")}
                     </Button>
                     <Button size="sm" variant="outline" className="border-white/20 hover:bg-white/10 bg-transparent">
                       <Heart className="w-3 h-3 mr-1" />
-                      {t("dashboard.donate")}
+                      {t("donate")}
                     </Button>
                   </div>
                 </motion.div>

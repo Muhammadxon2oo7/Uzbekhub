@@ -1,4 +1,5 @@
 {
     "title": "Чаты",
-    "search": "Поиск чатов"
+    "search": "Поиск чатов",
+    "messageInputPlaceholder": "Введите сообщение..."
 }

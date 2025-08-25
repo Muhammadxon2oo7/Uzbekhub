@@ -111,3 +111,10 @@ export const uploadFile = async (data: FormData, token: string) => {
     headers: { Authorization: `Bearer ${token}` },
   });
 };
+
+export const patchLocation = async (token: string, data: { lat: string; long: string }) => {
+  console.log("Patch location so‘rovi:", { token, data });
+  return api.patch("/accounts/account/location/", data, {
+    headers: { Authorization: `Bearer ${token}` },
+  });
+};

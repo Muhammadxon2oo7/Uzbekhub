@@ -1,0 +1,15 @@
+{
+    "title": "Groups",
+    "create": "Create Group",
+    "search": "Search groups",
+    "myGroups": "My Groups",
+    "discoverGroups": "Discover Groups",
+    "role": {
+        "owner": "Owner",
+        "admin": "Admin",
+        "member": "Member",
+        "moderator": "Moderator"
+    },
+    "members": "members",
+    "join_group": "Join Group"
+}

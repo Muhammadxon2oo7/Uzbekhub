@@ -9,6 +9,7 @@ import { Input } from "@/components/ui/input"
 import { Dialog, DialogContent, DialogTitle } from "@radix-ui/react-dialog"
 import { DialogHeader } from "../ui/dialog"
 import { set } from "lodash"
+import { useTranslation } from "react-i18next"
 
 export default function StoriesView() {
   const [selectedStory, setSelectedStory] = useState<string | null>(null)
@@ -25,6 +26,8 @@ export default function StoriesView() {
   const [storyText, setStoryText] = useState("")
   const [isCutting, setIsCutting] = useState(false)
   const [isPrivate, setIsPrivate] = useState(false)
+
+  const { t } = useTranslation("DashboardStories")
 
   // Mock stories data
   const stories = [
@@ -45,7 +48,7 @@ export default function StoriesView() {
           type: "image",
           content: "/placeholder.svg?height=400&width=300",
           caption: "Bugun oshxonada yangi taom tayyorladim! 🍛",
-          timestamp: "2 soat oldin",
+          timestamp: "2",
           views: 45,
           likes: 12,
         },
@@ -54,7 +57,7 @@ export default function StoriesView() {
           type: "video",
           content: "/placeholder.svg?height=400&width=300",
           caption: "Toshkentning chiroyli manzarasi 🌆",
-          timestamp: "4 soat oldin",
+          timestamp: "4",
           views: 67,
           likes: 23,
         },
@@ -70,7 +73,7 @@ export default function StoriesView() {
           type: "image",
           content: "/placeholder.svg?height=400&width=300",
           caption: "Yangi kitob o'qiyapman 📚✨",
-          timestamp: "6 soat oldin",
+          timestamp: "6",
           views: 89,
           likes: 34,
         },
@@ -86,7 +89,7 @@ export default function StoriesView() {
           type: "image",
           content: "/placeholder.svg?height=400&width=300",
           caption: "Yangi loyiha ustida ishlayapman 💻",
-          timestamp: "8 soat oldin",
+          timestamp: "8",
           views: 156,
           likes: 67,
         },
@@ -277,7 +280,7 @@ export default function StoriesView() {
           {/* Header */}
           <div className="flex items-center gap-3 mb-6">
             <Camera className="w-8 h-8 text-primary" />
-            <h1 className="text-2xl font-bold text-text">Hikoyalar</h1>
+            <h1 className="text-2xl font-bold text-text">{t("title")}</h1>
           </div>
 
           {/* Stories Grid */}
@@ -306,7 +309,7 @@ export default function StoriesView() {
                     {story.isOwn ? (
                       <div className="w-full h-full flex flex-col items-center justify-center bg-gradient-to-br from-primary/10 to-purple-500/10">
                         <Plus className="w-8 h-8 text-primary mb-2" />
-                        <span className="text-sm text-text font-medium">Hikoya qo'shish</span>
+                        <span className="text-sm text-text font-medium">{t("add")}</span>
                       </div>
                     ) : story.stories.length > 0 ? (
                       <img
@@ -334,7 +337,7 @@ export default function StoriesView() {
 
           {/* Recent Stories */}
           <div className="flex-1 overflow-y-auto">
-            <h2 className="text-lg font-semibold text-text mb-4">So'nggi hikoyalar</h2>
+            <h2 className="text-lg font-semibold text-text mb-4">{t("lastStories")}</h2>
             <div className="space-y-4">
               {stories
                 .filter((s) => !s.isOwn && s.stories.length > 0)
@@ -354,11 +357,11 @@ export default function StoriesView() {
                       <div className="flex-1">
                         <h3 className="font-medium text-text">{story.user}</h3>
                         <p className="text-sm text-gray-400">
-                          {story.stories.length} ta hikoya • {story.stories[0].timestamp}
+                          {story.stories.length} {t("count")} • {story.stories[0].timestamp} {t("hours_ago")}
                         </p>
                       </div>
                       <div className="text-right">
-                        <p className="text-sm text-gray-400">{story.stories[0].views} ko'rishlar</p>
+                        <p className="text-sm text-gray-400">{story.stories[0].views} {t("views")}</p>
                       </div>
                     </div>
                   </motion.div>
