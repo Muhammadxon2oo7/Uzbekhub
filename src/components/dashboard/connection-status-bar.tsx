@@ -34,7 +34,7 @@ export default function ConnectionStatusBar({ isSidebarCollapsed = false }: Conn
     <AnimatePresence>
       {!isDismissed && (
         <motion.div
-          className="fixed top-0 right-0 h-12 z-50 overflow-hidden backdrop-blur-sm border-b border-white/10 shadow-lg mb-[10px] bg-white/5 border-white/10 backdrop-blur-[10px]"
+          className="fixed top-0 right-0 h-8 z-50 overflow-hidden backdrop-blur-sm border-b border-white/10 shadow-lg mb-[10px] bg-white/5 border-white/10 backdrop-blur-[10px]"
           style={{
             left: leftPosition,
             background: isOnline
@@ -61,10 +61,10 @@ export default function ConnectionStatusBar({ isSidebarCollapsed = false }: Conn
             stiffness: 300,
             damping: 30,
           }}
-          whileHover={{
-            scale: 1.02,
-            transition: { duration: 0.2 },
-          }}
+          // whileHover={{
+          //   scale: 1.02,
+          //   transition: { duration: 0.2 },
+          // }}
         >
           <motion.div
             className="absolute inset-0"

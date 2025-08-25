@@ -1483,6 +1483,7 @@ export default function ProfileView() {
   const [isEmailChangeOpen, setIsEmailChangeOpen] = useState(false);
   const [isEmailVerifyOpen, setIsEmailVerifyOpen] = useState(false);
   const [isEmojiPickerOpen, setIsEmojiPickerOpen] = useState(false);
+  const [isDeleting, setIsDeleting] = useState<boolean>(false);
   const [usernameStatus, setUsernameStatus] = useState<
     "checking" | "available" | "taken" | null
   >(null);
@@ -1960,6 +1961,7 @@ export default function ProfileView() {
                 transition={{ delay: 0.3 }}
               >
                 <motion.div
+                  className="mb-[24px]"
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.4 }}
@@ -2166,7 +2168,27 @@ export default function ProfileView() {
                   </Card>                  
                 </motion.div>
 
-               
+                <motion.div
+                  className="lg:col-span-2 perspective-[1000px]"
+                >
+                  <Button onClick={() => setIsDeleting(true)} size={"lg"} className="w-full bg-red-500 hover:bg-red-500 cursor-pointer hover:scale-105">⚠️ DELETE ACCOUNT ⚠️</Button>
+                  <Dialog open={isDeleting} onOpenChange={setIsDeleting}>
+                    <DialogContent>
+                      <DialogHeader>
+                        <DialogTitle>{t("areYouSure")}</DialogTitle>
+                      </DialogHeader>
+                      <DialogFooter>
+                        {/* <Button variant="outline" onClick={() => setIsDeleteDialogOpen(false)}>
+                          {t("cancel")}
+                        </Button>
+                        <Button onClick={handleDeleteAccount} className="bg-red-500 hover:bg-red-600">
+                          {t("delete")}
+                        </Button> */}
+                      </DialogFooter>
+                    </DialogContent>
+                  </Dialog>
+                </motion.div>
+
               </motion.div>
 
               <motion.div
@@ -2364,17 +2386,30 @@ export default function ProfileView() {
                       </div>
                     </CardContent>
                   </Card>
+                </motion.div>
+                <motion.div
+                  onMouseMove={(e) => {
+                    const rect = e.currentTarget.getBoundingClientRect();
+                    const x = (e.clientX - rect.left - rect.width / 2) / 40;
+                    const y = (e.clientY - rect.top - rect.height / 2) / 40;
+                    e.currentTarget.style.transform = `rotateX(${y}deg) rotateY(${-x}deg)`;
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.transform =
+                      "rotateX(0deg) rotateY(0deg)";
+                  }}
+                >
                   <ProfileLocation
-                  dynamicLocation={dynamicLocation}
-                  setDynamicLocation={setDynamicLocation}
-                  profile={profile}
-                  setProfile={setProfile}
-                  setTempProfile={setTempProfile}
-                  isFetchingLocation={isFetchingLocation}
-                  setIsFetchingLocation={setIsFetchingLocation}
-                  isLocationPermissionOpen={isLocationPermissionOpen}
-                  setIsLocationPermissionOpen={setIsLocationPermissionOpen}
-                />
+                    dynamicLocation={dynamicLocation}
+                    setDynamicLocation={setDynamicLocation}
+                    profile={profile}
+                    setProfile={setProfile}
+                    setTempProfile={setTempProfile}
+                    isFetchingLocation={isFetchingLocation}
+                    setIsFetchingLocation={setIsFetchingLocation}
+                    isLocationPermissionOpen={isLocationPermissionOpen}
+                    setIsLocationPermissionOpen={setIsLocationPermissionOpen}
+                  />
                 </motion.div>
               </motion.div>
             </div>
