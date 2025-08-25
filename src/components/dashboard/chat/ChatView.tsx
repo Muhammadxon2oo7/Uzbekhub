@@ -536,17 +536,6 @@ export default function ChatView() {
                     onMouseEnter={(e) => (e.currentTarget.style.color = "#3b82f6")}
                     onMouseLeave={(e) => (e.currentTarget.style.color = "#ffffff")}
                   >
-                    <Mail className="w-5 h-5 text-primary" />
-                    <p>{userProfile.email}</p>
-                  </motion.div>
-                  <motion.div
-                    className="flex items-center gap-3"
-                    whileHover={{ x: 5, scale: 1.02 }}
-                    transition={{ duration: 0.2 }}
-                    style={{ color: "#ffffff" }}
-                    onMouseEnter={(e) => (e.currentTarget.style.color = "#3b82f6")}
-                    onMouseLeave={(e) => (e.currentTarget.style.color = "#ffffff")}
-                  >
                     <Clock className="w-5 h-5 text-primary" />
                     <p>Oxirgi faollik: {userProfile.last_online}</p>
                   </motion.div>
