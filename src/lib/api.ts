@@ -85,7 +85,7 @@ export const getUserById = async (id: string | number, token: string) => {
   });
 };
 
-export const updateLocation = async (token: string, data: { lat: string; long: string }) => {
+export const updateLocation = async (token: string, data: { lat: string; long: string; }, p0: { method: string; }) => {
   console.log("Update location so‘rovi:", { token, data });
   return api.post("/accounts/account/location/", data, {
     headers: { Authorization: `Bearer ${token}` },
@@ -115,6 +115,13 @@ export const uploadFile = async (data: FormData, token: string) => {
 export const patchLocation = async (token: string, data: { lat: string; long: string }) => {
   console.log("Patch location so‘rovi:", { token, data });
   return api.patch("/accounts/account/location/", data, {
+    headers: { Authorization: `Bearer ${token}` },
+  });
+};
+
+export const updateStatus = async (token: string, data: { status: string }) => {
+  console.log("Update status so‘rovi:", { token, data });
+  return api.post("/profile/status", data, {
     headers: { Authorization: `Bearer ${token}` },
   });
 };
