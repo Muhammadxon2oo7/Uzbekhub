@@ -10,6 +10,7 @@ import ChatHeader from "./ChatHeader";
 import MessageInput from "./MessageInput";
 import MessageBubble, { Message } from "./MessageBubble";
 import { searchUsers } from "@/lib/api";
+import Cookies from "js-cookie"; // cookie-dan token olish uchun
 
 // API bazasi URL
 const API_BASE_URL = "https://api.rozievich.uz";
@@ -388,6 +389,51 @@ export default function ChatView() {
       return () => clearTimeout(timer);
     }
   }, [message]);
+
+
+  const socketRef = useRef<WebSocket | null>(null);
+
+  useEffect(() => {
+    if (selectedChat) {
+      const token = Cookies.get("token"); // cookie-dan token olamiz
+      if (!token) {
+        console.error("Token topilmadi, WebSocket ulanmaydi");
+        return;
+      }
+
+      // WebSocket URL ni backendga moslashtir
+      const wsUrl = `wss://api.rozievich.uz/ws/chat/users/`;
+
+      // Ulash
+      const socket = new WebSocket(wsUrl, [], {
+        headers: { Authorization: `Bearer ${token}` },
+      } as any);
+
+      socketRef.current = socket;
+
+      socket.onopen = () => {
+        console.log("✅ WebSocket ulandi:", wsUrl);
+      };
+
+      socket.onmessage = (event) => {
+        const data = JSON.parse(event.data);
+        console.log("📩 WS dan xabar keldi:", data);
+      };
+
+      socket.onerror = (err) => {
+        console.error("❌ WS xatosi:", err);
+      };
+
+      socket.onclose = () => {
+        console.log("🔌 WebSocket uzildi");
+      };
+
+      // Sahifadan chiqishda yoki chat almashtirilganda yopish
+      return () => {
+        socket.close();
+      };
+    }
+  }, [selectedChat]);
 
   return (
     <div className="h-full flex bg-white/5 backdrop-blur-lg border border-white/10 rounded-2xl overflow-hidden">

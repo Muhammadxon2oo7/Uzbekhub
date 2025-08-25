@@ -2,16 +2,26 @@
 
 // import { useState, useEffect } from "react"
 // import { motion, AnimatePresence } from "framer-motion"
+// import dynamic from "next/dynamic"
 // import DashboardSidebar from "@/components/dashboard/DashboardSidebar"
 // import ChatView from "@/components/dashboard/chat/ChatView"
 // import GroupsView from "@/components/dashboard/GroupsView"
-// import ProfileView from "@/components/dashboard/ProfileView"
 // import DiscoverView from "@/components/dashboard/DiscoverView"
 // import DonateView from "@/components/dashboard/DonateView"
 // import SettingsView from "@/components/dashboard/SettingsView"
 // import StoriesView from "@/components/dashboard/StoriesView"
 // import CallsView from "@/components/dashboard/CallsView"
 // import { useSearchParams } from "next/navigation"
+
+// // ProfileView ni dinamik import qilish, SSR ni o‘chirish
+// const ProfileView = dynamic(() => import("@/components/dashboard/ProfileView"), {
+//   ssr: false,
+//   loading: () => (
+//     <div className="h-full flex items-center justify-center">
+//       <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-primary"></div>
+//     </div>
+//   ),
+// })
 
 // export type DashboardView =
 //   | "chat"
@@ -26,7 +36,6 @@
 // export default function Dashboard() {
 //   const searchParams = useSearchParams()
 //   const tab = searchParams.get("tab") as DashboardView | null
-
 
 //   const [activeView, setActiveView] = useState<DashboardView>("chat")
 //   const [sidebarCollapsed, setSidebarCollapsed] = useState(false)
@@ -93,10 +102,9 @@
 //   )
 // }
 
-
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState, useEffect, useRef } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import dynamic from "next/dynamic"
 import DashboardSidebar from "@/components/dashboard/DashboardSidebar"
@@ -129,18 +137,66 @@ export type DashboardView =
   | "stories"
   | "calls"
 
+// Cookie dan token olish funksiyasi
+const getCookie = (name: string): string | null => {
+  const value = `; ${document.cookie}`;
+  const parts = value.split(`; ${name}=`);
+  if (parts.length === 2) return parts.pop()?.split(";").shift() || null;
+  return null;
+};
+
 export default function Dashboard() {
   const searchParams = useSearchParams()
   const tab = searchParams.get("tab") as DashboardView | null
 
   const [activeView, setActiveView] = useState<DashboardView>("chat")
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false)
+  const wsRef = useRef<WebSocket | null>(null);
 
   useEffect(() => {
     if (tab) {
       setActiveView(tab)
     }
   }, [tab])
+
+  // WebSocket ulanishini boshlash
+  useEffect(() => {
+    const token = getCookie("token");
+    if (!token) {
+      console.error("Cookie da token topilmadi");
+      return;
+    }
+
+    // ⚠️ BU YERDA roomId ni haqiqiy qiymat bilan o‘zgartirishingiz kerak
+    const roomId = "123"; 
+
+    console.log("WebSocket uchun token:", token);
+
+    wsRef.current = new WebSocket(
+      `wss://api.rozievich.uz/ws/chat/${roomId}/?token=${token}`
+    );
+
+    wsRef.current.onopen = () => {
+      console.log("WebSocket ulandi");
+    };
+
+    wsRef.current.onmessage = (event) => {
+      const data = JSON.parse(event.data);
+      console.log("WebSocket xabar qabul qilindi:", data);
+    };
+
+    wsRef.current.onclose = (event) => {
+      console.log("WebSocket uzildi. Kod:", event.code, "Sabab:", event.reason);
+    };
+
+    wsRef.current.onerror = (error) => {
+      console.error("WebSocket xatosi:", error);
+    };
+
+    return () => {
+      wsRef.current?.close();
+    };
+  }, []);
 
   const renderView = () => {
     switch (activeView) {
