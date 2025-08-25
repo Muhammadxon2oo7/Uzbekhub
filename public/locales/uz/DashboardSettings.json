@@ -1,0 +1,52 @@
+{
+    "title": "Sozlamalar",
+    "tabs": {
+        "general": "Umumiy",
+        "notifications": "Bildirishnomalar",
+        "privacy": "Maxfiylik",
+        "security": "Xavfsizlik"
+    },
+    "general": {
+        "appearance": "Ko'rinish",
+        "language": "Til",
+        "sound": {
+            "title": "Ovoz",
+            "message": "Xabar ovozi",
+            "message_desc": "Kirish xabarlari uchun ovoz",
+            "notification": "Bildirishnoma ovozi",
+            "notification_desc": "Kirish bildirishnomalari uchun ovoz"
+        }
+    },
+    "notifications": {
+        "title": "Bildirishnomalar",
+        "message": "Xabar bildirishnomalari",
+        "message_desc": "Shaxsiy xabarlardagi bildirishnomalar",
+        "group": "Guruh bildirishnomalari",
+        "group_desc": "Guruh chatlaridagi bildirishnomalar",
+        "donation": "Xayriya bildirishnomalari",
+        "donation_desc": "Xayriya uchun bildirishnomalar",
+        "mention": "Belgilash bildirishnomalari",
+        "mention_desc": "Belgilash uchun bildirishnomalar"
+    },
+    "privacy": {
+        "title": "Maxfiylik",
+        "show_online": "Onlayn holatini ko'rsatish",
+        "show_online_desc": "Kim sizning onlayn holatingizni ko'rishi mumkin",
+        "show_location": "Joylashuvni ko'rsatish",
+        "show_location_desc": "Kim sizning joylashuvingizni ko'rishi mumkin",
+        "allow_donations": "Xayriya uchun ruxsat berish",
+        "allow_donations_desc": "Xayriya uchun ruxsat berish yoki o'chirish",
+        "profile_visibility": {
+            "title": "Profil ko'rinishi",
+            "public": "Ommaviy",
+            "private": "Shaxsiy",
+            "friends": "Do'stlar"
+        }
+    },
+    "security": {
+        "title": "Xavfsizlik",
+        "change_password": "Parolni o'zgartirish",
+        "two_factor_auth": "Ikki faktorli autentifikatsiya",
+        "active_sessions": "Faol sessiyalar"
+    }
+}

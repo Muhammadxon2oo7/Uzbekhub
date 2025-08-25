@@ -1,0 +1,52 @@
+{
+    "title": "Settings",
+    "tabs": {
+        "general": "General",
+        "notifications": "Notifications",
+        "privacy": "Privacy",
+        "security": "Security"
+    },
+    "general": {
+        "appearance": "Appearance",
+        "language": "Language",
+        "sound": {
+            "title": "Sound",
+            "message": "Message sound",
+            "message_desc": "Sound for incoming messages",
+            "notification": "Notification sound",
+            "notification_desc": "Sound for incoming notifications"
+        }
+    },
+    "notifications": {
+        "title": "Notifications",
+        "message": "Message notifications",
+        "message_desc": "Notifications on direct messages",
+        "group": "Group notifications",
+        "group_desc": "Notifications on group chats",
+        "donation": "Donation notifications",
+        "donation_desc": "Notifications for donations",
+        "mention": "Mention notifications",
+        "mention_desc": "Notifications for mentions"
+    },
+    "privacy": {
+        "title": "Privacy",
+        "show_online": "Show online status",
+        "show_online_desc": "Who can see your online status",
+        "show_location": "Show location",
+        "show_location_desc": "Who can see your location",
+        "allow_donations": "Allow donations",
+        "allow_donations_desc": "Allow or disallow donations",
+        "profile_visibility": {
+            "title": "Profile visibility",
+            "public": "Public",
+            "private": "Private",
+            "friends": "Friends"
+        }
+    },
+    "security": {
+        "title": "Security",
+        "change_password": "Change password",
+        "two_factor_auth": "Two-factor authentication",
+        "active_sessions": "Active sessions"
+    }
+}
