@@ -30,5 +30,6 @@
     "city": "Shahar",
     "neighbourhood": "Mahalla",
     "refreshLocation": "Joylashuvni yangilash",
-    "deleteLocation": "Joylashuvni o'chirish"
+    "deleteLocation": "Joylashuvni o'chirish",
+    "areYouSure": "Sizni ishonchingiz komilmi?"
 }

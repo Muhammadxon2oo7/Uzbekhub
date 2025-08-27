@@ -30,5 +30,6 @@
     "city": "Город",
     "neighbourhood": "Район",
     "refreshLocation": "Обновить местоположение",
-    "deleteLocation": "Удалить местоположение"
+    "deleteLocation": "Удалить местоположение",
+    "areYouSure": "Вы уверены?"
 }

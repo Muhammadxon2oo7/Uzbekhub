@@ -30,5 +30,6 @@
     "city": "City",
     "neighbourhood": "Neighbourhood",
     "refreshLocation": "Refresh location",
-    "deleteLocation": "Delete location"
+    "deleteLocation": "Delete location",
+    "areYouSure": "Are you sure?"
 }

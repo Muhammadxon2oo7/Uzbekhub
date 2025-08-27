@@ -1484,6 +1484,10 @@ export default function ProfileView() {
   const [isEmailVerifyOpen, setIsEmailVerifyOpen] = useState(false);
   const [isEmojiPickerOpen, setIsEmojiPickerOpen] = useState(false);
   const [isDeleting, setIsDeleting] = useState<boolean>(false);
+
+  const [confirmDelete, setConfirmDelete] = useState("");
+  const [deletePass, setDeletePass] = useState("");
+
   const [usernameStatus, setUsernameStatus] = useState<
     "checking" | "available" | "taken" | null
   >(null);
@@ -1897,6 +1901,16 @@ export default function ProfileView() {
     }
   }
 
+  const handleDeleteAccount = () => {
+    setIsDeleting(false);
+    if (confirmDelete === `delete ${profile?.email}`) {
+      console.log("Аккаунт удалён");
+    } else {
+      // Ошибка — что-то не совпадает
+      console.log("Email или пароль неверные");
+    }
+  };
+
   return (
     <TooltipProvider>
       <div className="h-full overflow-y-auto p-4">
@@ -2167,28 +2181,6 @@ export default function ProfileView() {
                     </CardContent>
                   </Card>                  
                 </motion.div>
-
-                <motion.div
-                  className="lg:col-span-2 perspective-[1000px]"
-                >
-                  <Button onClick={() => setIsDeleting(true)} size={"lg"} className="w-full bg-red-500 hover:bg-red-500 cursor-pointer hover:scale-105">⚠️ DELETE ACCOUNT ⚠️</Button>
-                  <Dialog open={isDeleting} onOpenChange={setIsDeleting}>
-                    <DialogContent>
-                      <DialogHeader>
-                        <DialogTitle>{t("areYouSure")}</DialogTitle>
-                      </DialogHeader>
-                      <DialogFooter>
-                        {/* <Button variant="outline" onClick={() => setIsDeleteDialogOpen(false)}>
-                          {t("cancel")}
-                        </Button>
-                        <Button onClick={handleDeleteAccount} className="bg-red-500 hover:bg-red-600">
-                          {t("delete")}
-                        </Button> */}
-                      </DialogFooter>
-                    </DialogContent>
-                  </Dialog>
-                </motion.div>
-
               </motion.div>
 
               <motion.div
@@ -2384,9 +2376,36 @@ export default function ProfileView() {
                           <TooltipContent>Email o‘zgartirish</TooltipContent>
                         </Tooltip>
                       </div>
+                      <Button onClick={() => setIsDeleting(true)} size={"lg"} className=" bg-red-500 hover:bg-red-500 cursor-pointer hover:scale-105">DELETE ACCOUNT!</Button>
                     </CardContent>
                   </Card>
                 </motion.div>
+                  <Dialog open={isDeleting} onOpenChange={setIsDeleting}>
+                    <DialogContent>
+                      <DialogHeader>
+                        <DialogTitle>{t("areYouSure")}</DialogTitle>
+                      </DialogHeader>
+                        <div className="flex flex-col gap-2">
+                          <label htmlFor="confirmDelete" className="w-full font-mono">
+                          <motion.span
+                            initial={{ width: 0 }}
+                            animate={{ width: "100%" }}
+                            transition={{ duration: 2, ease: "easeInOut" }}
+                            className="inline-block font-normal overflow-hidden tracking-tighter whitespace-nowrap"
+                          >
+                            Type <span className="text-red-500 font-bold">delete {profile?.email}</span> to confirm
+                          </motion.span>
+                        </label>
+                          <Input value={confirmDelete} onChange={(e) => setConfirmDelete(e.target.value)} onPaste={(e) => e.preventDefault()} autoComplete="off" id="confirmDelete" />
+                          <label htmlFor="deletePass">Type your password</label>
+                          <Input value={deletePass} onChange={(e) => setDeletePass(e.target.value)} onPaste={(e) => e.preventDefault()} autoComplete="off" id="deletePass" type="password" />
+                        </div>
+                        <DialogFooter>
+                          <Button onClick={handleDeleteAccount} variant={"outline"}>Delete</Button>
+                          <Button onClick={() => setIsDeleting(false)}>Cancel</Button>
+                        </DialogFooter>
+                    </DialogContent>
+                  </Dialog>
                 <motion.div
                   onMouseMove={(e) => {
                     const rect = e.currentTarget.getBoundingClientRect();
