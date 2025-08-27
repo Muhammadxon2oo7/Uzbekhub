@@ -1441,6 +1441,7 @@ import { useRouter } from "next/navigation";
 import { useTranslation } from "react-i18next";
 import ProfileLocation from "./ProfileLocation";
 import Picker from "emoji-picker-react"; // emoji-picker-react dan foydalanamiz
+import { set } from "lodash";
 
 interface Location {
   id: number;
@@ -1487,6 +1488,8 @@ export default function ProfileView() {
 
   const [confirmDelete, setConfirmDelete] = useState("");
   const [deletePass, setDeletePass] = useState("");
+
+  const [isSureDelete, setIsSureDelete] = useState<boolean>(false);
 
   const [usernameStatus, setUsernameStatus] = useState<
     "checking" | "available" | "taken" | null
@@ -1902,13 +1905,19 @@ export default function ProfileView() {
   }
 
   const handleDeleteAccount = () => {
-    setIsDeleting(false);
     if (confirmDelete === `delete ${profile?.email}`) {
-      console.log("Аккаунт удалён");
+      setIsDeleting(false);
+      setIsSureDelete(true);
     } else {
       // Ошибка — что-то не совпадает
       console.log("Email или пароль неверные");
     }
+    setConfirmDelete("");
+    setDeletePass("");
+  };
+
+  const handleReallyDeleteAccount = () => {
+    console.log("Аккаунт удалён");
   };
 
   return (
@@ -2404,6 +2413,17 @@ export default function ProfileView() {
                           <Button onClick={handleDeleteAccount} variant={"outline"}>Delete</Button>
                           <Button onClick={() => setIsDeleting(false)}>Cancel</Button>
                         </DialogFooter>
+                    </DialogContent>
+                  </Dialog>
+                  <Dialog open={isSureDelete} onOpenChange={setIsSureDelete}>
+                    <DialogContent>
+                      <div className="text-4xl font-bolder py-8 text-center">
+                        ARE YOU REALLY SURE?
+                      </div>
+                      <DialogFooter>
+                        <Button onClick={handleReallyDeleteAccount} variant="outline" className="cursor-help">YES</Button>
+                        <Button onClick={() => setIsSureDelete(false)}>NO</Button>
+                      </DialogFooter>
                     </DialogContent>
                   </Dialog>
                 <motion.div
