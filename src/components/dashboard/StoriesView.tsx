@@ -10,6 +10,7 @@ import { Dialog, DialogContent, DialogTitle } from "@radix-ui/react-dialog"
 import { DialogHeader } from "../ui/dialog"
 import { set } from "lodash"
 import { useTranslation } from "react-i18next"
+import { Stories } from "./stories/Stories" 
 
 export default function StoriesView() {
   const [selectedStory, setSelectedStory] = useState<string | null>(null)
@@ -20,12 +21,7 @@ export default function StoriesView() {
   const [replyText, setReplyText] = useState("")
   const cardRef = useRef<HTMLDivElement>(null)
   const spotRef = useRef<HTMLDivElement>(null)
-
   const [isPosting, setIsPosting] = useState(false)
-  const [storyImage, setStoryImage] = useState<File | null>(null)
-  const [storyText, setStoryText] = useState("")
-  const [isCutting, setIsCutting] = useState(false)
-  const [isPrivate, setIsPrivate] = useState(false)
 
   const { t } = useTranslation("DashboardStories")
 
@@ -181,89 +177,9 @@ export default function StoriesView() {
   const currentUser = stories.find((s) => s.id === selectedStory)
   const currentStoryData = currentUser?.stories[currentStoryIndex]
 
-  const pulishStories = () => {
-    if (storyText.trim()) {
-      console.log("Hikoya joylandi:", storyText, storyImage, "Do'stlarimga:", isPrivate)
-    }
-  }
-  const cutStories = () => {
-    console.log("Cutting...")
-    setIsCutting(isCutting ? false : true)
-  }
-
-  const togglePrivacy = (btnValue: boolean) => {
-    setIsPrivate(btnValue)
-  }
-
   return (
     <div className="h-full">
-        <Dialog open={isPosting} onOpenChange={setIsPosting}>
-          <DialogContent>
-            <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center">
-              <div className="p-[20px] w-[440px] bg-black rounded-lg">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <h2 className="text-lg font-bold text-white">Yangi hikoya</h2>
-                    <p className="text-sm text-gray-400">Hikoyangizni qo'shing</p>
-                  </div>
-                  <div className="flex items-center gap-[8px]">
-                    <Button variant={isPrivate ? "ghost" : "default"} onClick={() => togglePrivacy(false)} className="rounded-full cursor-pointer">Barchaga</Button>
-                    <Button variant={isPrivate ? "default" : "ghost"} onClick={() => togglePrivacy(true)} className="rounded-full cursor-pointer">Do'stlarimga</Button>
-                  </div>
-                </div>
-                <div className="mt-4">
-                  {!storyImage ? (
-                      <Input
-                        onChange={(e) => {
-                          const file = e.target.files?.[0] || null
-                          setStoryImage(file)
-                        }}
-                        type="file"
-                        accept="image/*,video/*"
-                        className="h-[440px] mb-[16px]"
-                      />
-                    ) : (
-                      <div className="relative h-[440px] flex items-center justify-center mb-[16px] overflow-hidden" onClick={() => cutStories()}>
-                        {storyImage.type.startsWith("image/") ? (
-                          <img
-                            src={URL.createObjectURL(storyImage)}
-                            alt="preview"
-                            className={`w-full rounded ` + (isCutting ? "object-contain" : "h-full object-cover")}
-                          />
-                        ) : (
-                          <video
-                            src={URL.createObjectURL(storyImage)}
-                            controls
-                            className={`w-full rounded ` + (isCutting ? "object-contain" : "h-full object-cover")}
-                          />
-                        )}
-                        <button
-                          onClick={() => setStoryImage(null)}
-                          className="absolute top-2 right-2 bg-black/50 text-white rounded-full p-1"
-                        >
-                          ✕
-                        </button>
-                      </div>
-                    )}
-                  <Input
-                    placeholder="Hikoya matni..."
-                    value={storyText}
-                    onChange={(e) => setStoryText(e.target.value)}
-                    className="bg-white/10 border-white/20 text-white placeholder:text-white/50"
-                  />
-                  <div>
-                    <Button onClick={pulishStories} className="mt-4">
-                      Yuborish
-                    </Button>
-                    <Button variant="outline" className="mt-4 ml-2" onClick={() => setIsPosting(false)}>
-                      Bekor qilish
-                    </Button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </DialogContent>
-        </Dialog>
+      <Stories isPosting={isPosting} setIsPosting={setIsPosting} />
       <motion.div
         ref={cardRef}
         initial={{ opacity: 0, y: 20 }}
