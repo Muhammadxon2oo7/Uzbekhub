@@ -4,6 +4,7 @@
     "save": "Saqlash",
     "edit": "Tahrirlash",
     "leave": "Chiqish",
+    "delete": "O'chirish",
     "changeUsername": "Foydalanuvchi nomini o'zgartirish",
     "newUsername": "Yangi foydalanuvchi nomi",
     "addedDate": "Qo'shilgan sana",
@@ -31,5 +32,12 @@
     "neighbourhood": "Mahalla",
     "refreshLocation": "Joylashuvni yangilash",
     "deleteLocation": "Joylashuvni o'chirish",
-    "areYouSure": "Sizni ishonchingiz komilmi?"
+    "deleteAccount": "Akkauntni o'chirish",
+    "areYouSure": "Sizni ishonchingiz komilmi?",
+    "type": "Tasdiqlash uchun",
+    "toConfirm": "deb yozing",
+    "typeYourPassword": "Parolingizni kiriting",
+    "areYouReallySure": "Siz aniq o'chirmoqchimisiz?",
+    "yes": "Ha",
+    "no": "Yo'q"
 }

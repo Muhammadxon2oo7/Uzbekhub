@@ -187,7 +187,7 @@ export default function Security({
               size="lg"
               className="bg-red-500 hover:bg-red-500 cursor-pointer hover:scale-105"
             >
-              DELETE ACCOUNT!
+              {t("deleteAccount")}
             </Button>
           </CardContent>
         </Card>
@@ -206,7 +206,7 @@ export default function Security({
                 transition={{ duration: 2, ease: "easeInOut" }}
                 className="inline-block font-normal overflow-hidden tracking-tighter whitespace-nowrap"
               >
-                Type <span className="text-red-500 font-bold">delete {profile.email}</span> to confirm
+                {t("type")} <span className="text-red-500 font-bold">delete {profile.email.slice(0, 3)}..{profile.email.slice(-10)}</span> {t("toConfirm")}
               </motion.span>
             </label>
             <Input
@@ -216,7 +216,7 @@ export default function Security({
               autoComplete="off"
               id="confirmDelete"
             />
-            <label htmlFor="deletePass">Type your password</label>
+            <label htmlFor="deletePass">{t("typeYourPassword")}</label>
             <Input
               value={deletePass}
               onChange={(e) => setDeletePass(e.target.value)}
@@ -228,17 +228,17 @@ export default function Security({
           </div>
           <DialogFooter>
             <Button onClick={handleDeleteAccount} variant="outline">
-              Delete
+              {t("delete")}
             </Button>
-            <Button onClick={() => setIsDeleting(false)}>Cancel</Button>
+            <Button onClick={() => setIsDeleting(false)}>{t("cancel")}</Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>
 
       <Dialog open={isSureDelete} onOpenChange={setIsSureDelete}>
         <DialogContent>
-          <div className="text-4xl font-bold py-8 text-center">
-            ARE YOU REALLY SURE?
+          <div className="text-4xl font-bold py-8 text-center uppercase">
+            {t("areYouReallySure")}
           </div>
           <DialogFooter>
             <Button
@@ -246,9 +246,9 @@ export default function Security({
               variant="outline"
               className="cursor-help"
             >
-              YES
+              {t("yes")}
             </Button>
-            <Button onClick={() => setIsSureDelete(false)}>NO</Button>
+            <Button onClick={() => setIsSureDelete(false)}>{t("no")}</Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>

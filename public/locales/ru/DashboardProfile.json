@@ -4,6 +4,7 @@
     "save": "Сохранить",
     "edit": "Редактировать",
     "leave": "Выйти",
+    "delete": "Удалить",
     "changeUsername": "Изменить имя пользователя",
     "newUsername": "Новое имя пользователя",
     "addedDate": "Дата добавления",
@@ -31,5 +32,12 @@
     "neighbourhood": "Район",
     "refreshLocation": "Обновить местоположение",
     "deleteLocation": "Удалить местоположение",
-    "areYouSure": "Вы уверены?"
+    "deleteAccount": "Удалить аккаунт",
+    "areYouSure": "Вы уверены?",
+    "type": "Напишите",
+    "toConfirm": "чтобы подтвердить",
+    "typeYourPassword": "Напишите свой пароль",
+    "areYouReallySure": "Вы точно уверены?",
+    "yes": "Да",
+    "no": "Нет"
 }

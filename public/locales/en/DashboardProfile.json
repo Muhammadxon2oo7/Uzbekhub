@@ -4,6 +4,7 @@
     "save": "Save",
     "edit": "Edit",
     "leave": "Leave",
+    "delete": "Delete",
     "changeUsername": "Change username",
     "newUsername": "New username",
     "addedDate": "Added date",
@@ -31,5 +32,12 @@
     "neighbourhood": "Neighbourhood",
     "refreshLocation": "Refresh location",
     "deleteLocation": "Delete location",
-    "areYouSure": "Are you sure?"
+    "deleteAccount": "Delete account",
+    "areYouSure": "Are you sure?",
+    "type": "Type",
+    "toConfirm": "to confirm",
+    "typeYourPassword": "Type your password",
+    "areYouReallySure": "Are you really sure?",
+    "yes": "Yes",
+    "no": "No"
 }
