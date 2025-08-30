@@ -96,6 +96,7 @@ interface MessageBubbleProps {
 }
 
 export default function ChatView() {
+  //setSelectedChat
   const [selectedChat, setSelectedChat] = useState<string>("");
   const [message, setMessage] = useState<string>("");
   const [isRecording, setIsRecording] = useState<boolean>(false);
@@ -336,7 +337,7 @@ export default function ChatView() {
   const addReaction = (messageId: string, emoji: string) => {
     console.log("Reaktsiya:", messageId, emoji);
   };
-
+  //startChat
   const startChat = () => {
     if (userProfile) {
       const newChat: Chat = {
@@ -395,7 +396,7 @@ export default function ChatView() {
 
 
   return (
-    <div className="h-full flex bg-white/5 backdrop-blur-lg border border-white/10 rounded-2xl overflow-hidden">
+    <div className="h-[90vh] flex bg-white/5 backdrop-blur-lg border border-white/10 rounded-2xl overflow-hidden relative top-4">
       <ChatList
         chats={chats}
         selectedChat={selectedChat}
@@ -404,13 +405,14 @@ export default function ChatView() {
         setSearchResults={setSearchResults}
       />
       {selectedChat ? (
-        <div className="flex-1 flex flex-col">
+        <div className="flex-1 min-h-0 flex flex-col">
           {isChatStarted && userProfile ? (
             <motion.div
+              key={selectedChat}
               initial={{ opacity: 0, x: 50 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.5, ease: "easeOut" }}
-              className="flex-1 flex flex-col"
+              className="flex-1 min-h-0 flex flex-col"
             >
               <ChatHeader
                 chatName={userProfile.name}
@@ -418,7 +420,7 @@ export default function ChatView() {
                 onlineStatus={userProfile.last_online || "Noma'lum"}
                 onAvatarClick={showUserProfile}
               />
-              <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-transparent">
+              <div className="flex-1 overflow-y-scroll p-4 space-y-4 bg-transparent">
                 <AnimatePresence>
                   {messagesByChatId[selectedChat]?.map((msg, index) => (
                     <motion.div
@@ -506,7 +508,7 @@ export default function ChatView() {
                   animate={{ y: 0, opacity: 1 }}
                   transition={{ delay: 0.4, duration: 0.4 }}
                 >
-                  <motion.div
+                  {/* <motion.div
                     className="flex items-center gap-3"
                     whileHover={{ x: 5, scale: 1.02 }}
                     transition={{ duration: 0.2 }}
@@ -516,7 +518,7 @@ export default function ChatView() {
                   >
                     <User className="w-5 h-5 text-primary" />
                     <p>Foydalanuvchi ID: {userProfile.id}</p>
-                  </motion.div>
+                  </motion.div> */}
                   <motion.div
                     className="flex items-center gap-3"
                     whileHover={{ x: 5, scale: 1.02 }}

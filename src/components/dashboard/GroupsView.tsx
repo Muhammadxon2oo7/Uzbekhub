@@ -127,7 +127,7 @@ export default function GroupsView() {
   }, [])
 
   return (
-    <div className="h-full">
+    <div className="h-[90vh] relative top-4">
       <motion.div
         ref={cardRef}
         initial={{ opacity: 0, y: 20 }}

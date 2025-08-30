@@ -519,7 +519,7 @@ export default function ProfileView() {
 
   return (
     <TooltipProvider>
-      <div className="h-full overflow-y-auto p-4">
+      <div className="h-[90vh] overflow-y-auto p-4">
         <motion.div
           ref={cardRef}
           initial={{ opacity: 0, y: 20 }}

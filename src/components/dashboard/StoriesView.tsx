@@ -178,7 +178,7 @@ export default function StoriesView() {
   const currentStoryData = currentUser?.stories[currentStoryIndex]
 
   return (
-    <div className="h-full">
+    <div className="h-[90vh] relative top-4">
       <Stories isPosting={isPosting} setIsPosting={setIsPosting} />
       <motion.div
         ref={cardRef}

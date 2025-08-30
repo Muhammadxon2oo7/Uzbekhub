@@ -85,7 +85,7 @@ export default function CallsView() {
   )
 
   return (
-    <div className="h-full overflow-hidden flex flex-col bg-white/5 backdrop-blur-[10px] border border-white/10 rounded-2xl">
+    <div className="h-[90vh] relative top-4 overflow-hidden flex flex-col bg-white/5 backdrop-blur-[10px] border border-white/10 rounded-2xl">
       {/* Header */}
       <div className="p-4 border-b border-white/10 flex items-center gap-3">
         <Phone className="w-6 h-6 text-primary" />
