@@ -156,7 +156,7 @@ export default function DashboardSidebar({
     <motion.div
       ref={sidebarRef}
       initial={{ x: -100, opacity: 0 }}
-      animate={{ x: 0, opacity: 1, width: collapsed ? 64 : 256 }}
+      animate={{ x: 0, opacity: 1, width: collapsed ? 72 : 256 }}
       transition={{ duration: 0.4, ease: "easeInOut" }}
       className="fixed left-0 top-0 h-screen bg-[#f7f7f726] backdrop-blur-[20px] border-r border-white/20 z-40 overflow-hidden"
     >

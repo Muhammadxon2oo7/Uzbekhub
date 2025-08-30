@@ -28,7 +28,7 @@ export default function ConnectionStatusBar({ isSidebarCollapsed = false }: Conn
     }
   }, [])
 
-  const leftPosition = isSidebarCollapsed ? "4rem" : "16rem"
+  const leftPosition = isSidebarCollapsed ? "72px" : "16rem"
 
   return (
     <AnimatePresence>
